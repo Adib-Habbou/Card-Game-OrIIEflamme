@@ -10,8 +10,15 @@
 /* importation du module structure */
 #include "structure.h"
 
-/* type plateau abstrait */
-typedef struct base_plateau *plateau;
+/* implémentation du type plateau */
+typedef struct plateau {
+    int tab[1000][1000]; // matrice de taille 1000x1000
+} plateau;
+
+/*  droite : plateau[i+1][j]
+    gauche : plateau[i-1][j]
+    haut : plateau[i][j-1]
+    bas : plateau[i][j+1] */
 
 /*  @requires rien
     @assigns rien

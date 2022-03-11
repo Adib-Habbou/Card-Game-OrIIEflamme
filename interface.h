@@ -54,7 +54,7 @@ int CartePositon();
 @ensures affiche les effets de la carte
 */
 void AfficherEffet(carte c);
-
+ 
 /* 
 @requires faction f1 et f2 sont les factions en jeu
 @assigns rien

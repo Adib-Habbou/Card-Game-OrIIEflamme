@@ -6,7 +6,7 @@
 
 /* importation du module faction */
 #include 'faction.h'
-
+//importation du module plateau
 #include 'plateau.h'
 /* 
 @requires rien

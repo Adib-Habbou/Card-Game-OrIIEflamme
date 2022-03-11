@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < 2; i++){
         affichemain(facs[i]);
         afficheoptions();
-        useoption(optionchoisi(), facs[i]);
+        remelanger(test_remelanger(), facs[i]);
     }
 
     // manche 1

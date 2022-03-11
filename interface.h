@@ -6,8 +6,10 @@
 
 /* importation du module faction */
 #include 'faction.h'
-
+//importation du module plateau
 #include 'plateau.h'
+
+
 /* 
 @requires rien
 @assigns rien
@@ -52,7 +54,7 @@ int CartePositon();
 @ensures affiche les effets de la carte
 */
 void AfficherEffet(carte c);
-
+ 
 /* 
 @requires faction f1 et f2 sont les factions en jeu
 @assigns rien
@@ -60,3 +62,4 @@ void AfficherEffet(carte c);
 */
 void Gagnant(faction f1,faction f2);
 
+#endif

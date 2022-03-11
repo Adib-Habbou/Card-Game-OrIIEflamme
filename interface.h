@@ -8,6 +8,8 @@
 #include 'faction.h'
 //importation du module plateau
 #include 'plateau.h'
+
+
 /* 
 @requires rien
 @assigns rien
@@ -60,3 +62,4 @@ void AfficherEffet(carte c);
 */
 void Gagnant(faction f1,faction f2);
 
+#endif

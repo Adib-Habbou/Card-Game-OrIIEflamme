@@ -18,7 +18,7 @@ typedef struct faction {
     @requires   faction valide
     @assigns    rien
     @ensures    renvoie 1 si l'option remélanger a été utilisée, 0 autrement */
-int test_remelanger();
+int test_remelanger(faction fact);
 
 
 /* utilisation de la fonction remélanger 
@@ -30,7 +30,7 @@ int test_remelanger();
                     changement de la main de la faction
                     changement de la pioche de la faction
                     changement des cartes dans la boîte à idées */
-void remelanger();
+void remelanger(faction fact);
 
 
 /* vide de la main dans la pioche 
@@ -39,7 +39,7 @@ void remelanger();
     @assigns    rien
     @ensures    permet à une faction de vider sa main dans sa pioche :
                     changement des cartes de la pioche de la faction */
-void vider_main();
+void vider_main(faction fact);
 
 /* mélange de la pioche 
     @requires   faction valide
@@ -47,7 +47,7 @@ void vider_main();
     @assigns    rien
     @ensures    permet à une faction de mélanger sa pioche :
                     changement des cartes de la pioche de la faction */
-void melanger_pioche();
+void melanger_pioche(faction fact);
 
 /* repioche d'une main
     @requires   faction valide
@@ -56,6 +56,6 @@ void melanger_pioche();
     @ensures    permet à une faction de repiocher les cartes de leur main :
                     changement de la main de la faction
                     changement des cartes de la pioche de la faction */
-void repiocher();
+void repiocher(faction fact);
 
 #endif

@@ -2,13 +2,16 @@
 #define INTERFACE_H
 
 /* importation du module carte */
-#include 'carte.h'
+#include "carte.h"
 
 /* importation du module faction */
-#include 'faction.h'
+#include "faction.h"
 
 /* importation du module plateau */
-#include 'plateau.h'
+#include "plateau.h"
+
+/* importation de structure.h */
+#include "structure.h"
 
 
 /* 
@@ -16,7 +19,7 @@
 @assigns rien
 @ensures Affiche le plateau de jeu dans son état actuel
 */
-void affiche_plateau();
+void affiche_plateau(plateau p);
 
 /* 
 @requires rien
@@ -31,23 +34,23 @@ void affiche_main(faction f);
 /* 
 @requires rien
 @assigns rien
-@ensures retourne -1 si la faction veut vider sa main, 0 si elle veut mélanger sa pioche et 1 si elle veut repiocher
+@ensures retourne 1 si la faction décide de remélanger sa main, retourne 0 sinon
 */
-int decision(faction f); //à changer selon l'implémentation des factions
+int decision(); //à changer selon l'implémentation des factions
 
 /* 
 @requires cartes valides
 @assigns rien
 @ensures retourne la carte qui va être posée
 */
-carte carte_poser(); //potentiellement une variable contenant la main
+carte carte_choisie(faction f); //potentiellement une variable contenant la main
 
 /* 
 @requires rien
 @assigns rien
-@ensures retourne 0 pour la position vertical 1 pour la position horizontal
+@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
-int carte_positon();
+int[2] carte_positon(plateau p);
 
 /* 
 @requires carte valide

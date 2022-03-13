@@ -46,7 +46,7 @@ int decision(); //à changer selon l'implémentation des factions
 carte carte_choisie(faction f); //potentiellement une variable contenant la main
 
 /* 
-@requires rien
+@requires plateau valide
 @assigns rien
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
@@ -60,10 +60,10 @@ int[2] carte_positon(plateau p);
 void afficher_effet(carte c);
  
 /* 
-@requires faction f1 et f2 sont les factions en jeu
+@requires liste faction valide
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction f1, faction f2);
+void gagnant(faction[2] factions);
 
 #endif

@@ -1,4 +1,3 @@
-
 /* importation du module carte */
 #include "carte.h"
 
@@ -11,37 +10,39 @@
 /* importation du module plateau */
 #include "plateau.h"
 
-/* implémentation du type plateau */
-struct plateau {
-    carte tab[1000][1000]; // matrice de cartes de taille 1000x1000
-};
 
 int main(int argc, char* argv[]){
     plateau p = init_plateau();
-    faction[2] facs = liste_faction();
-    afficheplateau(p);
+    faction facs[2] = liste_faction();
+    affiche_plateau(p);
 
-    // init joueur
-    for(int i = 0; i < 2; i++){
-        affichemain(facs[i]);
-        afficheoptions();
-        remelanger(test_remelanger(), facs[i]);
+    // Manche
+    while(fin_manche(p) != 0){
+        // Init joueur
+        for(int i = 0; i < 2; i++){
+            affiche_main(facs[i]);
+            decision();
+            if(test_remelanger(facs[i]))
+                remelanger(facs[i]);
+        }
+
+        // Phase 1
+        for(int i = 0, i < 16; i++){
+            affiche_main(facs[i%2]);
+            carte c = carte_choisie(facs[i%2]);
+            int pos[2] = carte_positon(p);
+            poser(p, c, pos);
+        }
+
+        // Phase 2
+        while(true){
+            carte c = retourner(p,facs);
+            if(c == NULL)
+                break;
+            afficher_effet(c);
+        }
     }
 
-    // manche 1
-    for(int i = 0, i < 16; i++){
-        affichemain(facs[i%2]);
-        carte c = cartechoisi();
-        int pos = positioncartechoisi();
-        poser(&p, c, pos);
-    }
-
-    //manche 2
-    while(fin_manche(p) != 1){
-        int pos = retourner(&p);
-        affichereffet(p, pos);
-    }
-
-    affichevainqueur();
+    gagnant(facs);
     return 0;
 }

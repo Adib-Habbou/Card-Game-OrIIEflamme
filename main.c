@@ -12,7 +12,6 @@
 
 #include <stddef.h>
 
-
 int main(){
     plateau p = init_plateau();
     faction* facs = liste_faction();

@@ -1,8 +1,12 @@
-
 #include "faction.h"
 
 #include "plateau.h"
-
+/* définition de la structure des cartes */
+struct carte {
+    char nom;
+    char description;
+    int nombre_occurrences;
+};
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
@@ -69,3 +73,4 @@ void EcologIIE(faction f) {
     }
     f.DDRS+=total ;
 }
+

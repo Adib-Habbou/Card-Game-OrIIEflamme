@@ -14,6 +14,7 @@
 #include "structure.h"
 
 
+
 /* 
 @requires rien
 @assigns rien
@@ -50,7 +51,7 @@ carte carte_choisie(faction f); //potentiellement une variable contenant la main
 @assigns rien
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
-int[2] carte_positon(plateau p);
+int* carte_positon(plateau p);
 
 /* 
 @requires carte valide
@@ -58,12 +59,15 @@ int[2] carte_positon(plateau p);
 @ensures affiche les effets de la carte
 */
 void afficher_effet(carte c);
- 
+
 /* 
 @requires liste faction valide
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction[2] factions);
+void gagnant(faction* factions);
+
 
 #endif
+
+

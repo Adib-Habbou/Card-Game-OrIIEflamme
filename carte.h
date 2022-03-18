@@ -2,6 +2,6 @@
 #define CARTE_H
 
 /* définition du type abstrait des cartes */
-typedef struct carte carte;
+typedef struct carte *carte;
 
 #endif

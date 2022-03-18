@@ -3,7 +3,7 @@
 
 
 /* définition du tyoe abstrait des factions */
-typedef struct faction faction;
+typedef struct faction *faction;
 
 
 /* vérification de l'utilisation de l'option remélanger 

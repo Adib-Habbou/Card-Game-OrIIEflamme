@@ -1,6 +1,6 @@
 /* définition de la structure des cartes */
-typedef struct carte {
+struct carte {
     char nom;
     char description;
     int nombre_occurrences;
-} carte;
+};

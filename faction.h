@@ -1,17 +1,9 @@
 #ifndef FACTION_H  /* pour éviter des inclusions multiples */
 #define FACTION_H
 
-/* importation de structure.h */
-#include "structure.h"
 
-
-/* définition de la structure des factions */
-typedef struct faction {
-    char nom;
-    int nombre_points_DDRS;
-    liste_carte main; /* type liste_carte défini dans structure.h */
-    pile_carte pioche; /* type pile_carte défini dans structure.h */
-} faction;
+/* définition du tyoe abstrait des factions */
+typedef struct faction faction;
 
 
 /* vérification de l'utilisation de l'option remélanger 

@@ -5,6 +5,7 @@ typedef struct case {
     int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
 } case;
 
+/* implémentation du type plateau */
 typedef struct plateau {
     case tab[1000][1000]; // matrice de cases de taille 1000 x 1000
 } plateau;

@@ -10,10 +10,12 @@
 /* importation du module plateau */
 #include "plateau.h"
 
+#include <stddef.h>
 
-int main(int argc, char* argv[]){
+
+int main(){
     plateau p = init_plateau();
-    faction facs[2] = liste_faction();
+    faction* facs = liste_faction();
     affiche_plateau(p);
 
     // Manche
@@ -27,16 +29,16 @@ int main(int argc, char* argv[]){
         }
 
         // Phase 1
-        for(int i = 0, i < 16; i++){
+        for(int i = 0; i < 16; i++){
             affiche_main(facs[i%2]);
             carte c = carte_choisie(facs[i%2]);
-            int pos[2] = carte_positon(p);
+            int* pos = carte_positon(p);
             poser(p, c, pos);
         }
 
         // Phase 2
-        while(true){
-            carte c = retourner(p,facs);
+        while(1){
+            carte c = retourner(p, facs);
             if(c == NULL)
                 break;
             afficher_effet(c);

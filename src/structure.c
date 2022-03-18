@@ -29,8 +29,8 @@ void empile(pile* p, carte c) {
         exit(1);
     }
     // on empile la carte c
-    res->top = c;
-    res->next = *p;
+    res->sommet = c;
+    res->suivant = *p;
     *p = res;
 }
 
@@ -40,7 +40,7 @@ void empile(pile* p, carte c) {
 carte depile(pile* p) {
     // on vérifie que la pile n'est pas vide
     if(*p == NULL) {
-        print("La pile est vide.\n");
+        printf("La pile est vide.\n");
         exit(1);
     }
     // on supprime le sommet de la pile
@@ -56,11 +56,11 @@ carte depile(pile* p) {
 void affiche_pile(pile p) {
     // on vérifie que la pile n'est pas vide
     if(pile_est_vide(p)){
-        print("La pile est vide.\n");
+        printf("La pile est vide.\n");
     }
     // tant que la pile est vide on affiche le nom de la carte
     while(!pile_est_vide(p)) {
-        printf("-> [ %s ] ", s->sommet.nom);
+        printf("-> [ %s ] ", p->sommet->nom);
     }
     // on affiche un saut de ligne par soucis esthétique
     printf("\n");

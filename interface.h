@@ -1,13 +1,18 @@
-#ifndef interface_h
-#define interface_h
+#ifndef INTERFACE_H
+#define INTERFACE_H
 
 /* importation du module carte */
-#include 'carte.h'
+#include "carte.h"
 
 /* importation du module faction */
-#include 'faction.h'
-//importation du module plateau
-#include 'plateau.h'
+#include "faction.h"
+
+/* importation du module plateau */
+#include "plateau.h"
+
+/* importation de structure.h */
+#include "structure.h"
+
 
 
 /* 
@@ -15,14 +20,14 @@
 @assigns rien
 @ensures Affiche le plateau de jeu dans son état actuel
 */
-void AffichePlateau();
+void affiche_plateau(plateau p);
 
 /* 
 @requires rien
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void AfficheMain(faction f);
+void affiche_main(faction f);
 
 //NB : j'ai supposé que la main et le plateau sont stocké en tant que variables globales,
 //     à changer l'argument selon l'implémentation
@@ -30,36 +35,39 @@ void AfficheMain(faction f);
 /* 
 @requires rien
 @assigns rien
-@ensures retourne -1 si la faction veut vider sa main, 0 si elle veut mélanger sa pioche et 1 si elle veut repiocher
+@ensures retourne 1 si la faction décide de remélanger sa main, retourne 0 sinon
 */
-int Decision(faction f); //à changer selon l'implémentation des factions
+int decision(); //à changer selon l'implémentation des factions
 
 /* 
 @requires cartes valides
 @assigns rien
 @ensures retourne la carte qui va être posée
 */
-carte CartePoser(); //potentiellement une variable contenant la main
+carte carte_choisie(faction f); //potentiellement une variable contenant la main
 
 /* 
-@requires rien
+@requires plateau valide
 @assigns rien
-@ensures retourne 0 pour la position vertical 1 pour la position horizontal
+@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
-int CartePositon();
+int* carte_positon(plateau p);
 
 /* 
 @requires carte valide
 @assigns rien
 @ensures affiche les effets de la carte
 */
-void AfficherEffet(carte c);
- 
+void afficher_effet(carte c);
+
 /* 
-@requires faction f1 et f2 sont les factions en jeu
+@requires liste faction valide
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void Gagnant(faction f1,faction f2);
+void gagnant(faction* factions);
+
 
 #endif
+
+

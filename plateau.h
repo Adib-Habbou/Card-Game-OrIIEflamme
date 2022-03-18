@@ -24,7 +24,7 @@ void libere_plateau(plateau p);
     @assigns    rien
     @ensures    renvoie 1 si il initialise une nouvelle manche de jeu
                 renvoie 0 si le jeu est terminé */
-int fin_manche(plateau p);
+int init_manche(plateau p);
 
 /*  @requires   rien
     @assigns    rien

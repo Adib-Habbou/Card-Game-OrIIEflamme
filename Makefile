@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-OBJETS = plateau.o faction.o interface.o carte.o main.o
+OBJETS = main.o
 
 oriieflamme : $(OBJETS)
 	$(CC) -o $@ $^
 
-%.o : %.c %.h
+main.o : main.c carte.h faction.h interface.h plateau.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 .PHONY: clean

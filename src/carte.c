@@ -1,6 +1,6 @@
-#include "faction.h"
+#include "../headers/faction.h"
 
-#include "plateau.h"
+#include "../headers/plateau.h"
 /* définition de la structure des cartes */
 struct carte {
     char nom;

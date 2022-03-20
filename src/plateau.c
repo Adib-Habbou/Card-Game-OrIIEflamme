@@ -1,4 +1,10 @@
-#include "plateau.h"
+#include "../headers/plateau.h"
+
+/* importation pour avoir accès au type faction */
+#include "faction.c"
+
+/* importation pour avoir accès au type carte */
+#include "carte.c"
 
 #define LENGTH 1000
 #define NOMBRE_JOUEUR 2
@@ -6,7 +12,7 @@
 
 
 /* implémentation du type case */
-struct Case {
+struct case {
     carte carte; // carte posée sur la case en question
     int id_faction; // 0 ou 1 qui détermine la faction qui a posée la carte
     int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
@@ -14,14 +20,7 @@ struct Case {
 
 /* implémentation du type plateau */
 struct plateau {
-    Case** tab; // matrice de cases de taille 1000 x 1000
-};
-
-struct faction {
-    char nom;
-    int nombre_points_DDRS;
-    pile main; /* type liste défini dans structure.h */
-    pile pioche; /* type pile défini dans structure.h */
+    case** tab; // matrice de cases de taille 1000 x 1000
 };
 
 plateau init_plateau(){

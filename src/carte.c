@@ -1,12 +1,16 @@
+#include "../headers/carte.h"
+
 #include "../headers/faction.h"
 
 #include "../headers/plateau.h"
+
 /* définition de la structure des cartes */
 struct carte {
     char nom;
     char description;
     int nombre_occurrences;
 };
+
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction

@@ -1,6 +1,9 @@
 #include "plateau.h"
 
 #define LENGTH 1000
+#define NOMBRE_JOUEUR 2
+#include <stddef.h>
+
 
 /* implémentation du type case */
 struct Case {
@@ -37,19 +40,151 @@ void libere_plateau(plateau _plateau){
     free(_plateau.tab);
 }
 
-int init_manche(plateau p){
+int init_manche(plateau _plateau){
     //tire carte
     // 1 si fin 0 sinon
 }
 
 faction* liste_faction(){
-
+    faction factions[NOMBRE_JOUEUR];
+    for(int i = 0; i < NOMBRE_JOUEUR; i++){
+        faction faction;
+        faction->nom = "Joueur "+i;
+        faction->nombre_points_DDRS = 0;
+        factions[i] = faction;
+    }
+    return factions;
 }
 
-void poser(plateau p, carte c, int* pos){
-
+void poser(plateau _plateau, carte _carte, int* _position){
+    _plateau.tab[_position[0]][_position[1]].carte = _carte;
+    _plateau.tab[_position[0]][_position[1]].id_faction = _position[2];
+    _plateau.tab[_position[0]][_position[1]].etat = 0;
 }
 
-carte retourner(plateau p, faction* facs){
+carte retourner(plateau _plateau, faction* _factions){
+    Case _case;
+    for(int i = 0; i < LENGTH; i++){
+        for(int j = 0; j < LENGTH; j++){
+            if(i != j){
+                if(_plateau->tab[i][j].etat != 0){
+                    _case = _plateau->tab[i][j];
+                    goto cartetrouvé;
+                }
+                if(_plateau->tab[j][i].etat != 0){
+                    _case = _plateau->tab[j][i];
+                    goto cartetrouvé;
+                }
+            }else{
+                if(_plateau->tab[j][j].etat != 0){
+                    _case = _plateau->tab[j][j];
+                    goto cartetrouvé;
+                }
+            }
+        }
+    }
 
+cartetrouvé:
+    switch (_case.carte->nom)
+    {
+        case 'FISE':
+            FISE(_factions[_case.id_faction]);
+            break;
+        case 'FISA':
+            FISA(_factions[_case.id_faction], _plateau);
+            break;
+        case 'FC':
+            FC(_factions[_case.id_faction]);
+            break;
+        case 'EcologIIE':
+            EcologIIE(_factions[_case.id_faction]);
+            break;
+        case 'lIIEns':
+            lIIEns(_factions[_case.id_faction]);
+            break;
+        case 'Soirée sans alcool':
+            Soiree_sans_alcool(_factions[_case.id_faction]);
+            break;
+        case 'Alcool':
+            Alcool(_factions[_case.id_faction]);
+            break;
+        case 'Café':
+            Cafe(_factions[_case.id_faction]);
+            break;
+        case "Thé":
+            The(_factions[_case.id_faction]);
+            break;
+        case "Ecocup":
+            Ecocup(_factions[_case.id_faction]);
+            break;
+        case "Reprographie":
+            Reprographie(_factions[_case.id_faction]);
+            break;
+        case "Isolation du bâtiment":
+            Isolation_du_batiment(_factions[_case.id_faction]);
+            break;
+        case "Parcours sobriété numérique":
+            Parcours_sobriete_numerique(_factions[_case.id_faction]);
+            break;
+        case "Heures supplémentaires":
+            Heures_supplementaires(_factions[_case.id_faction]);
+            break;
+        case "Kahina Bouchama":
+            Kahina_Bouchama(_factions[_case.id_faction]);
+            break;
+        case "Kevin Goilard":
+            Kevin_Goilard(_factions[_case.id_faction]);
+            break;
+        case "Massinissa Merabet":
+            Massinissa_Merabet(_factions[_case.id_faction]);
+            break;
+        case "Vitéra Y":
+            Vitera_Y(_factions[_case.id_faction]);
+            break;
+        case "Jonas Senizergues":
+            Jonas_Senizergues(_factions[_case.id_faction]);
+            break;
+        case "Fetia Bannour":
+            Fetia_Bannour(_factions[_case.id_faction]);
+            break;
+        case "Catherine Dubois":
+            Catherine_Dubois(_factions[_case.id_faction]);
+            break;
+        case "Anne-Laure Ligozat":
+            Anne_Laure_Ligozat(_factions[_case.id_faction]);
+            break;
+        case "Guillaume Burel":
+            Guillaume_Burel(_factions[_case.id_faction]);
+            break;
+        case "Christophe Mouilleron":
+            Christophe_Mouilleron(_factions[_case.id_faction]);
+            break;
+        case "Thomas Lim":
+            Thomas_Lim(_factions[_case.id_faction]);
+            break;
+        case "Julien Forest":
+            Julien_Forest(_factions[_case.id_faction]);
+            break;
+        case "Dimitri Watel":
+            Dimitri_Watel(_factions[_case.id_faction]);
+            break;
+        case "Djibril-Aurélien Dembele-Cabot":
+            Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
+            break;
+        case "Eric Lejeune":
+            Eric_Lejeune(_factions[_case.id_faction]);
+            break;
+        case "Lucienne Pacavé":
+            Lucienne_Pacave(_factions[_case.id_faction]);
+            break;
+        case "Katrin Salhab":
+            Katrin_Salhab(_factions[_case.id_faction]);
+            break;
+        case "Laurent Prével":
+            Laurent_Prevel(_factions[_case.id_faction]);
+            break;
+        
+        default:
+            break;
+    }
 }

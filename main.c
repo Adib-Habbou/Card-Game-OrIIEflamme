@@ -10,41 +10,61 @@
 /* importation du module plateau */
 #include "plateau.h"
 
+/* Pour le null */
 #include <stddef.h>
 
-
 int main(){
-    plateau p = init_plateau();
-    faction* facs = liste_faction();
-    affiche_plateau(p);
+    // Initialisation du plateau
+    plateau _plateau = init_plateau();
 
-    // Manche
-    while(fin_manche(p) != 0){
-        // Init joueur
+    // Initialisation de la liste des factions
+    faction* _factions = liste_faction();
+
+    // Affichage du plateau sur la console
+    affiche_plateau(_plateau);
+
+    // Initialisation d'une manche si le jeu n'est pas terminé 
+    while(init_manche(_plateau) != 0){
+        // Initialisation des joueurs
         for(int i = 0; i < 2; i++){
-            affiche_main(facs[i]);
+            // Affichage la main de la faction i dans la console
+            affiche_main(_factions[i]);
+            // Demande à la faction actuelle si elle veut utiliser son option permettant de repiocher
             decision();
-            if(test_remelanger(facs[i]))
-                remelanger(facs[i]);
+            // Renvoie 1 si l'option remélanger a été utilisée, 0 autrement 
+            if(test_remelanger(_factions[i]))
+            // Remelange les cartes de la fonction
+                remelanger(_factions[i]);
         }
 
-        // Phase 1
+        // Phase 1 :
+
+        // Boucle pour chaque carte qu'on va poser
         for(int i = 0; i < 16; i++){
-            affiche_main(facs[i%2]);
-            carte c = carte_choisie(facs[i%2]);
-            int* pos = carte_positon(p);
-            poser(p, c, pos);
+            // Affiche la main d'une faction tour par tour
+            affiche_main(_factions[i%2]);
+            // Retourne la carte choisi par la faction
+            carte _carte = carte_choisie(_factions[i%2]);
+            // Retourne la position sur le plateau où la faction décide de poser la carte
+            int* _position = carte_positon(_plateau);
+            // Pose la carte sur le plateau
+            poser(_plateau, _carte, _position);
         }
 
-        // Phase 2
+        // Phase 2 :
+
+        // Boucle infini on s'arrete quand il n'y a plus de carte sur le plateau
+        // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
-            carte c = retourner(p, facs);
-            if(c == NULL)
+            carte _carte = retourner(_plateau, _factions);
+            if(_carte == NULL)
                 break;
-            afficher_effet(c);
+            afficher_effet(_carte);
         }
     }
 
-    gagnant(facs);
+    // Affichage du gagnant
+    gagnant(_factions);
+
     return 0;
 }

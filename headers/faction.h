@@ -1,6 +1,8 @@
 #ifndef FACTION_H  /* pour éviter des inclusions multiples */
 #define FACTION_H
 
+/* importation du module structure */
+#include "structure.h"
 
 /* définition du tyoe abstrait des factions */
 typedef struct faction *faction;
@@ -49,5 +51,45 @@ void melanger_pioche(faction fact);
                     changement de la main de la faction
                     changement des cartes de la pioche de la faction */
 void repiocher(faction fact);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie le nom de la faction */
+char get_faction_nom(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie le nombre de points DDRS de la faction */
+int get_faction_nombre_points_DDRS(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie la main de la faction */
+pile get_faction_main(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie la pioche de la faction */
+pile get_faction_pioche(faction faction);
+
+/*  @requires   une faction valide et un chaîne de caractères
+    @assigns    faction
+    @ensures    modifie le nom de la faction */
+void set_faction_nom(faction faction, char nom);
+
+/*  @requires   une faction valide et un entier
+    @assigns    faction
+    @ensures    modifie le nombre de points DDRS de la faction */
+void set_faction_nombre_points_DDRS(faction faction, int nomre_points_DDRS);
+
+/*  @requires   une faction valide et une pile
+    @assigns    faction
+    @ensures    modifie la main de la faction */
+void set_faction_main(faction faction, pile main);
+
+/*  @requires   une faction valide et une pile
+    @assigns    faction
+    @ensures    modifie la pioche de la faction */
+void set_faction_pioche(faction faction, pile pioche);
 
 #endif

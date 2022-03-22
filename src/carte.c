@@ -11,6 +11,27 @@ struct carte {
     int nombre_occurrences;
 };
 
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie le nom de la carte */
+char get_carte_nom(carte carte) {
+    return carte.nom;
+}
+
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie la description de la carte */
+char get_carte_description(carte carte) {
+    return carte.description;
+}
+
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie le nomnre d'occurrences de la carte */
+int get_carte_nombre_occurrences(carte carte) {
+    return carte.nombre_occurrences;
+}
+
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction

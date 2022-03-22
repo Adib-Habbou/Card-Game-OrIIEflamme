@@ -46,6 +46,40 @@ void set_case_etat(Case case, int etat) {
     case->etat = etat;
 }
 
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie la carte la plus en haut à gauche du plateau */
+carte get_plateau_carte_haut_gauche(plateau plateau) {
+    int i, j;
+    while(plateau->tab[i][j]->carte != NULL) {
+        if (j < 1000) {
+             j += 1;
+        }
+        else {
+            j = 0;
+            i += 1;
+        }
+    }
+    return (i, j);
+}
+
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie la carte la plus en bas à droite du plateau  */
+carte get_plateau_carte_bas_droite(plateau plateau) {
+    int i, j;
+    while(plateau->tab[1000 - i][1000 - j]->carte != NULL) {
+        if (j < 1000) {
+             j += 1;
+        }
+        else {
+            j = 0;
+            i += 1;
+        }
+    }
+    return (1000 - i, 1000 - j);
+}
+
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */

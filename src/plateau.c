@@ -36,6 +36,13 @@ int get_case_etat(Case case) {
     return case.etat;
 }
 
+/*  @requires   une case valide et un entier
+    @assigns    case
+    @ensures    modifie l'état de la carte posé sur la case */
+void set_case_etat(Case case, int etat) {
+    case.etat = etat;
+}
+
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */

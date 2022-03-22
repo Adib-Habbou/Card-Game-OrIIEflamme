@@ -385,18 +385,48 @@ la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée
 Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau
 */
 void Thomas_Lim(faction f, plateau p) {
+    int Julien_Forest_present = 0;
+    //TODO présence Julien via historique
+    int nb_FISE = 0;
+    int i,j;
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (p[i][j].tab.carte == "FISE") {
+                nb_FISE+=1;
+            }
+        }
+    }
 
+    if (Julien_Forest_present) {
+        //set this faction DDRS to current + 3*nb_FISE
+    }
+
+    else { 
+        //set opponent faction DDRS to current - nb_FISE
+    }
     
 }
 
 /*
 @requires faction valide
-@assigns le plateau et l'attribut DDRS de la faction
+@assigns l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau
 */
 void Julien_Forest(faction f, plateau p) {
-
-    
+    int nb_FISE = 0;
+    int i,j;
+    int drapeau = 0;
+    //historique cartes retounéés TODO
+    if (drapeau) { 
+        for (i=0;i<1000;i++) {  //plateau de taille 1000
+            for (j=0;j<1000;j++) {  
+                if (p[i][j].tab.carte == "FISE") {
+                    nb_FISE+=1;
+                }
+            }
+        }
+    }
+    //set nb_DDRS to (get_DDRS + 6*nb_FISE)
 }
 
 /*
@@ -405,7 +435,20 @@ void Julien_Forest(faction f, plateau p) {
 @ensures La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau
 */
 void Dimitri_Watel(faction f, plateau p) {
-
+    int nb_FISA_FC = 0;
+    int i,j;
+    int drapeau = 0;
+    //historique cartes retounéés TODO
+    if (drapeau) { 
+        for (i=0;i<1000;i++) {  //plateau de taille 1000
+            for (j=0;j<1000;j++) {  
+                if (p[i][j].tab.carte == "FISA" || p[i][j].tab.carte == "FC" ) {
+                    nb_FISA_FC+=1;
+                }
+            }
+        }
+    }
+    //set nb_DDRS to (get_DDRS + 3*nb_FISE)
     
 }
 
@@ -414,9 +457,16 @@ void Dimitri_Watel(faction f, plateau p) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Djibril_Aurelien_Dembele_Cabot(faction f, plateau p) {
-
-    
+void Djibril_Aurelien_Dembele_Cabot(faction f, plateau p, int ligne) {
+    int nb_retournee =0;
+    for (j=0;j<1000;j++) { //optimisation possible 
+        if (p[i][j].tab.etat == 1) {
+            nb_retournee+=1;
+        }
+    }
+    if (nb_retournee>= 3) {
+        //set DDRS to (current + 5)
+    }
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 

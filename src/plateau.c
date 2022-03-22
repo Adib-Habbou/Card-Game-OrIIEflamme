@@ -49,7 +49,7 @@ void set_case_etat(Case case, int etat) {
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */
-carte get_plateau_carte_haut_gauche(plateau plateau) {
+carte get_plateau_carte_premier(plateau plateau) {
     int i, j;
     while(plateau->tab[i][j]->carte != NULL) {
         if (j < 1000) {
@@ -66,7 +66,7 @@ carte get_plateau_carte_haut_gauche(plateau plateau) {
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
-carte get_plateau_carte_bas_droite(plateau plateau) {
+carte get_plateau_carte_dernier(plateau plateau) {
     int i, j;
     while(plateau->tab[1000 - i][1000 - j]->carte != NULL) {
         if (j < 1000) {

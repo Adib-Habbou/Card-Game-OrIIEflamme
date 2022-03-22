@@ -63,8 +63,8 @@ void set_carte_nombre_occurrences(carte carte, int nombre_occurrences) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1
 */
-void FISE(faction f) {
-    f.DDRS+=1; //TODO setter
+void FISE(faction _faction) {
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+1); 
 }
 
 /*
@@ -72,18 +72,18 @@ void FISE(faction f) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 2
 */
-void FISA(faction f, plateau p) {
+void FISA(faction _faction, plateau _plateau) {
     int nb_pair=0;
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (p[i][j].tab.etat == 1) {
+            if (_plateau.tab[i][j].etat == 1) {
                 nb_pair+=1;//si 1 indique que la carte est retournée 
             }
         }
     }
     if (nb_pair%2 == 0) {
-        f.DDRS+=2;//TODO setter
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+2);
     }
 }
 
@@ -92,18 +92,18 @@ void FISA(faction f, plateau p) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 4
 */
-void FC(faction f, plateau p) {
+void FC(faction _faction, plateau _plateau) {
     int drapeau_FC=0;
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (p[i][j].tab.carte == "FC" && p[i][j].tab.etat==1) {
+            if (_plateau.tab[i][j].carte == "FC" && _plateau.tab[i][j].etat==1) {
                 drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
             }
         }
     }
     if (drapeau_FC) { //au moins une carte FC était retournée
-        f.DDRS+=4;//TODO setter
+       set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+4);
     }
 }
 
@@ -112,17 +112,17 @@ void FC(faction f, plateau p) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1 pour chaque carte FISE, FISA ou FC retournées
 */
-void EcologIIE(faction f, plateau p) {
+void EcologIIE(faction _faction, plateau _plateau) {
     int total = 0;
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (p[i][j].tab.etat == 1 && ( (p[i][j].tab.carte == "FC") || (p[i][j].tab.carte == "FISE") || (p[i][j].tab.carte == "FISA") )) {
+            if (_plateau.tab[i][j].etat == 1 && ( (_plateau.tab[i][j].carte == "FC") || (_plateau.tab[i][j].carte == "FISE") || (_plateau.tab[i][j].carte == "FISA") )) {
                 total+=1; 
             }
         }
     }
-    f.DDRS+=total ;//TODO setter 
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+total) ;//TODO setter 
 }
 
 
@@ -384,25 +384,27 @@ void Christophe_Mouilleron(faction f, plateau p) {
 la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée sur le plateau. 
 Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau
 */
-void Thomas_Lim(faction f, plateau p) {
+void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     int Julien_Forest_present = 0;
+
     //TODO présence Julien via historique
+
     int nb_FISE = 0;
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (p[i][j].tab.carte == "FISE") {
+            if (_plateau.tab[i][j].carte == "FISE") {
                 nb_FISE+=1;
             }
         }
     }
 
     if (Julien_Forest_present) {
-        //set this faction DDRS to current + 3*nb_FISE
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+3*nb_FISE);
     }
 
     else { 
-        //set opponent faction DDRS to current - nb_FISE
+        set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS-nb_FISE);
     }
     
 }
@@ -412,21 +414,23 @@ void Thomas_Lim(faction f, plateau p) {
 @assigns l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau
 */
-void Julien_Forest(faction f, plateau p) {
+void Julien_Forest(faction _faction, plateau _plateau) {
     int nb_FISE = 0;
     int i,j;
     int drapeau = 0;
-    //historique cartes retounéés TODO
+
+    //TODO historique cartes retounéés 
+
     if (drapeau) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (p[i][j].tab.carte == "FISE") {
+                if (_plateau.tab[i][j].carte == "FISE") {
                     nb_FISE+=1;
                 }
             }
         }
     }
-    //set nb_DDRS to (get_DDRS + 6*nb_FISE)
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+6*nb_FISE);
 }
 
 /*
@@ -434,21 +438,21 @@ void Julien_Forest(faction f, plateau p) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau
 */
-void Dimitri_Watel(faction f, plateau p) {
+void Dimitri_Watel(faction _faction, plateau _plateau) {
     int nb_FISA_FC = 0;
     int i,j;
     int drapeau = 0;
-    //historique cartes retounéés TODO
+    //TODO historique cartes retounéés 
     if (drapeau) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (p[i][j].tab.carte == "FISA" || p[i][j].tab.carte == "FC" ) {
+                if (_plateau.tab[i][j].carte == "FISA" || _plateau.tab[i][j].carte == "FC" ) {
                     nb_FISA_FC+=1;
                 }
             }
         }
     }
-    //set nb_DDRS to (get_DDRS + 3*nb_FISE)
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+3*nb_FISA_FC);
     
 }
 
@@ -457,15 +461,15 @@ void Dimitri_Watel(faction f, plateau p) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Djibril_Aurelien_Dembele_Cabot(faction f, plateau p, int ligne) {
+void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne) {
     int nb_retournee =0;
     for (j=0;j<1000;j++) { //optimisation possible 
-        if (p[i][j].tab.etat == 1) {
+        if (_plateau.tab[i][j].etat == 1) {
             nb_retournee+=1;
         }
     }
     if (nb_retournee>= 3) {
-        //set DDRS to (current + 5)
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS+5);
     }
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------

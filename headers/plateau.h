@@ -74,11 +74,31 @@ void set_case_etat(Case case, int etat);
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */
-carte get_plateau_carte_haut_gauche(plateau plateau);
+carte get_plateau_carte_premier(plateau plateau);
 
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
-carte get_plateau_carte_bas_droite(plateau plateau);
+carte get_plateau_carte_dernier(plateau plateau);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la carte la plus à gauche  */
+carte get_plateau_carte_gauche(plateau plateau, int i, int j);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la carte la plus à droite  */
+carte get_plateau_carte_droite(plateau plateau, int i, int j);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la carte la plus en haut  */
+carte get_plateau_carte_haut(plateau plateau, int i, int j);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la carte la plus en bas  */
+carte get_plateau_carte_bas(plateau plateau, int i, int j);
 
 #endif

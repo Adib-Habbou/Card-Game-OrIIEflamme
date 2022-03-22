@@ -2,16 +2,16 @@
 #define PLATEAU_H
 
 /* importation du module carte */
-#include "carte.h"
+#include "../headers/carte.h"
 
 /* importation du module faction */
-#include "faction.h"
+#include "../headers/faction.h"
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
-typedef struct case *case;
+typedef struct Case Case;
 
 /* implémentation du type abstrait plateau */
-typedef struct plateau *plateau;
+typedef struct plateau plateau;
 
 /*  @requires   rien
     @assigns    rien
@@ -44,5 +44,20 @@ void poser(plateau plateau, carte carte, int* position);
     @ensures    retourne la carte la plus en haut à gauche face visible et active son effet
                 renvoie la carte retournée ou NULL si toutes les cartes du plateau sont déjà face visible */
 carte retourner(plateau plateau, faction* liste_faction);
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie la carte posé sur la case */
+carte get_case_carte(Case case);
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'état de la carte posé sur la case */
+int get_case_etat(Case case);
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie la faction qui a posé la carte présente sur la case */
+faction get_case_faction(Case case);
 
 #endif

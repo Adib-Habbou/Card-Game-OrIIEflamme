@@ -50,4 +50,24 @@ void melanger_pioche(faction fact);
                     changement des cartes de la pioche de la faction */
 void repiocher(faction fact);
 
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie le nom de la faction */
+char get_faction_nom(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie le nombre de points DDRS de la faction */
+int get_faction_nombre_points_DDRS(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie la main de la faction */
+pile get_faction_main(faction faction);
+
+/*  @requires   une faction valide
+    @assigns    rien
+    @ensures    renvoie la pioche de la faction */
+pile get_faction_pioche(faction faction);
+
 #endif

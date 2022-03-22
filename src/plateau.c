@@ -10,7 +10,6 @@
 #define NOMBRE_JOUEUR 2
 #include <stddef.h>
 
-
 /* implémentation du type case */
 struct Case {
     carte carte; // carte posée sur la case en question
@@ -22,6 +21,28 @@ struct Case {
 struct plateau {
     Case** tab; // matrice de cases de taille 1000 x 1000
 };
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie la carte posé sur la case */
+carte get_case_carte(Case case) {
+    return case.carte;
+}
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'état de la carte posé sur la case */
+int get_case_etat(Case case) {
+    return case.etat;
+}
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie la faction qui a posé la carte présente sur la case */
+faction get_case_faction(Case case) {
+    liste_faction = liste_faction();
+    return liste_faction[case.id_faction];
+}
 
 plateau init_plateau(){
     plateau _plateau;

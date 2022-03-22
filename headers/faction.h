@@ -1,6 +1,8 @@
 #ifndef FACTION_H  /* pour éviter des inclusions multiples */
 #define FACTION_H
 
+/* importation du module structure */
+#include "structure.h"
 
 /* définition du tyoe abstrait des factions */
 typedef struct faction *faction;

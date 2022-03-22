@@ -1,7 +1,10 @@
+/* importation du module carte */
 #include "../headers/carte.h"
 
+/* importation du module faction */
 #include "../headers/faction.h"
 
+/* importation du module plateau */
 #include "../headers/plateau.h"
 
 /* définition de la structure des cartes */

@@ -1,4 +1,8 @@
-#include "faction.h"
+/* importation du module faction */
+#include "../headers/faction.h"
+
+/* importation du module structure */
+#include "../headers/structure.h"
 
 /* définition de la structure des factions */
 struct faction {

@@ -7,6 +7,9 @@
 /* importation du module faction */
 #include "../headers/faction.h"
 
+/* importation du module structure */
+#include "../headers/structure.h"
+
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case Case;
 

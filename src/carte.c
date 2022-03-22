@@ -331,7 +331,7 @@ void Fetia_Bannour(faction f, plateau p) {
 @assigns le plateau
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
-void Catherine_Dubois(faction f, plateau p) {
+void Catherine_Dubois(faction f, plateau p, int ligne, int colonne) {
 
     
 }
@@ -442,7 +442,9 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
     int nb_FISA_FC = 0;
     int i,j;
     int drapeau = 0;
+
     //TODO historique cartes retounéés 
+
     if (drapeau) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
@@ -463,8 +465,9 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
 */
 void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne) {
     int nb_retournee =0;
-    for (j=0;j<1000;j++) { //optimisation possible 
-        if (_plateau.tab[i][j].etat == 1) {
+    int j;
+    for (j=0;j<1000;j++) { //optimisation possible avec getter border du "plateau" effectif
+        if (_plateau.tab[ligne][j].etat == 1) {
             nb_retournee+=1;
         }
     }

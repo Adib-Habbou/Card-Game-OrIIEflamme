@@ -8,10 +8,10 @@
 #include "faction.h"
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
-typedef struct Case *Case;
+typedef struct Case Case;
 
 /* implémentation du type abstrait plateau */
-typedef struct plateau *plateau;
+typedef struct plateau plateau;
 
 /*  @requires   rien
     @assigns    rien

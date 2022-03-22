@@ -32,6 +32,27 @@ int get_carte_nombre_occurrences(carte carte) {
     return carte.nombre_occurrences;
 }
 
+/*  @requires   une carte valide et une chaîne de caractères
+    @assigns    carte
+    @ensures    modifie le nom de la carte */
+void set_carte_nom(carte carte, char nom) {
+    carte.nom = nom;
+}
+
+/*  @requires   une carte valide et une chaîne de caractères
+    @assigns    carte
+    @ensures    modifie la description de la carte */
+void set_carte_description(carte carte, char description) {
+    carte.description = description;
+}
+
+/*  @requires   une carte valide et un entier
+    @assigns    carte
+    @ensures    modifie le nomnre d'occurrences de la carte */
+void set_carte_nombre_occurrences(carte carte, int nombre_occurrences) {
+    carte.nombre_occurrences = nombre_occurrences;
+}
+
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction

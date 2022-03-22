@@ -50,7 +50,8 @@ void set_case_etat(Case case, int etat) {
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */
 carte get_plateau_carte_premier(plateau plateau) {
-    int i, j;
+    int i = 0;
+    int j = 0;
     while(plateau->tab[i][j]->carte != NULL) {
         if (j < 1000) {
              j += 1;
@@ -67,8 +68,9 @@ carte get_plateau_carte_premier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
 carte get_plateau_carte_dernier(plateau plateau) {
-    int i, j;
-    while(plateau->tab[1000 - i][1000 - j]->carte != NULL) {
+    int i = 1000;
+    int j = 1000;
+    while(plateau->tab[i][j]->carte != NULL) {
         if (j < 1000) {
              j += 1;
         }
@@ -77,14 +79,14 @@ carte get_plateau_carte_dernier(plateau plateau) {
             i += 1;
         }
     }
-    return (1000 - i, 1000 - j);
+    return (i, j);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus à gauche  */
 carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
-    int x;
+    int x = i;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 0) {
             printf("Pas de carte à gauche");
@@ -99,7 +101,7 @@ carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
     @assigns    rien
     @ensures    renvoie la carte la plus à droite  */
 carte get_plateau_carte_droite(plateau plateau, int i, int j) {
-    int x;
+    int x = i;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 1000) {
             printf("Pas de carte à droite");
@@ -114,7 +116,7 @@ carte get_plateau_carte_droite(plateau plateau, int i, int j) {
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
 carte get_plateau_carte_haut(plateau plateau, int i, int j) {
-    int y;
+    int y = j;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 0) {
             printf("Pas de carte en haut");
@@ -129,7 +131,7 @@ carte get_plateau_carte_haut(plateau plateau, int i, int j) {
     @assigns    rien
     @ensures    renvoie la carte la plus en bas  */
 carte get_plateau_carte_bas(plateau plateau, int i, int j) {
-    int y;
+    int y = j;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 1000) {
             printf("Pas de carte en bas");

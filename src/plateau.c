@@ -29,21 +29,21 @@ struct plateau {
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
 carte get_case_carte(Case case) {
-    return case.carte;
+    return case->carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
 int get_case_etat(Case case) {
-    return case.etat;
+    return case->etat;
 }
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case case, int etat) {
-    case.etat = etat;
+    case->etat = etat;
 }
 
 /*  @requires   une case valide
@@ -51,7 +51,7 @@ void set_case_etat(Case case, int etat) {
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case case) {
     liste_faction = liste_faction();
-    return liste_faction[case.id_faction];
+    return liste_faction[case->id_faction];
 }
 
 plateau init_plateau(){

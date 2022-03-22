@@ -60,4 +60,9 @@ int get_case_etat(Case case);
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case case);
 
+/*  @requires   une case valide et un entier
+    @assigns    case
+    @ensures    modifie l'état de la carte posé sur la case */
+void set_case_etat(Case case, int etat);
+
 #endif

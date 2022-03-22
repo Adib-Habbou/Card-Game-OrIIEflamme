@@ -2,13 +2,13 @@
 #define PLATEAU_H
 
 /* importation du module carte */
-#include "../headers/carte.h"
+#include "carte.h"
 
 /* importation du module faction */
-#include "../headers/faction.h"
+#include "faction.h"
 
 /* importation du module structure */
-#include "../headers/structure.h"
+#include "structure.h"
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case Case;

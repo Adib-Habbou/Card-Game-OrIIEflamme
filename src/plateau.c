@@ -12,7 +12,7 @@
 
 
 /* implémentation du type case */
-struct case {
+struct Case {
     carte carte; // carte posée sur la case en question
     int id_faction; // 0 ou 1 qui détermine la faction qui a posée la carte
     int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
@@ -20,7 +20,7 @@ struct case {
 
 /* implémentation du type plateau */
 struct plateau {
-    case** tab; // matrice de cases de taille 1000 x 1000
+    Case** tab; // matrice de cases de taille 1000 x 1000
 };
 
 plateau init_plateau(){

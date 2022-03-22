@@ -7,6 +7,9 @@
 /* importation du module faction */
 #include "faction.h"
 
+/* importation du module faction */
+#include "../src/faction.c"
+
 /* importation du module structure */
 #include "structure.h"
 
@@ -67,5 +70,7 @@ faction get_case_faction(Case case);
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case case, int etat);
+
+
 
 #endif

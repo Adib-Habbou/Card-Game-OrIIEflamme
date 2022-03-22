@@ -12,7 +12,7 @@
 
 
 /* implémentation du type case */
-struct case {
+struct Case {
     carte carte; // carte posée sur la case en question
     int id_faction; // 0 ou 1 qui détermine la faction qui a posée la carte
     int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
@@ -20,7 +20,7 @@ struct case {
 
 /* implémentation du type plateau */
 struct plateau {
-    case** tab; // matrice de cases de taille 1000 x 1000
+    Case** tab; // matrice de cases de taille 1000 x 1000
 };
 
 plateau init_plateau(){
@@ -66,17 +66,17 @@ carte retourner(plateau _plateau, faction* _factions){
     for(int i = 0; i < LENGTH; i++){
         for(int j = 0; j < LENGTH; j++){
             if(i != j){
-                if(_plateau->tab[i][j].etat != 0){
-                    _case = _plateau->tab[i][j];
+                if(_plateau.tab[i][j].etat != 0){
+                    _case = _plateau.tab[i][j];
                     goto cartetrouvé;
                 }
-                if(_plateau->tab[j][i].etat != 0){
-                    _case = _plateau->tab[j][i];
+                if(_plateau.tab[j][i].etat != 0){
+                    _case = _plateau.tab[j][i];
                     goto cartetrouvé;
                 }
             }else{
-                if(_plateau->tab[j][j].etat != 0){
-                    _case = _plateau->tab[j][j];
+                if(_plateau.tab[j][j].etat != 0){
+                    _case = _plateau.tab[j][j];
                     goto cartetrouvé;
                 }
             }
@@ -84,106 +84,67 @@ carte retourner(plateau _plateau, faction* _factions){
     }
 
 cartetrouvé:
-    switch (_case.carte->nom)
-    {
-        case 'FISE':
-            FISE(_factions[_case.id_faction]);
-            break;
-        case 'FISA':
-            FISA(_factions[_case.id_faction], _plateau);
-            break;
-        case 'FC':
-            FC(_factions[_case.id_faction]);
-            break;
-        case 'EcologIIE':
-            EcologIIE(_factions[_case.id_faction]);
-            break;
-        case 'lIIEns':
-            lIIEns(_factions[_case.id_faction]);
-            break;
-        case 'Soirée sans alcool':
-            Soiree_sans_alcool(_factions[_case.id_faction]);
-            break;
-        case 'Alcool':
-            Alcool(_factions[_case.id_faction]);
-            break;
-        case 'Café':
-            Cafe(_factions[_case.id_faction]);
-            break;
-        case "Thé":
-            The(_factions[_case.id_faction]);
-            break;
-        case "Ecocup":
-            Ecocup(_factions[_case.id_faction]);
-            break;
-        case "Reprographie":
-            Reprographie(_factions[_case.id_faction]);
-            break;
-        case "Isolation du bâtiment":
-            Isolation_du_batiment(_factions[_case.id_faction]);
-            break;
-        case "Parcours sobriété numérique":
-            Parcours_sobriete_numerique(_factions[_case.id_faction]);
-            break;
-        case "Heures supplémentaires":
-            Heures_supplementaires(_factions[_case.id_faction]);
-            break;
-        case "Kahina Bouchama":
-            Kahina_Bouchama(_factions[_case.id_faction]);
-            break;
-        case "Kevin Goilard":
-            Kevin_Goilard(_factions[_case.id_faction]);
-            break;
-        case "Massinissa Merabet":
-            Massinissa_Merabet(_factions[_case.id_faction]);
-            break;
-        case "Vitéra Y":
-            Vitera_Y(_factions[_case.id_faction]);
-            break;
-        case "Jonas Senizergues":
-            Jonas_Senizergues(_factions[_case.id_faction]);
-            break;
-        case "Fetia Bannour":
-            Fetia_Bannour(_factions[_case.id_faction]);
-            break;
-        case "Catherine Dubois":
-            Catherine_Dubois(_factions[_case.id_faction]);
-            break;
-        case "Anne-Laure Ligozat":
-            Anne_Laure_Ligozat(_factions[_case.id_faction]);
-            break;
-        case "Guillaume Burel":
-            Guillaume_Burel(_factions[_case.id_faction]);
-            break;
-        case "Christophe Mouilleron":
-            Christophe_Mouilleron(_factions[_case.id_faction]);
-            break;
-        case "Thomas Lim":
-            Thomas_Lim(_factions[_case.id_faction]);
-            break;
-        case "Julien Forest":
-            Julien_Forest(_factions[_case.id_faction]);
-            break;
-        case "Dimitri Watel":
-            Dimitri_Watel(_factions[_case.id_faction]);
-            break;
-        case "Djibril-Aurélien Dembele-Cabot":
-            Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
-            break;
-        case "Eric Lejeune":
-            Eric_Lejeune(_factions[_case.id_faction]);
-            break;
-        case "Lucienne Pacavé":
-            Lucienne_Pacave(_factions[_case.id_faction]);
-            break;
-        case "Katrin Salhab":
-            Katrin_Salhab(_factions[_case.id_faction]);
-            break;
-        case "Laurent Prével":
-            Laurent_Prevel(_factions[_case.id_faction]);
-            break;
-        
-        default:
-            break;
+    if(_case.carte->nom == "FISE"){
+        FISE(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "FISA"){
+        FISA(_factions[_case.id_faction], _plateau);
+    }else if(_case.carte->nom == "FC"){
+        FC(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "EcologIIE"){
+        EcologIIE(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "lIIEns"){
+        lIIEns(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Soirée sans alcool"){
+        Soiree_sans_alcool(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Alcool"){
+        Alcool(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Café"){
+        Cafe(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Thé"){
+        The(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Ecocup"){
+        Ecocup(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Reprographie"){
+        Reprographie(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Isolation du bâtiment"){
+        Isolation_du_batiment(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Parcours sobriété numérique"){
+        Parcours_sobriete_numerique(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Heures supplémentaires"){
+        Heures_supplementaires(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Kahina Bouchama"){
+        Kahina_Bouchama(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Kevin Goilard"){
+        Kevin_Goilard(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Vitéra Y"){
+        Massinissa_Merabet(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Jonas Senizergues"){
+        Jonas_Senizergues(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Fetia Bannour"){
+        Fetia_Bannour(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Catherine Dubois"){
+        Catherine_Dubois(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Anne-Laure Ligozat"){
+        Anne_Laure_Ligozat(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Guillaume Burel"){
+        Guillaume_Burel(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Christophe Mouilleron"){
+        Christophe_Mouilleron(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Thomas Lim"){
+        Thomas_Lim(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Julien Forest"){
+        Julien_Forest(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Dimitri Watel"){
+        Dimitri_Watel(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Djibril-Aurélien Dembele-Cabot"){
+        Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Eric Lejeune"){
+        Eric_Lejeune(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Lucienne Pacavé"){
+        Lucienne_Pacave(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Katrin Salhab"){
+        Katrin_Salhab(_factions[_case.id_faction]);
+    }else if(_case.carte->nom == "Laurent Prével"){
+        Laurent_Prevel(_factions[_case.id_faction]);
     }
 }

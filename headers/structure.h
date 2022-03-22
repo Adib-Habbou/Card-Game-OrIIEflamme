@@ -2,7 +2,7 @@
 #define STRUCTURE_H
 
 /* importation du fichier pour avoir accès au type carte */
-#include "carte.c"
+#include "../src/carte.c"
 
 /*  implementation des piles avec des listes chaînées */
 typedef struct maillon {

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "structure.h"
+#include "../headers/structure.h"
 
 /*  @requires rien
     @assigns rien

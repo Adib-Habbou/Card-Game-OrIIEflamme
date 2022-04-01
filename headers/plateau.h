@@ -14,7 +14,7 @@
 typedef struct Case Case;
 
 /* implémentation du type abstrait plateau */
-typedef struct plateau plateau;
+typedef struct plateau *plateau;
 
 
 // INTERFACES DES FONCTIONS

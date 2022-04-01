@@ -7,3 +7,9 @@ oriieflamme : $(OBJETS)
 
 obj/%.o : src/%.c  headers/%.h
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+test.o : src/test.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+test : $(OBJETS) obj/test.o
+	$(CC) -o $@ $^

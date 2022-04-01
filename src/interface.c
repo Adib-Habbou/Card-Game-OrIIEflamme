@@ -7,7 +7,7 @@
 
 /* importation du module plateau */
 #include "../headers/plateau.h"
-
+#include "../src/plateau.c"
 #include <stdio.h>
 
 

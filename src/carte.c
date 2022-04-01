@@ -1,5 +1,5 @@
+/* importation du module carte */
 #include "../headers/carte.h"
-<<<<<<< HEAD
 
 /* importation du module faction */
 #include "../headers/faction.h"
@@ -9,9 +9,6 @@
 #include "../src/plateau.c"
 
 #include "../headers/main.h"
-=======
-#include "faction.c"
->>>>>>> 4159f798a1417e34f60bbe1f0e2a471cb21b43a1
 
 /* définition de la structure des cartes */
 struct carte {
@@ -103,7 +100,7 @@ void FC(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (_plateau.tab[i][j].carte == "FC" && _plateau.tab[i][j].etat==1) {
+            if (_plateau.tab[i][j].carte.nom == "FC" && _plateau.tab[i][j].etat==1) {
                 drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
             }
         }
@@ -123,7 +120,7 @@ void EcologIIE(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (_plateau.tab[i][j].etat == 1 && ( (_plateau.tab[i][j].carte == "FC") || (_plateau.tab[i][j].carte == "FISE") || (_plateau.tab[i][j].carte == "FISA") )) {
+            if (_plateau.tab[i][j].etat == 1 && ( (_plateau.tab[i][j].carte.nom == "FC") || (_plateau.tab[i][j].carte.nom == "FISE") || (_plateau.tab[i][j].carte.nom == "FISA") )) {
                 total+=1; 
             }
         }
@@ -399,7 +396,7 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (_plateau.tab[i][j].carte == "FISE") {
+            if (_plateau.tab[i][j].carte.nom == "FISE") {
                 nb_FISE+=1;
             }
         }
@@ -430,7 +427,7 @@ void Julien_Forest(faction _faction, plateau _plateau) {
     if (drapeau) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (_plateau.tab[i][j].carte == "FISE") {
+                if (_plateau.tab[i][j].carte.nom == "FISE") {
                     nb_FISE+=1;
                 }
             }
@@ -454,7 +451,7 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
     if (drapeau) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (_plateau.tab[i][j].carte == "FISA" || _plateau.tab[i][j].carte == "FC" ) {
+                if (_plateau.tab[i][j].carte.nom == "FISA" || _plateau.tab[i][j].carte.nom == "FC" ) {
                     nb_FISA_FC+=1;
                 }
             }
@@ -511,13 +508,13 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
 
 //parcours de la ligne
     for (i=0;i<1000;i++) {
-        if (_plateau.tab[i][colonne].carte == "FISA") {
+        if (_plateau.tab[i][colonne].carte.nom == "FISA") {
             drapeau_FISA = 1;
         }
     }
 //parcours de la colonne
     for (i=0;i<1000;i++) {
-        if (_plateau.tab[ligne][i].carte == "FISA") {
+        if (_plateau.tab[ligne][i].carte.nom == "FISA") {
             drapeau_FISA = 1;
         }
     }
@@ -546,20 +543,36 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     for(i=0,i<1000;i++){
         for(j=0,j<1000;j++){
 
-            if (_plateau.tab[i][j].carte == "Djibril-Aurélien Djembele-Cabeau") {
+            if (_plateau.tab[i][j].carte.nom == "Djibril-Aurélien Djembele-Cabeau") {
             drapeau_Djibril = 1;
             }
-            if (_plateau.tab[i][j].carte == "Eric Lejeune") {
+            if (_plateau.tab[i][j].carte.nom == "Eric Lejeune") {
             drapeau_Eric = 1;
             }
-            if (_plateau.tab[i][j].carte == "Lucienne Pacavé") {
+            if (_plateau.tab[i][j].carte.nom == "Lucienne Pacavé") {
             drapeau_Lucienne = 1;
             }
         }
         }
     }
+    
     if (drapeau_Djibril && drapeau_Lucienne && drapeau_Eric) {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+10)
+    }
+
+    else {
+        //retourne les cartes sur la meme ligne
+        for(j=0,j<1000;j++) {
+            if (_plateau.tab[ligne][j] != NULL) {
+            _plateau.tab[ligne][j].etat = 1;
+            }
+        }
+        //pareil sur la colonne
+        for(j=0,j<1000;j++) {
+            if (_plateau.tab[j][colonne] != NULL) {
+            _plateau.tab[j][colonne].etat = 1;
+            }
+        }
     }
 }
 

@@ -187,12 +187,21 @@ void Cafe(faction _faction, plateau _plateau) {
     int drapeau_Ecocup = 0;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Thé") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool") ) {
-                set_case_etat(get_plateau_case(_plateau,i,j),-1);
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Thé") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
+                set_case_etat(get_plateau_case(_plateau,i,j),A CHANGER); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
+            }
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
+                drapeau_Ecocup = 1;
             }
         }
     }
 
+    if (drapeau_Ecocup) {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+1);
+    }
+    else {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)-1);
+    }
     
 }
 
@@ -411,19 +420,7 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     //TODO présence Julien via historique
 
     int nb_FISE = 0;
-    int i,j;
-    for (i=0;i<1000;i++) {  //plateau de taille 1000
-        for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "FISE") {
-                nb_FISE+=1;
-            }
-        }
-    }
-
-    if (Julien_Forest_present) {
-        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+3*nb_FISE);
-    }
-
+    int i,j;bot
     else { 
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)-nb_FISE);
     }

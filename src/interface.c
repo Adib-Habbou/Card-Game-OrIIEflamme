@@ -28,7 +28,7 @@ void affiche_main(faction _faction) {
     }
     // tant que la pile est vide on affiche le nom de la carte
     while(!pile_est_vide()) {
-        printf("-> [ %s ] ", pile->sommet->nom);
+        printf("-> [ %s ] ", _faction.main->sommet->nom);
     }
     // on affiche un saut de ligne par soucis esthétique
     printf("\n");
@@ -47,21 +47,21 @@ int decision(); //à changer selon l'implémentation des factions
 @assigns rien
 @ensures retourne la carte qui va être posée
 */
-carte carte_choisie(faction f); //potentiellement une variable contenant la main
+carte carte_choisie(faction _faction); //potentiellement une variable contenant la main
 
 /* 
 @requires plateau valide
 @assigns rien
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
-int* carte_positon(plateau p);
+int* carte_positon(plateau _plateau);
 
 /* 
 @requires carte valide
 @assigns rien
 @ensures affiche les effets de la carte
 */
-void afficher_effet(carte c);
+void afficher_effet(carte _carte);
 
 /* 
 @requires liste faction valide
@@ -79,16 +79,3 @@ void affiche(char string) {
     printf("%s\n",string);
 }
 
-
-void affiche_pile(pile pile) {
-    // on vérifie que la pile n'est pas vide
-    if(pile_est_vide(pile)){
-        printf("La pile est vide.\n");
-    }
-    // tant que la pile est vide on affiche le nom de la carte
-    while(!pile_est_vide(pile)) {
-        printf("-> [ %s ] ", pile->sommet->nom);
-    }
-    // on affiche un saut de ligne par soucis esthétique
-    printf("\n");
-}

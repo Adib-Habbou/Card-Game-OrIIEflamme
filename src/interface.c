@@ -18,12 +18,12 @@ void affiche_plateau(plateau _plateau);
 */
 void affiche_main(faction _faction) {
     // on vérifie que la pile n'est pas vide
-    if(pile_est_vide(_faction.main)){
+    if(pile_est_vide(get_faction_main(_faction))){
         printf("La main est vide.\n");
     }
     // tant que la pile est vide on affiche le nom de la carte
-    while(!pile_est_vide()) {
-        printf("-> [ %s ] ", _faction.main->sommet->nom);
+    while(!pile_est_vide(get_faction_main(_faction)) ) {
+        printf("-> [ %s ] ", get_carte_nom(pile_sommet(get_faction_main(_faction))) );
     }
     // on affiche un saut de ligne par soucis esthétique
     printf("\n");

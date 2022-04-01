@@ -17,146 +17,118 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case) {
-    return case->carte;
+carte get_case_carte(Case _case) {
+    return _case.carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case) {
-    return case->etat;
+int get_case_etat(Case _case) {
+    return _case.etat;
 }
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
-void set_case_etat(Case case, int etat) {
-    case->etat = etat;
+void set_case_etat(Case _case, int etat) {
+    _case.etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la case de coordonées i, j sur le plateau */
-case get_plateau_case(plateau plateau, int i, int j) {
-    return plateau->tab[i][j];
+    @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
+case get_plateau_case(plateau plateau, int ligne, int colonne) {
+    return plateau.tab[ligne][colonne];
 }
 
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */
 carte get_plateau_carte_premier(plateau plateau) {
-    int i = 0;
-    int j = 0;
-    while(plateau->tab[i][j]->carte != NULL) {
-        if (j < 1000) {
-             j += 1;
+    int ligne = 0;
+    int colonne = 0;
+    while(plateau.tab[ligne][colonne].carte != NULL) {
+        if (colonne < 1000) {
+             colonne += 1;
         }
         else {
-            j = 0;
-            i += 1;
+            colonne = 0;
+            ligne += 1;
         }
     }
-    return (i, j);
+    return (ligne, colonne);
 }
 
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
 carte get_plateau_carte_dernier(plateau plateau) {
-    int i = 1000;
-    int j = 1000;
-    while(plateau->tab[i][j]->carte != NULL) {
-        if (j < 1000) {
-             j += 1;
+    int ligne = 1000;
+    int colonne = 1000;
+    while(plateau.tab[ligne][colonne].carte != NULL) {
+        if (colonne < 1000) {
+             colonne += 1;
         }
         else {
-            j = 0;
-            i += 1;
+            colonne = 0;
+            ligne += 1;
         }
     }
-    return (i, j);
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
-    int x = i;
-    while(plateau->tab[x][j]->carte != NULL) {
-        if (x == 0) {
-            affiche("Pas de carte à gauche");
-            exit(1);
-        }
-        x -= 1;
-    }
-    return (x, j);
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int i, int j) {
-    int x = i;
-    while(plateau->tab[x][j]->carte != NULL) {
-        if (x == 1000) {
-            affiche("Pas de carte à droite");
-            exit(1);
-        }
-        x += 1;
-    }
-    return (x, j);
+    return (ligne, colonne);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
-carte get_plateau_carte_haut(plateau plateau, int i, int j) {
-    int y = j;
-    while(plateau->tab[i][y]->carte != NULL) {
-        if (y == 0) {
-            affiche("Pas de carte en haut");
-            exit(1);
-        }
-        y -= 1;
+carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
+    int colonne_bis = coloncase
+        colonne_bis -= 1;
     }
-    return (i, y);
+    return (ligne, colonne_bis);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en bas  */
-carte get_plateau_carte_bas(plateau plateau, int i, int j) {
-    int y = j;
-    while(plateau->tab[i][y]->carte != NULL) {
-        if (y == 1000) {
+carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
+    int colonne_bis = colonne;
+    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+        if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);
         }
-        y += 1;
+        colonne_bis += 1;
     }
-    return (i, y);
+    return (ligne, colonne_bis);
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case) {
-    liste_faction = liste_faction();
-    return liste_faction[case->id_faction];
+faction get_case_faction(Case _case) {
+    faction* liste_faction = liste_faction();
+    return liste_faction[_case.id_faction];
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
+    plateau->tab[ligne][colonne]->carte->nom;
 }
 
 plateau init_plateau(){
     plateau _plateau;
-    _plateau.tab = (Case**) malloc(LENGTH * sizeof(Case*));
-    for(int i = 0; i < LENGTH; i++){
-        _plateau.tab[i] = (Case*) malloc(LENGTH * sizeof(Case));
+    _plateau.tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        _plateau.tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
     }
     return _plateau;
 }
 
 void libere_plateau(plateau _plateau){
-    for(int i = 0; i < LENGTH; i++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau.tab[i]);
     }
     free(_plateau.tab);
@@ -168,8 +140,8 @@ int init_manche(plateau _plateau){
 }
 
 faction* liste_faction(){
-    faction factions[NOMBRE_JOUEUR];
-    for(int i = 0; i < NOMBRE_JOUEUR; i++){
+    faction factions[NOMBRE_JOUEURS];
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction faction;
         faction->nom = "Joueur "+i;
         faction->nombre_points_DDRS = 0;
@@ -186,127 +158,93 @@ void poser(plateau _plateau, carte _carte, int* _position){
 
 carte retourner(plateau _plateau, faction* _factions){
     Case _case;
-    for(int i = 0; i < LENGTH; i++){
-        for(int j = 0; j < LENGTH; j++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        for(int j = 0; j < TAILLE_PLATEAU; j++){
             if(i != j){
                 if(_plateau->tab[i][j].etat != 0){
                     _case = _plateau->tab[i][j];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
                 if(_plateau->tab[j][i].etat != 0){
                     _case = _plateau->tab[j][i];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
             }else{
                 if(_plateau->tab[j][j].etat != 0){
                     _case = _plateau->tab[j][j];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
             }
         }
     }
 
-cartetrouvé:
+cartetrouve:
     switch (_case.carte->nom)
     {
-        case 'FISE':
+        if("FISE"){
             FISE(_factions[_case.id_faction]);
-            break;
-        case 'FISA':
+        }else if("FISA"){
             FISA(_factions[_case.id_faction], _plateau);
-            break;
-        case 'FC':
+        }else if("FC"){
             FC(_factions[_case.id_faction]);
-            break;
-        case 'EcologIIE':
+        }else if("EcologIIE"){
             EcologIIE(_factions[_case.id_faction]);
-            break;
-        case 'lIIEns':
+        }else if("lIIEns"){
             lIIEns(_factions[_case.id_faction]);
-            break;
-        case 'Soirée sans alcool':
+        }else if("Soirée sans alcool"){
             Soiree_sans_alcool(_factions[_case.id_faction]);
-            break;
-        case 'Alcool':
+        }else if("Alcool"){
             Alcool(_factions[_case.id_faction]);
-            break;
-        case 'Café':
+        }else if("Café"){
             Cafe(_factions[_case.id_faction]);
-            break;
-        case "Thé":
+        }else if("Thé"){
             The(_factions[_case.id_faction]);
-            break;
-        case "Ecocup":
+        }else if("Ecocup"){
             Ecocup(_factions[_case.id_faction]);
-            break;
-        case "Reprographie":
+        }else if("Reprographie"){
             Reprographie(_factions[_case.id_faction]);
-            break;
-        case "Isolation du bâtiment":
+        }else if("Isolation du bâtiment"){
             Isolation_du_batiment(_factions[_case.id_faction]);
-            break;
-        case "Parcours sobriété numérique":
+        }else if("Parcours sobriété numérique"){
             Parcours_sobriete_numerique(_factions[_case.id_faction]);
-            break;
-        case "Heures supplémentaires":
+        }else if("Heures supplémentaires"){
             Heures_supplementaires(_factions[_case.id_faction]);
-            break;
-        case "Kahina Bouchama":
+        }else if("Kahina Bouchama"){
             Kahina_Bouchama(_factions[_case.id_faction]);
-            break;
-        case "Kevin Goilard":
+        }else if("Kevin Goilard"){
             Kevin_Goilard(_factions[_case.id_faction]);
-            break;
-        case "Massinissa Merabet":
+        }else if("Massinissa Merabet"){
             Massinissa_Merabet(_factions[_case.id_faction]);
-            break;
-        case "Vitéra Y":
+        }else if("Vitéra Y"){
             Vitera_Y(_factions[_case.id_faction]);
-            break;
-        case "Jonas Senizergues":
+        }else if("Jonas Senizergues"){
             Jonas_Senizergues(_factions[_case.id_faction]);
-            break;
-        case "Fetia Bannour":
+        }else if("Fetia Bannour"){
             Fetia_Bannour(_factions[_case.id_faction]);
-            break;
-        case "Catherine Dubois":
+        }else if("Catherine Dubois"){
             Catherine_Dubois(_factions[_case.id_faction]);
-            break;
-        case "Anne-Laure Ligozat":
+        }else if("Anne-Laure Ligozat"){
             Anne_Laure_Ligozat(_factions[_case.id_faction]);
-            break;
-        case "Guillaume Burel":
+        }else if("Guillaume Burel"){
             Guillaume_Burel(_factions[_case.id_faction]);
-            break;
-        case "Christophe Mouilleron":
+        }else if("Christophe Mouilleron"){
             Christophe_Mouilleron(_factions[_case.id_faction]);
-            break;
-        case "Thomas Lim":
+        }else if("Thomas Lim"){
             Thomas_Lim(_factions[_case.id_faction]);
-            break;
-        case "Julien Forest":
+        }else if("Julien Forest"){
             Julien_Forest(_factions[_case.id_faction]);
-            break;
-        case "Dimitri Watel":
+        }else if("Dimitri Watel"){
             Dimitri_Watel(_factions[_case.id_faction]);
-            break;
-        case "Djibril-Aurélien Dembele-Cabot":
+        }else if("Djibril-Aurélien Dembele-Cabot"){
             Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
-            break;
-        case "Eric Lejeune":
+        }else if("Eric Lejeune"){
             Eric_Lejeune(_factions[_case.id_faction]);
-            break;
-        case "Lucienne Pacavé":
+        }else if("Lucienne Pacavé"){
             Lucienne_Pacave(_factions[_case.id_faction]);
-            break;
-        case "Katrin Salhab":
+        }else if("Katrin Salhab"){
             Katrin_Salhab(_factions[_case.id_faction]);
-            break;
-        case "Laurent Prével":
+        }else if("Laurent Prével"){
             Laurent_Prevel(_factions[_case.id_faction]);
-            break;
-        
-        default:
-            break;
+        }
     }
 }

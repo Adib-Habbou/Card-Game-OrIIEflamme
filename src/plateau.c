@@ -1,14 +1,5 @@
 #include "../headers/main.h"
 
-/* importation pour avoir accès au type faction */
-#include "faction.c"
-
-/* importation pour avoir accès au type carte */
-#include "carte.c"
-
-/* importation du module structure */
-#include "../headers/structure.h"
-
 #define LENGTH 1000
 #define NOMBRE_JOUEUR 2
 #include <stddef.h>

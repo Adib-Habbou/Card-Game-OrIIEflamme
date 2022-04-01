@@ -19,6 +19,9 @@ typedef struct Case Case;
 /* implémentation du type abstrait plateau */
 typedef struct plateau plateau;
 
+
+// INTERFACES DES FONCTIONS
+
 /*  @requires   rien
     @assigns    rien
     @ensures    renvoie un nouveau plateau */
@@ -50,6 +53,27 @@ void poser(plateau plateau, carte carte, int* position);
     @ensures    retourne la carte la plus en haut à gauche face visible et active son effet
                 renvoie la carte retournée ou NULL si toutes les cartes du plateau sont déjà face visible */
 carte retourner(plateau plateau, faction* liste_faction);
+
+
+// CONSTANTES ET VARIABLES GLOBALES
+
+/* nombre de lignes et nombres de colonnes d'un plateau */
+#define TAILLE_PLATEAU 1000
+
+/* nombre de joueurs pour une partie */
+#define NOMBRE_JOUEURS 2
+
+/* nombre de manches gagnantes */
+#define NOMBRE_MANCHES_GAGNANTES 2
+
+/* nombre des phases d'une manche */
+#define NOMBRE_PHASES_MANCHE 2
+
+/* nombre de cartes posées sur le plateau */
+#define NOMBRE_CARTES_POSEES 16
+
+
+// GETTERS ET SETTERS
 
 /*  @requires   une case valide
     @assigns    rien

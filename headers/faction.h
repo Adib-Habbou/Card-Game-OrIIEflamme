@@ -60,7 +60,8 @@ void repiocher(faction fact);
 /* nombre de cartes dans la main d'une faction au début d'une manche */
 #define NOMBRE_CARTES_MAIN_INITIAL 8
 
-
+/* nombre de cartes pour une pioche */
+#define NOMBRE_CARTES_PIOCHE 8
 
 
 // GETTERS ET SETTERS 

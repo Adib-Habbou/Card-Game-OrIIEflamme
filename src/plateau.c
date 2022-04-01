@@ -1,13 +1,6 @@
 #include "../headers/plateau.h"
-
-/* importation pour avoir accès au type faction */
-#include "faction.c"
-
-/* importation pour avoir accès au type carte */
+#include "interface.c"
 #include "carte.c"
-
-/* importation du module structure */
-#include "../headers/structure.h"
 
 #define LENGTH 1000
 #define NOMBRE_JOUEUR 2
@@ -89,7 +82,7 @@ carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
     int x = i;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 0) {
-            printf("Pas de carte à gauche");
+            affiche("Pas de carte à gauche");
             exit(1);
         }
         x -= 1;
@@ -104,7 +97,7 @@ carte get_plateau_carte_droite(plateau plateau, int i, int j) {
     int x = i;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 1000) {
-            printf("Pas de carte à droite");
+            affiche("Pas de carte à droite");
             exit(1);
         }
         x += 1;
@@ -119,7 +112,7 @@ carte get_plateau_carte_haut(plateau plateau, int i, int j) {
     int y = j;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 0) {
-            printf("Pas de carte en haut");
+            affiche("Pas de carte en haut");
             exit(1);
         }
         y -= 1;
@@ -134,7 +127,7 @@ carte get_plateau_carte_bas(plateau plateau, int i, int j) {
     int y = j;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 1000) {
-            printf("Pas de carte en bas");
+            affiche("Pas de carte en bas");
             exit(1);
         }
         y += 1;

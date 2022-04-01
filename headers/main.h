@@ -14,5 +14,9 @@
 #include "plateau.h"
 #include "../src/plateau.c"
 
+/* importation du module strcuture */
+#include "structure.h"
+#include "../src/structure.c"
+
 /* Pour le null */
 #include <stddef.h>

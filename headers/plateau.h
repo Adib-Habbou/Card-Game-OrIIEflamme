@@ -127,4 +127,9 @@ carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne);
     @ensures    renvoie la carte la plus en bas  */
 carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
 
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
+
 #endif

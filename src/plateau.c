@@ -146,6 +146,13 @@ faction get_case_faction(Case case) {
     return liste_faction[case->id_faction];
 }
 
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
+    plateau->tab[ligne][colonne]->carte->nom;
+}
+
 plateau init_plateau(){
     plateau _plateau;
     _plateau.tab = (Case**) malloc(LENGTH * sizeof(Case*));

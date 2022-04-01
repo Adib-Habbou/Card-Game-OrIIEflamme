@@ -76,6 +76,7 @@ carte get_plateau_carte_dernier(plateau plateau) {
         }
     }
     return (ligne, colonne);
+}
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
@@ -85,6 +86,7 @@ carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
         colonne_bis -= 1;
     }
     return (ligne, colonne_bis);
+}
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien

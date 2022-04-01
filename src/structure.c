@@ -39,7 +39,7 @@ void empile(pile* _pile, carte carte) {
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
     if (res == NULL) {
-        affiche("Erreur d'allocation mémoire.\n");
+        affiche("Erreur d'allocation mémoire.");
         exit(1);
     }
     // on empile la carte
@@ -54,7 +54,7 @@ void empile(pile* _pile, carte carte) {
 void depile(pile* pile) {
     // on vérifie que la pile n'est pas vide
     if(*pile == NULL) {
-        affiche("La pile est vide.\n");
+        affiche("La pile est vide.");
         exit(1);
     }
     // on supprime le sommet de la pile
@@ -62,22 +62,6 @@ void depile(pile* pile) {
     (*pile) = (*pile)->suivant;
     // on libère la mémoire du sommet supprimé
     free(sommet);
-}
-
-/*  @requires une pile valide
-    @assigns rien
-    @ensures affiche la pile */
-void affiche_pile(pile pile) {
-    // on vérifie que la pile n'est pas vide
-    if(pile_est_vide(pile)){
-        affiche("La pile est vide.\n");
-    }
-    // tant que la pile est vide on affiche le nom de la carte
-    while(!pile_est_vide(pile)) {
-        affiche("-> [ %s ] ", pile->sommet->nom);
-    }
-    // on affiche un saut de ligne par soucis esthétique
-    affiche("\n");
 }
 
 /*  @requires une pile valide

@@ -132,7 +132,6 @@ set_carte_nombre_occurrences(Katrin_Salhab, 1);
 struct carte Laurent_Prével = { .nom="Laurent Prével", .description="Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.");
 set_carte_nombre_occurrences(Laurent_Prével, 1);
 
-*/
 
 // GETTERS ET SETTERS
 

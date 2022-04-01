@@ -38,14 +38,14 @@ int get_carte_nombre_occurrences(carte carte) {
 /*  @requires   une carte valide et une chaîne de caractères
     @assigns    carte
     @ensures    modifie le nom de la carte */
-void set_carte_nom(carte carte, char nom) {
+void set_carte_nom(carte carte, char* nom) {
     carte->nom = nom;
 }
 
 /*  @requires   une carte valide et une chaîne de caractères
     @assigns    carte
     @ensures    modifie la description de la carte */
-void set_carte_description(carte carte, char description) {
+void set_carte_description(carte carte, char* description) {
     carte->description = description;
 }
 

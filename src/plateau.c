@@ -17,22 +17,22 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case) {
-    return case->carte;
+carte get_case_carte(Case _case) {
+    return _case->carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case) {
-    return case->etat;
+int get_case_etat(Case _case) {
+    return _case->etat;
 }
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
-void set_case_etat(Case case, int etat) {
-    case->etat = etat;
+void set_case_etat(Case _case, int etat) {
+    _case->etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -143,9 +143,9 @@ carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case) {
+faction get_case_faction(Case _case) {
     liste_faction = liste_faction();
-    return liste_faction[case->id_faction];
+    return liste_faction[_case->id_faction];
 }
 
 /*  @requires   un plateau valide et deux entiers

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/strcuture.h"
+#include "../headers/structure.h"
 #include "interface.c"
 
 /*  implementation des piles avec des listes chaînées */

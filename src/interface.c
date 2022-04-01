@@ -1,12 +1,6 @@
 
-/* importation du module carte */
-#include "carte.h"
-
-/* importation du module faction */
-#include "faction.h"
-
 /* importation du module plateau */
-#include "plateau.h"
+#include "../headers/interface.h"
 
 #include <stdio.h>
 

@@ -44,8 +44,8 @@ case get_plateau_case(plateau plateau, int ligne, int colonne) {
 
 /*  @requires   un plateau valide
     @assigns    rien
-    @ensures    renvoie la carte la plus en haut à gauche du plateau */
-carte get_plateau_carte_premier(plateau plateau) {
+    @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
+int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
     while(plateau.tab[ligne][colonne].carte != NULL) {
@@ -62,36 +62,56 @@ carte get_plateau_carte_premier(plateau plateau) {
 
 /*  @requires   un plateau valide
     @assigns    rien
-    @ensures    renvoie la carte la plus en bas à droite du plateau  */
-carte get_plateau_carte_dernier(plateau plateau) {
-    int ligne = 1000;
-    int colonne = 1000;
-    while(plateau.tab[ligne][colonne].carte != NULL) {
-        if (colonne < 1000) {
-             colonne += 1;
+    @ensures    renvoie les coodronnées de la carte la plus à gauche  */
+int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
+    int ligne_bis = ligne;
+    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+        if (ligne_bis == 0) {
+            affiche("Pas de carte à gauche");
+            exit(1);
         }
-        else {
-            colonne = 0;
-            ligne += 1;
-        }
+        ligne_bis -= 1;
     }
-    return (ligne, colonne);
+    return (ligne_bis, colonne);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus en haut  */
-carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
-    int colonne_bis = coloncase
+    @ensures    renvoie les coodronnées de la carte la plus à droite  */
+int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
+    int ligne_bis = ligne;
+    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+        if (ligne_bis == 1000) {
+            affiche("Pas de carte à droite");
+            exit(1);
+        }
+        ligne_bis += 1;
+    }
+    return (ligne_bis, colonne)
+
+}
+
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en haut  */
+int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
+    int colonne_bis = colonne;
+    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+        if (colonne_bis == 0) {
+            affiche("Pas de carte en haut");
+            exit(1);
+        }
         colonne_bis -= 1;
     }
-    return (ligne, colonne_bis);
+    return (ligne, colonne_bis)
+
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus en bas  */
-carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
+    @ensures    renvoie les coodronnées de la carte la plus en bas  */
+int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
     while(plateau.tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 1000) {

@@ -64,6 +64,13 @@ void afficher_effet(carte c);
 */
 void gagnant(faction* factions);
 
+/* 
+@requires rien
+@assigns rien
+@ensures affiche string sur l'écran
+*/
+void affiche(char string);
+
 
 #endif
 

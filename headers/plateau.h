@@ -75,22 +75,22 @@ carte retourner(plateau plateau, faction* liste_faction);
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case);
+carte get_case_carte(Case _case);
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case);
+int get_case_etat(Case _case);
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case);
+faction get_case_faction(Case _case);
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
-void set_case_etat(Case case, int etat);
+void set_case_etat(Case _case, int etat);
 
 /*  @requires   un plateau valide
     @assigns    rien

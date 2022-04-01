@@ -17,22 +17,22 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case) {
-    return case->carte;
+carte get_case_carte(Case _case) {
+    return _case.carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case) {
-    return case->etat;
+int get_case_etat(Case _case) {
+    return _case.etat;
 }
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
-void set_case_etat(Case case, int etat) {
-    case->etat = etat;
+void set_case_etat(Case _case, int etat) {
+    _case.etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -76,54 +76,17 @@ carte get_plateau_carte_dernier(plateau plateau) {
         }
     }
     return (ligne, colonne);
-
-
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
-    int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
-        if (ligne_bis == 0) {
-            affiche("Pas de carte à gauche");
-            exit(1);
-        }
-        ligne_bis -= 1;
-    }
-    return (ligne_bis, colonne);
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
-    int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
-        if (ligne_bis == 1000) {
-            affiche("Pas de carte à droite");
-            exit(1);
-        }
-        ligne_bis += 1;
-    }
-    return (ligne_bis, colonne);
-
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
 carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
-    int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
-        if (colonne_bis == 0) {
-            affiche("Pas de carte en haut");
-            exit(1);
-        }
+    int colonne_bis = coloncase
         colonne_bis -= 1;
     }
     return (ligne, colonne_bis);
+}
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
@@ -143,9 +106,9 @@ carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case) {
-    liste_faction = liste_faction();
-    return liste_faction[case->id_faction];
+faction get_case_faction(Case _case) {
+    faction* liste_faction = liste_faction();
+    return liste_faction[_case.id_faction];
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -218,104 +181,70 @@ carte retourner(plateau _plateau, faction* _factions){
 cartetrouve:
     switch (_case.carte->nom)
     {
-        case 'FISE':
+        if("FISE"){
             FISE(_factions[_case.id_faction]);
-            break;
-        case 'FISA':
+        }else if("FISA"){
             FISA(_factions[_case.id_faction], _plateau);
-            break;
-        case 'FC':
+        }else if("FC"){
             FC(_factions[_case.id_faction]);
-            break;
-        case 'EcologIIE':
+        }else if("EcologIIE"){
             EcologIIE(_factions[_case.id_faction]);
-            break;
-        case 'lIIEns':
+        }else if("lIIEns"){
             lIIEns(_factions[_case.id_faction]);
-            break;
-        case 'Soirée sans alcool':
+        }else if("Soirée sans alcool"){
             Soiree_sans_alcool(_factions[_case.id_faction]);
-            break;
-        case 'Alcool':
+        }else if("Alcool"){
             Alcool(_factions[_case.id_faction]);
-            break;
-        case 'Café':
+        }else if("Café"){
             Cafe(_factions[_case.id_faction]);
-            break;
-        case "Thé":
+        }else if("Thé"){
             The(_factions[_case.id_faction]);
-            break;
-        case "Ecocup":
+        }else if("Ecocup"){
             Ecocup(_factions[_case.id_faction]);
-            break;
-        case "Reprographie":
+        }else if("Reprographie"){
             Reprographie(_factions[_case.id_faction]);
-            break;
-        case "Isolation du bâtiment":
+        }else if("Isolation du bâtiment"){
             Isolation_du_batiment(_factions[_case.id_faction]);
-            break;
-        case "Parcours sobriété numérique":
+        }else if("Parcours sobriété numérique"){
             Parcours_sobriete_numerique(_factions[_case.id_faction]);
-            break;
-        case "Heures supplémentaires":
+        }else if("Heures supplémentaires"){
             Heures_supplementaires(_factions[_case.id_faction]);
-            break;
-        case "Kahina Bouchama":
+        }else if("Kahina Bouchama"){
             Kahina_Bouchama(_factions[_case.id_faction]);
-            break;
-        case "Kevin Goilard":
+        }else if("Kevin Goilard"){
             Kevin_Goilard(_factions[_case.id_faction]);
-            break;
-        case "Massinissa Merabet":
+        }else if("Massinissa Merabet"){
             Massinissa_Merabet(_factions[_case.id_faction]);
-            break;
-        case "Vitéra Y":
+        }else if("Vitéra Y"){
             Vitera_Y(_factions[_case.id_faction]);
-            break;
-        case "Jonas Senizergues":
+        }else if("Jonas Senizergues"){
             Jonas_Senizergues(_factions[_case.id_faction]);
-            break;
-        case "Fetia Bannour":
+        }else if("Fetia Bannour"){
             Fetia_Bannour(_factions[_case.id_faction]);
-            break;
-        case "Catherine Dubois":
+        }else if("Catherine Dubois"){
             Catherine_Dubois(_factions[_case.id_faction]);
-            break;
-        case "Anne-Laure Ligozat":
+        }else if("Anne-Laure Ligozat"){
             Anne_Laure_Ligozat(_factions[_case.id_faction]);
-            break;
-        case "Guillaume Burel":
+        }else if("Guillaume Burel"){
             Guillaume_Burel(_factions[_case.id_faction]);
-            break;
-        case "Christophe Mouilleron":
+        }else if("Christophe Mouilleron"){
             Christophe_Mouilleron(_factions[_case.id_faction]);
-            break;
-        case "Thomas Lim":
+        }else if("Thomas Lim"){
             Thomas_Lim(_factions[_case.id_faction]);
-            break;
-        case "Julien Forest":
+        }else if("Julien Forest"){
             Julien_Forest(_factions[_case.id_faction]);
-            break;
-        case "Dimitri Watel":
+        }else if("Dimitri Watel"){
             Dimitri_Watel(_factions[_case.id_faction]);
-            break;
-        case "Djibril-Aurélien Dembele-Cabot":
+        }else if("Djibril-Aurélien Dembele-Cabot"){
             Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
-            break;
-        case "Eric Lejeune":
+        }else if("Eric Lejeune"){
             Eric_Lejeune(_factions[_case.id_faction]);
-            break;
-        case "Lucienne Pacavé":
+        }else if("Lucienne Pacavé"){
             Lucienne_Pacave(_factions[_case.id_faction]);
-            break;
-        case "Katrin Salhab":
+        }else if("Katrin Salhab"){
             Katrin_Salhab(_factions[_case.id_faction]);
-            break;
-        case "Laurent Prével":
+        }else if("Laurent Prével"){
             Laurent_Prevel(_factions[_case.id_faction]);
-            break;
-        
-        default:
-            break;
+        }
     }
 }

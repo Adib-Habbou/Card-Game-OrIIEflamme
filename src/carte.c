@@ -1,8 +1,3 @@
-/* importation du module carte */
-#include "../headers/carte.h"
-
-/* importation du module faction */
-#include "../headers/faction.h"
 
 /* importation du module plateau */
 #include "../headers/plateau.h"
@@ -97,7 +92,7 @@ void FC(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(plateau,i,j) == "FC" && get_case_etat(get_plateau_case(_plateau,i,j))==1) {
+            if (get_plateau_carte_nom(_plateau,i,j) == "FC" && get_case_etat(get_plateau_case(_plateau,i,j))==1) {
                 drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
             }
         }
@@ -467,7 +462,7 @@ void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int lign
     int nb_retournee =0;
     int j;
     for (j=0;j<1000;j++) { //optimisation possible avec getter border du "plateau" effectif
-        if (_plateau->tab[ligne][j]->etat == 1) {
+        if (_get_case_etat(get_tableau_case(_plateau,ligne,j)) == 1) {
             nb_retournee+=1;
         }
     }
@@ -505,13 +500,13 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
 
 //parcours de la ligne
     for (i=0;i<1000;i++) {
-        if (_plateau->tab[i][colonne]->carte->nom == "FISA") {
+        if (get_plateau_carte_nom(_plateau,i,colonne)== "FISA") {
             drapeau_FISA = 1;
         }
     }
 //parcours de la colonne
     for (i=0;i<1000;i++) {
-        if (_plateau->tab[ligne][i]->carte->nom == "FISA") {
+        if (get_plateau_carte_nom(_plateau,ligne,i) == "FISA") {
             drapeau_FISA = 1;
         }
     }
@@ -538,20 +533,20 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     int drapeau_Lucienne = 0;
 
     for(i=0;i<1000;i++){
-        for(j=0,j<1000;j++){
+        for(j=0;j<1000;j++){
 
-            if (_plateau->tab[i][j]->carte->nom == "Djibril-Aurélien Djembele-Cabeau") {
+            if (get_plateau_carte_nom(_plateau,i,j) == "Djibril-Aurélien Djembele-Cabeau") {
             drapeau_Djibril = 1;
             }
-            if (_plateau->tab[i][j]->carte->nom == "Eric Lejeune") {
+            if (get_plateau_carte_nom(_plateau,i,j) == "Eric Lejeune") {
             drapeau_Eric = 1;
             }
-            if (_plateau->tab[i][j]->carte->nom == "Lucienne Pacavé") {
+            if (get_plateau_carte_nom(_plateau,i,j) == "Lucienne Pacavé") {
             drapeau_Lucienne = 1;
             }
         }
         }
-    }
+
 
     if (drapeau_Djibril && drapeau_Lucienne && drapeau_Eric) {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+10);
@@ -560,14 +555,14 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     else {
         //retourne les cartes sur la meme ligne
         for(j=0;j<1000;j++) {
-            if (_plateau->tab[ligne][j] != NULL) {
-            _plateau->tab[ligne][j]->etat = 1;
+            if (get_plateau_case(_plateau,ligne,j) != NULL) {
+            set_case_etat( get_plateau_case(_plateau,ligne,j) , 1 );
             }
         }
         //pareil sur la colonne
         for(j=0;j<1000;j++) {
-            if (_plateau->tab[j][colonne] != NULL) {
-            _plateau->tab[j][colonne]->etat = 1;
+            if (get_plateau_case(_plateau,j,colonne) != NULL) {
+            set_case_etat(get_plateau_case(_plateau,j,colonne),1);
             }
         }
     }

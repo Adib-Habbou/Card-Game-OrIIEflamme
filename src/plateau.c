@@ -38,7 +38,7 @@ void set_case_etat(Case _case, int etat) {
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
-case get_plateau_case(plateau plateau, int ligne, int colonne) {
+Case get_plateau_case(plateau plateau, int ligne, int colonne) {
     return plateau.tab[ligne][colonne];
 }
 
@@ -140,18 +140,18 @@ char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
 
 plateau init_plateau(){
     plateau _plateau;
-    _plateau.tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
+    _plateau->tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
     for(int i = 0; i < TAILLE_PLATEAU; i++){
-        _plateau.tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
+        _plateau->tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
     }
     return _plateau;
 }
 
 void libere_plateau(plateau _plateau){
     for(int i = 0; i < TAILLE_PLATEAU; i++){
-        free(_plateau.tab[i]);
+        free(_plateau->tab[i]);
     }
-    free(_plateau.tab);
+    free(_plateau->tab);
 }
 
 int init_manche(plateau _plateau){
@@ -163,17 +163,17 @@ faction* liste_faction(){
     faction factions[NOMBRE_JOUEURS];
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction faction;
-        faction->nom = "Joueur "+i;
-        faction->nombre_points_DDRS = 0;
+        set_faction_nom(faction, "Joueur "+i);
+        set_faction_nombre_points_DDRS(faction, 0);
         factions[i] = faction;
     }
     return factions;
 }
 
 void poser(plateau _plateau, carte _carte, int* _position){
-    _plateau.tab[_position[0]][_position[1]].carte = _carte;
-    _plateau.tab[_position[0]][_position[1]].id_faction = _position[2];
-    _plateau.tab[_position[0]][_position[1]].etat = 0;
+    _plateau->tab[_position[0]][_position[1]].carte = _carte;
+    _plateau->tab[_position[0]][_position[1]].id_faction = _position[2];
+    _plateau->tab[_position[0]][_position[1]].etat = 0;
 }
 
 carte retourner(plateau _plateau, faction* _factions){
@@ -199,67 +199,67 @@ carte retourner(plateau _plateau, faction* _factions){
     }
 
 cartetrouve:
-    if(_case.carte->nom == "FISE"){
+    if(get_carte_nom(_case.carte) == "FISE"){
         FISE(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "FISA"){
+    }else if(get_carte_nom(_case.carte) == "FISA"){
         FISA(_factions[_case.id_faction], _plateau);
-    }else if(_case.carte->nom == "FC"){
+    }else if(get_carte_nom(_case.carte) == "FC"){
         FC(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "EcologIIE"){
+    }else if(get_carte_nom(_case.carte) == "EcologIIE"){
         EcologIIE(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "lIIEns"){
+    }else if(get_carte_nom(_case.carte) == "lIIEns"){
         lIIEns(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Soirée sans alcool"){
+    }else if(get_carte_nom(_case.carte) == "Soirée sans alcool"){
         Soiree_sans_alcool(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Alcool"){
+    }else if(get_carte_nom(_case.carte) == "Alcool"){
         Alcool(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Café"){
+    }else if(get_carte_nom(_case.carte) == "Café"){
         Cafe(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Thé"){
+    }else if(get_carte_nom(_case.carte) == "Thé"){
         The(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Ecocup"){
+    }else if(get_carte_nom(_case.carte) == "Ecocup"){
         Ecocup(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Reprographie"){
+    }else if(get_carte_nom(_case.carte) == "Reprographie"){
         Reprographie(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Isolation du bâtiment"){
+    }else if(get_carte_nom(_case.carte) == "Isolation du bâtiment"){
         Isolation_du_batiment(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Parcours sobriété numérique"){
+    }else if(get_carte_nom(_case.carte) == "Parcours sobriété numérique"){
         Parcours_sobriete_numerique(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Heures supplémentaires"){
+    }else if(get_carte_nom(_case.carte) == "Heures supplémentaires"){
         Heures_supplementaires(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Kahina Bouchama"){
+    }else if(get_carte_nom(_case.carte) == "Kahina Bouchama"){
         Kahina_Bouchama(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Kevin Goilard"){
+    }else if(get_carte_nom(_case.carte) == "Kevin Goilard"){
         Kevin_Goilard(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Vitéra Y"){
+    }else if(get_carte_nom(_case.carte) == "Vitéra Y"){
         Massinissa_Merabet(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Jonas Senizergues"){
+    }else if(get_carte_nom(_case.carte) == "Jonas Senizergues"){
         Jonas_Senizergues(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Fetia Bannour"){
+    }else if(get_carte_nom(_case.carte) == "Fetia Bannour"){
         Fetia_Bannour(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Catherine Dubois"){
+    }else if(get_carte_nom(_case.carte) == "Catherine Dubois"){
         Catherine_Dubois(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Anne-Laure Ligozat"){
+    }else if(get_carte_nom(_case.carte) == "Anne-Laure Ligozat"){
         Anne_Laure_Ligozat(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Guillaume Burel"){
+    }else if(get_carte_nom(_case.carte) == "Guillaume Burel"){
         Guillaume_Burel(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Christophe Mouilleron"){
+    }else if(get_carte_nom(_case.carte) == "Christophe Mouilleron"){
         Christophe_Mouilleron(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Thomas Lim"){
+    }else if(get_carte_nom(_case.carte) == "Thomas Lim"){
         Thomas_Lim(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Julien Forest"){
+    }else if(get_carte_nom(_case.carte) == "Julien Forest"){
         Julien_Forest(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Dimitri Watel"){
+    }else if(get_carte_nom(_case.carte) == "Dimitri Watel"){
         Dimitri_Watel(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Djibril-Aurélien Dembele-Cabot"){
+    }else if(get_carte_nom(_case.carte) == "Djibril-Aurélien Dembele-Cabot"){
         Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Eric Lejeune"){
+    }else if(get_carte_nom(_case.carte) == "Eric Lejeune"){
         Eric_Lejeune(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Lucienne Pacavé"){
+    }else if(get_carte_nom(_case.carte) == "Lucienne Pacavé"){
         Lucienne_Pacave(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Katrin Salhab"){
+    }else if(get_carte_nom(_case.carte) == "Katrin Salhab"){
         Katrin_Salhab(_factions[_case.id_faction]);
-    }else if(_case.carte->nom == "Laurent Prével"){
+    }else if(get_carte_nom(_case.carte) == "Laurent Prével"){
         Laurent_Prevel(_factions[_case.id_faction]);
     }
 }

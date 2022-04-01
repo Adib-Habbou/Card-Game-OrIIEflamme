@@ -64,9 +64,19 @@ carte get_plateau_carte_premier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
 carte get_plateau_carte_dernier(plateau plateau) {
-    int ligne = 1000;     faction factions[NOMBRE_JOUEUR];
-                      ^~~~~~~~~~~~~
-                      NOMBRE_JOUEURS
+    int ligne = 1000;
+    int colonne = 1000;
+    while(plateau->tab[ligne][colonne]->carte != NULL) {
+        if (colonne < 1000) {
+             colonne += 1;
+        }
+        else {
+            colonne = 0;
+            ligne += 1;
+        }
+    }
+    return (ligne, colonne);
+
 
 }
 
@@ -75,7 +85,7 @@ carte get_plateau_carte_dernier(plateau plateau) {
     @ensures    renvoie la carte la plus à gauche  */
 carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int x = ligne;
-    while(plateau->tab[x][j]->carte != NULL) {
+    while(plateau->tab[x][colonne]->carte != NULL) {
         if (x == 0) {
             affiche("Pas de carte à gauche");
             exit(1);
@@ -90,14 +100,15 @@ carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie la carte la plus à droite  */
 carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int x = ligne;
-    while(plateau->tab[x][j]->carte != NULL) {
+    while(plateau->tab[x][colonne]->carte != NULL) {
         if (x == 1000) {
-            affiche("Pas de carte à droite");     faction factions[NOMBRE_JOUEUR];
-                      ^~~~~~~~~~~~~
-                      NOMBRE_JOUEURS
-
+            affiche("Pas de carte à droite");
+            exit(1);
+        }
+        x += 1;
     }
-    return (x, colonne);
+    return (x, colonne)
+
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -105,13 +116,14 @@ carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie la carte la plus en haut  */
 carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int y = colonne;
-    while(plateau->tab[i][y]->carte != NULL) {
+    while(plateau->tab[ligne][y]->carte != NULL) {
         if (y == 0) {
             affiche("Pas de carte en haut");
             exit(1);
-        }     faction factions[NOMBRE_JOUEUR];
-                      ^~~~~~~~~~~~~
-                      NOMBRE_JOUEURS
+        }
+        y -= 1;
+    }
+    return (ligne, y);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien

@@ -155,15 +155,15 @@ char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
 
 plateau init_plateau(){
     plateau _plateau;
-    _plateau.tab = (Case**) malloc(LENGTH * sizeof(Case*));
-    for(int i = 0; i < LENGTH; i++){
-        _plateau.tab[i] = (Case*) malloc(LENGTH * sizeof(Case));
+    _plateau.tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        _plateau.tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
     }
     return _plateau;
 }
 
 void libere_plateau(plateau _plateau){
-    for(int i = 0; i < LENGTH; i++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau.tab[i]);
     }
     free(_plateau.tab);
@@ -175,8 +175,8 @@ int init_manche(plateau _plateau){
 }
 
 faction* liste_faction(){
-    faction factions[NOMBRE_JOUEUR];
-    for(int i = 0; i < NOMBRE_JOUEUR; i++){
+    faction factions[NOMBRE_JOUEURS];
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction faction;
         faction->nom = "Joueur "+i;
         faction->nombre_points_DDRS = 0;
@@ -193,27 +193,27 @@ void poser(plateau _plateau, carte _carte, int* _position){
 
 carte retourner(plateau _plateau, faction* _factions){
     Case _case;
-    for(int i = 0; i < LENGTH; i++){
-        for(int j = 0; j < LENGTH; j++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        for(int j = 0; j < TAILLE_PLATEAU; j++){
             if(i != j){
                 if(_plateau->tab[i][j].etat != 0){
                     _case = _plateau->tab[i][j];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
                 if(_plateau->tab[j][i].etat != 0){
                     _case = _plateau->tab[j][i];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
             }else{
                 if(_plateau->tab[j][j].etat != 0){
                     _case = _plateau->tab[j][j];
-                    goto cartetrouvé;
+                    goto cartetrouve;
                 }
             }
         }
     }
 
-cartetrouvé:
+cartetrouve:
     switch (_case.carte->nom)
     {
         case 'FISE':

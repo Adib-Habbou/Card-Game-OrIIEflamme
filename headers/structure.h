@@ -34,11 +34,6 @@ void depile(pile* pile);
 
 /*  @requires une pile valide
     @assigns rien
-    @ensures affiche la pile */
-void affiche_pile(pile pile);
-
-/*  @requires une pile valide
-    @assigns rien
     @ensures renvoie la taille de la pile */
 int taille_pile(pile pile);
 

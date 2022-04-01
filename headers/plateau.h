@@ -104,27 +104,32 @@ carte get_plateau_carte_dernier(plateau plateau);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la case de coordonées i, j sur le plateau */
-case get_plateau_case(plateau plateau, int i, int j);
+    @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
+case get_plateau_case(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int i, int j);
+carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int i, int j);
+carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
-carte get_plateau_carte_haut(plateau plateau, int i, int j);
+carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en bas  */
-carte get_plateau_carte_bas(plateau plateau, int i, int j);
+carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
 
 #endif

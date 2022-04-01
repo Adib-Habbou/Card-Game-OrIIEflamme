@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "../headers/structure.h"
-#include "interface.c"
 
 /*  implementation des piles avec des listes chaînées */
 typedef struct maillon {

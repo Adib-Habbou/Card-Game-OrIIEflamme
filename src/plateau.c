@@ -1,6 +1,4 @@
 #include "../headers/plateau.h"
-#include "interface.c"
-#include "carte.c"
 
 #include <stddef.h>
 
@@ -39,52 +37,52 @@ void set_case_etat(Case case, int etat) {
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la case de coordonées i, j sur le plateau */
-case get_plateau_case(plateau plateau, int i, int j) {
-    return plateau->tab[i][j];
+    @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
+case get_plateau_case(plateau plateau, int ligne, int colonne) {
+    return plateau->tab[ligne][colonne];
 }
 
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */
 carte get_plateau_carte_premier(plateau plateau) {
-    int i = 0;
-    int j = 0;
-    while(plateau->tab[i][j]->carte != NULL) {
-        if (j < 1000) {
-             j += 1;
+    int ligne = 0;
+    int colonne = 0;
+    while(plateau->tab[ligne][colonne]->carte != NULL) {
+        if (colonne < 1000) {
+             colonne += 1;
         }
         else {
-            j = 0;
-            i += 1;
+            colonne = 0;
+            ligne += 1;
         }
     }
-    return (i, j);
+    return (ligne, colonne);
 }
 
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
 carte get_plateau_carte_dernier(plateau plateau) {
-    int i = 1000;
-    int j = 1000;
+    int ligne = 1000;
+    int colonne = 1000;
     while(plateau->tab[i][j]->carte != NULL) {
-        if (j < 1000) {
-             j += 1;
+        if (colonne < 1000) {
+             colonne += 1;
         }
         else {
-            j = 0;
-            i += 1;
+            colonne = 0;
+            ligne += 1;
         }
     }
-    return (i, j);
+    return (ligne, colonne);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
-    int x = i;
+carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
+    int x = ligne;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 0) {
             affiche("Pas de carte à gauche");
@@ -92,14 +90,14 @@ carte get_plateau_carte_gauche(plateau plateau, int i, int j) {
         }
         x -= 1;
     }
-    return (x, j);
+    return (x, colonne);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int i, int j) {
-    int x = i;
+carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
+    int x = ligne;
     while(plateau->tab[x][j]->carte != NULL) {
         if (x == 1000) {
             affiche("Pas de carte à droite");
@@ -107,14 +105,14 @@ carte get_plateau_carte_droite(plateau plateau, int i, int j) {
         }
         x += 1;
     }
-    return (x, j);
+    return (x, colonne);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
-carte get_plateau_carte_haut(plateau plateau, int i, int j) {
-    int y = j;
+carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
+    int y = colonne;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 0) {
             affiche("Pas de carte en haut");
@@ -122,14 +120,14 @@ carte get_plateau_carte_haut(plateau plateau, int i, int j) {
         }
         y -= 1;
     }
-    return (i, y);
+    return (ligne, y);
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en bas  */
-carte get_plateau_carte_bas(plateau plateau, int i, int j) {
-    int y = j;
+carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
+    int y = colonne;
     while(plateau->tab[i][y]->carte != NULL) {
         if (y == 1000) {
             affiche("Pas de carte en bas");
@@ -137,7 +135,7 @@ carte get_plateau_carte_bas(plateau plateau, int i, int j) {
         }
         y += 1;
     }
-    return (i, y);
+    return (ligne, y);
 }
 
 /*  @requires   une case valide
@@ -146,6 +144,13 @@ carte get_plateau_carte_bas(plateau plateau, int i, int j) {
 faction get_case_faction(Case case) {
     liste_faction = liste_faction();
     return liste_faction[case->id_faction];
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
+    plateau->tab[ligne][colonne]->carte->nom;
 }
 
 plateau init_plateau(){

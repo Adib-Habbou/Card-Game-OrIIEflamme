@@ -93,7 +93,7 @@ carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie la carte la plus en bas  */
 carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau.tab[i][y].carte != NULL) {
+    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);

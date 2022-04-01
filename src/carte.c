@@ -216,8 +216,26 @@ void Cafe(faction _faction, plateau _plateau) {
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
 void The(faction _faction, plateau _plateau) {
+    int i,j;
+        int drapeau_Ecocup = 0;
+        for (i=0;i<1000;i++) {  //plateau de taille 1000
+            for (j=0;j<1000;j++) {  
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Café") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
+                    set_case_etat(get_plateau_case(_plateau,i,j),A CHANGER); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
+                }
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
+                    drapeau_Ecocup = 1;
+                }
+            }
+        }
 
-    
+        if (drapeau_Ecocup) {
+            set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+1);
+        }
+        else {
+            set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)-1);
+        }
+        
 }
 
 /*
@@ -244,7 +262,24 @@ void Reprographie(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS des factions
 @ensures Chaque faction gagne 1 point DDRS par carte non retournée et non supprimée du plateau qu'elle a posée sur le plateau
 */
-void Isolation_du_batiment(faction _faction, plateau _plateau) {
+void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _plateau) {
+    int nb_faction_1 = 0;
+    int nb_faction_2 = 0;
+    int i,j;
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if ( get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j)) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0  ) {
+                nb_faction_1++;
+            }
+            
+            if ( get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j)) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
+                nb_faction_2++;
+            }
+        }
+    }
+    
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+nb_faction_1);
+    set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)+nb_faction_2);
 
     
 }
@@ -260,7 +295,15 @@ void Isolation_du_batiment(faction _faction, plateau _plateau) {
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
 void Parcours_sobriete_numerique(faction _faction, plateau _plateau) {
-
+    int ligne;
+    for (ligne = 0;ligne <1000; ligne++) {
+        int ligne1 = get_plateau_carte_gauche(_plateau,ligne,1)[0];
+        int colonne1 = get_plateau_carte_gauche(_plateau,ligne,1)[1];
+        int ligne2 = get_plateau_carte_droite(_plateau,ligne,1)[0];
+        int colonne2 = get_plateau_carte_droite(_plateau,ligne,1)[1];
+        set_case_etat( get_plateau_case(_plateau,ligne1,colonne1) , 1 );
+        set_case_etat( get_plateau_case(_plateau,ligne2,colonne2) , 1 );
+    }
     
 }
 

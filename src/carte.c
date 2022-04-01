@@ -1,17 +1,5 @@
 #include "../headers/carte.h"
-<<<<<<< HEAD
-
-/* importation du module faction */
-#include "../headers/faction.h"
-
-/* importation du module plateau */
-#include "../headers/plateau.h"
-#include "../src/plateau.c"
-
-#include "../headers/main.h"
-=======
 #include "faction.c"
->>>>>>> 4159f798a1417e34f60bbe1f0e2a471cb21b43a1
 
 /* définition de la structure des cartes */
 struct carte {

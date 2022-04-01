@@ -107,7 +107,7 @@ carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
         }
         x += 1;
     }
-    return (x, colonne)
+    return (x, colonne);
 
 }
 

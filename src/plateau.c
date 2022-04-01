@@ -179,104 +179,70 @@ carte retourner(plateau _plateau, faction* _factions){
 cartetrouve:
     switch (_case.carte->nom)
     {
-        case 'FISE':
+        if("FISE"){
             FISE(_factions[_case.id_faction]);
-            break;
-        case 'FISA':
+        }else if("FISA"){
             FISA(_factions[_case.id_faction], _plateau);
-            break;
-        case 'FC':
+        }else if("FC"){
             FC(_factions[_case.id_faction]);
-            break;
-        case 'EcologIIE':
+        }else if("EcologIIE"){
             EcologIIE(_factions[_case.id_faction]);
-            break;
-        case 'lIIEns':
+        }else if("lIIEns"){
             lIIEns(_factions[_case.id_faction]);
-            break;
-        case 'Soirée sans alcool':
+        }else if("Soirée sans alcool"){
             Soiree_sans_alcool(_factions[_case.id_faction]);
-            break;
-        case 'Alcool':
+        }else if("Alcool"){
             Alcool(_factions[_case.id_faction]);
-            break;
-        case 'Café':
+        }else if("Café"){
             Cafe(_factions[_case.id_faction]);
-            break;
-        case "Thé":
+        }else if("Thé"){
             The(_factions[_case.id_faction]);
-            break;
-        case "Ecocup":
+        }else if("Ecocup"){
             Ecocup(_factions[_case.id_faction]);
-            break;
-        case "Reprographie":
+        }else if("Reprographie"){
             Reprographie(_factions[_case.id_faction]);
-            break;
-        case "Isolation du bâtiment":
+        }else if("Isolation du bâtiment"){
             Isolation_du_batiment(_factions[_case.id_faction]);
-            break;
-        case "Parcours sobriété numérique":
+        }else if("Parcours sobriété numérique"){
             Parcours_sobriete_numerique(_factions[_case.id_faction]);
-            break;
-        case "Heures supplémentaires":
+        }else if("Heures supplémentaires"){
             Heures_supplementaires(_factions[_case.id_faction]);
-            break;
-        case "Kahina Bouchama":
+        }else if("Kahina Bouchama"){
             Kahina_Bouchama(_factions[_case.id_faction]);
-            break;
-        case "Kevin Goilard":
+        }else if("Kevin Goilard"){
             Kevin_Goilard(_factions[_case.id_faction]);
-            break;
-        case "Massinissa Merabet":
+        }else if("Massinissa Merabet"){
             Massinissa_Merabet(_factions[_case.id_faction]);
-            break;
-        case "Vitéra Y":
+        }else if("Vitéra Y"){
             Vitera_Y(_factions[_case.id_faction]);
-            break;
-        case "Jonas Senizergues":
+        }else if("Jonas Senizergues"){
             Jonas_Senizergues(_factions[_case.id_faction]);
-            break;
-        case "Fetia Bannour":
+        }else if("Fetia Bannour"){
             Fetia_Bannour(_factions[_case.id_faction]);
-            break;
-        case "Catherine Dubois":
+        }else if("Catherine Dubois"){
             Catherine_Dubois(_factions[_case.id_faction]);
-            break;
-        case "Anne-Laure Ligozat":
+        }else if("Anne-Laure Ligozat"){
             Anne_Laure_Ligozat(_factions[_case.id_faction]);
-            break;
-        case "Guillaume Burel":
+        }else if("Guillaume Burel"){
             Guillaume_Burel(_factions[_case.id_faction]);
-            break;
-        case "Christophe Mouilleron":
+        }else if("Christophe Mouilleron"){
             Christophe_Mouilleron(_factions[_case.id_faction]);
-            break;
-        case "Thomas Lim":
+        }else if("Thomas Lim"){
             Thomas_Lim(_factions[_case.id_faction]);
-            break;
-        case "Julien Forest":
+        }else if("Julien Forest"){
             Julien_Forest(_factions[_case.id_faction]);
-            break;
-        case "Dimitri Watel":
+        }else if("Dimitri Watel"){
             Dimitri_Watel(_factions[_case.id_faction]);
-            break;
-        case "Djibril-Aurélien Dembele-Cabot":
+        }else if("Djibril-Aurélien Dembele-Cabot"){
             Djibril_Aurelien_Dembele_Cabot(_factions[_case.id_faction]);
-            break;
-        case "Eric Lejeune":
+        }else if("Eric Lejeune"){
             Eric_Lejeune(_factions[_case.id_faction]);
-            break;
-        case "Lucienne Pacavé":
+        }else if("Lucienne Pacavé"){
             Lucienne_Pacave(_factions[_case.id_faction]);
-            break;
-        case "Katrin Salhab":
+        }else if("Katrin Salhab"){
             Katrin_Salhab(_factions[_case.id_faction]);
-            break;
-        case "Laurent Prével":
+        }else if("Laurent Prével"){
             Laurent_Prevel(_factions[_case.id_faction]);
-            break;
-        
-        default:
-            break;
+        }
     }
 }

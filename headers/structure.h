@@ -5,10 +5,7 @@
 #include "../src/carte.c"
 
 /*  implementation des piles avec des listes chaînées */
-typedef struct maillon {
-    carte sommet; // la valeur du premier maillon représente le sommet de la pile
-    struct maillon *suivant;
-} *pile;
+typedef struct maillon *pile;
 
 /*  @requires rien
     @assigns rien

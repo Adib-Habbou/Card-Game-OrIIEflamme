@@ -3,6 +3,7 @@
 
 /* importation du module structure */
 #include "../headers/structure.h"
+#include "structure.c"
 
 /* définition de la structure des factions */
 struct faction {

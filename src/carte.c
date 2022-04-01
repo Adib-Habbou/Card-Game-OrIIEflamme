@@ -6,9 +6,6 @@
 
 /* importation du module plateau */
 #include "../headers/plateau.h"
-#include "../src/plateau.c"
-
-#include "../headers/main.h"
 
 /* définition de la structure des cartes */
 struct carte {

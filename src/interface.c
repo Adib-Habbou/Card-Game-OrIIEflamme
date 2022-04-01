@@ -1,13 +1,8 @@
 
 /* importation du module plateau */
 #include "../headers/interface.h"
-#include "../src/plateau.c"
 
-#include "structure.c"
 #include <stdio.h>
-
-
-
 
 /* 
 @requires rien

@@ -1,6 +1,4 @@
 #include "../headers/plateau.h"
-#include "interface.c"
-#include "carte.c"
 
 #include <stddef.h>
 

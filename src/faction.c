@@ -1,4 +1,5 @@
-#include "../headers/main.h"
+#include "../headers/faction.h"
+#include "structure.c"
 
 /* définition de la structure des factions */
 struct faction {

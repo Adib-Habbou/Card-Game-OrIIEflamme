@@ -1,4 +1,5 @@
-#include "../headers/main.h"
+#include "../headers/carte.h"
+#include "faction.c"
 
 /* définition de la structure des cartes */
 struct carte {

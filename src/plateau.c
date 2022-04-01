@@ -1,4 +1,6 @@
-#include "../headers/main.h"
+#include "../headers/plateau.h"
+#include "interface.c"
+#include "carte.c"
 
 #define LENGTH 1000
 #define NOMBRE_JOUEUR 2

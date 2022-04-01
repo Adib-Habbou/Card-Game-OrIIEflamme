@@ -4,22 +4,22 @@
 
 /* définition de la structure des cartes */
 struct carte {
-    char nom;
-    char description;
+    char* nom;
+    char* description;
     int nombre_occurrences;
 };
 
 /*  @requires   une carte valide
     @assigns    rien
     @ensures    renvoie le nom de la carte */
-char get_carte_nom(carte carte) {
+char* get_carte_nom(carte carte) {
     return carte->nom;
 }
 
 /*  @requires   une carte valide
     @assigns    rien
     @ensures    renvoie la description de la carte */
-char get_carte_description(carte carte) {
+char* get_carte_description(carte carte) {
     return carte->description;
 }
 

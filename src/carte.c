@@ -2,6 +2,8 @@
 /* importation du module plateau */
 #include "../headers/plateau.h"
 
+#include<stddef.h>
+
 /* définition de la structure des cartes */
 struct carte {
     char* nom;
@@ -156,6 +158,21 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
 */
 void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) {
 
+    if (get_plateau_case(_plateau,ligne+1,colonne) != NULL) {
+        set_case_etat(get_plateau_case(_plateau,ligne+1,colonne),-1);
+    }
+
+    if (get_plateau_case(_plateau,ligne,colonne+1) != NULL) {
+        set_case_etat(get_plateau_case(_plateau,ligne,colonne+1),-1);
+    }
+
+    if (get_plateau_case(_plateau,ligne-1,colonne) != NULL) {
+        set_case_etat(get_plateau_case(_plateau,ligne-1,colonne),-1);
+    }
+
+    if (get_plateau_case(_plateau,ligne,colonne-1) != NULL) {
+        set_case_etat(get_plateau_case(_plateau,ligne,colonne-1),-1);
+    }
     
 }
 
@@ -166,7 +183,25 @@ void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) {
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
 void Cafe(faction _faction, plateau _plateau) {
+    int i,j;
+    int drapeau_Ecocup = 0;
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Thé") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
+                set_case_etat(get_plateau_case(_plateau,i,j),A CHANGER); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
+            }
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
+                drapeau_Ecocup = 1;
+            }
+        }
+    }
 
+    if (drapeau_Ecocup) {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+1);
+    }
+    else {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)-1);
+    }
     
 }
 
@@ -385,19 +420,7 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     //TODO présence Julien via historique
 
     int nb_FISE = 0;
-    int i,j;
-    for (i=0;i<1000;i++) {  //plateau de taille 1000
-        for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "FISE") {
-                nb_FISE+=1;
-            }
-        }
-    }
-
-    if (Julien_Forest_present) {
-        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+3*nb_FISE);
-    }
-
+    int i,j;bot
     else { 
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)-nb_FISE);
     }
@@ -462,7 +485,7 @@ void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int lign
     int nb_retournee =0;
     int j;
     for (j=0;j<1000;j++) { //optimisation possible avec getter border du "plateau" effectif
-        if (_get_case_etat(get_tableau_case(_plateau,ligne,j)) == 1) {
+        if (get_case_etat(get_tableau_case(_plateau,ligne,j)) == 1) {
             nb_retournee+=1;
         }
     }

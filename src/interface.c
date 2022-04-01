@@ -1,7 +1,9 @@
 
 /* importation du module plateau */
 #include "../headers/interface.h"
+#include "../src/plateau.c"
 
+#include "structure.c"
 #include <stdio.h>
 
 
@@ -12,17 +14,26 @@
 @assigns rien
 @ensures Affiche le plateau de jeu dans son état actuel
 */
-void affiche_plateau(plateau p);
+void affiche_plateau(plateau _plateau);
 
 /* 
 @requires rien
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void affiche_main(faction f);
+void affiche_main(faction _faction) {
+    // on vérifie que la pile n'est pas vide
+    if(pile_est_vide(_faction.main)){
+        printf("La main est vide.\n");
+    }
+    // tant que la pile est vide on affiche le nom de la carte
+    while(!pile_est_vide()) {
+        printf("-> [ %s ] ", pile->sommet->nom);
+    }
+    // on affiche un saut de ligne par soucis esthétique
+    printf("\n");
+}
 
-//NB : j'ai supposé que la main et le plateau sont stocké en tant que variables globales,
-//     à changer l'argument selon l'implémentation
 
 /* 
 @requires rien
@@ -66,4 +77,18 @@ void gagnant(faction* factions);
 */
 void affiche(char string) {
     printf("%s\n",string);
+}
+
+
+void affiche_pile(pile pile) {
+    // on vérifie que la pile n'est pas vide
+    if(pile_est_vide(pile)){
+        printf("La pile est vide.\n");
+    }
+    // tant que la pile est vide on affiche le nom de la carte
+    while(!pile_est_vide(pile)) {
+        printf("-> [ %s ] ", pile->sommet->nom);
+    }
+    // on affiche un saut de ligne par soucis esthétique
+    printf("\n");
 }

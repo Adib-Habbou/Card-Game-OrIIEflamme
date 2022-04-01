@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/structure.h"
+#include "../headers/main.h"
 
 /*  implementation des piles avec des listes chaînées */
 typedef struct maillon {

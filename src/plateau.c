@@ -1,4 +1,4 @@
-#include "../headers/plateau.h"
+#include "../headers/main.h"
 
 /* importation pour avoir accès au type faction */
 #include "faction.c"

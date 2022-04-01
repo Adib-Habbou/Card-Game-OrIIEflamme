@@ -555,7 +555,7 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
         }
         }
     }
-    
+
     if (drapeau_Djibril && drapeau_Lucienne && drapeau_Eric) {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+10)
     }

@@ -4,9 +4,11 @@
 /* importation du module structure */
 #include "structure.h"
 
-/* définition du tyoe abstrait des factions */
+/* définition du type abstrait des factions */
 typedef struct faction *faction;
 
+
+// INTERFACES DES FONCTIONS
 
 /* vérification de l'utilisation de l'option remélanger 
     @requires   faction valide
@@ -51,6 +53,17 @@ void melanger_pioche(faction fact);
                     changement de la main de la faction
                     changement des cartes de la pioche de la faction */
 void repiocher(faction fact);
+
+
+// CONSTANTES ET VARIABLES GLOBALES
+
+/* nombre de cartes dans la main d'une faction au début d'une manche */
+#define NOMBRE_CARTES_MAIN_INITIAL 8
+
+
+
+
+// GETTERS ET SETTERS 
 
 /*  @requires   une faction valide
     @assigns    rien

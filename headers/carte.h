@@ -4,6 +4,24 @@
 /* définition du type abstrait des cartes */
 typedef struct carte *carte;
 
+
+// CONSTANTES ET VARIABLES GLOBALES 
+
+/* noms des différentes cartes */
+
+/* FISE */
+carte FISE;
+set_carte_nom(FISE, "FISE");
+
+/* FISA */
+carte FISA;
+set_carte_nom(FISA, "FISA");
+set_carte_description(FISA, "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.")
+
+
+
+// GETTERS ET SETTERS 
+
 /*  @requires   une carte valide
     @assigns    rien
     @ensures    renvoie le nom de la carte */

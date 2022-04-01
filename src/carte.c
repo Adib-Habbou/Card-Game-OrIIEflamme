@@ -420,7 +420,20 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     //TODO présence Julien via historique
 
     int nb_FISE = 0;
-    int i,j;bot
+    int i,j;
+        
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "FISE") {
+                nb_FISE+=1;
+            }
+        }
+    }
+
+    if (Julien_Forest_present) {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+3*nb_FISE);
+    }
+
     else { 
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)-nb_FISE);
     }

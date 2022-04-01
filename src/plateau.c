@@ -1,13 +1,5 @@
 #include "../headers/plateau.h"
 
-/* importation pour avoir accès au type faction */
-#include "faction.c"
-
-/* importation pour avoir accès au type carte */
-#include "carte.c"
-
-#define LENGTH 1000
-#define NOMBRE_JOUEUR 2
 #include <stddef.h>
 
 /* implémentation du type case */
@@ -25,36 +17,138 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case) {
-    return case.carte;
+carte get_case_carte(Case _case) {
+    return _case.carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case) {
-    return case.etat;
+int get_case_etat(Case _case) {
+    return _case.etat;
+}
+
+/*  @requires   une case valide et un entier
+    @assigns    case
+    @ensures    modifie l'état de la carte posé sur la case */
+void set_case_etat(Case _case, int etat) {
+    _case.etat = etat;
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
+case get_plateau_case(plateau plateau, int ligne, int colonne) {
+    return plateau.tab[ligne][colonne];
+}
+
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
+int* get_plateau_carte_premier(plateau plateau) {
+    int ligne = 0;
+    int colonne = 0;
+    while(plateau.tab[ligne][colonne].carte != NULL) {
+        if (colonne < 1000) {
+             colonne += 1;
+        }
+        else {
+            colonne = 0;
+            ligne += 1;
+        }
+    }
+    return (ligne, colonne);
+}
+
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus à gauche  */
+int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
+    int ligne_bis = ligne;
+    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+        if (ligne_bis == 0) {
+            affiche("Pas de carte à gauche");
+            exit(1);
+        }
+        ligne_bis -= 1;
+    }
+    return (ligne_bis, colonne);
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus à droite  */
+int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
+    int ligne_bis = ligne;
+    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+        if (ligne_bis == 1000) {
+            affiche("Pas de carte à droite");
+            exit(1);
+        }
+        ligne_bis += 1;
+    }
+    return (ligne_bis, colonne)
+
+}
+
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en haut  */
+int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
+    int colonne_bis = colonne;
+    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+        if (colonne_bis == 0) {
+            affiche("Pas de carte en haut");
+            exit(1);
+        }
+        colonne_bis -= 1;
+    }
+    return (ligne, colonne_bis)
+
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en bas  */
+int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
+    int colonne_bis = colonne;
+    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+        if (colonne_bis == 1000) {
+            affiche("Pas de carte en bas");
+            exit(1);
+        }
+        colonne_bis += 1;
+    }
+    return (ligne, colonne_bis);
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case) {
-    liste_faction = liste_faction();
-    return liste_faction[case.id_faction];
+faction get_case_faction(Case _case) {
+    faction* liste_faction = liste_faction();
+    return liste_faction[_case.id_faction];
+}
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
+    plateau->tab[ligne][colonne]->carte->nom;
 }
 
 plateau init_plateau(){
     plateau _plateau;
-    _plateau.tab = (Case**) malloc(LENGTH * sizeof(Case*));
-    for(int i = 0; i < LENGTH; i++){
-        _plateau.tab[i] = (Case*) malloc(LENGTH * sizeof(Case));
+    _plateau.tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        _plateau.tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
     }
     return _plateau;
 }
 
 void libere_plateau(plateau _plateau){
-    for(int i = 0; i < LENGTH; i++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau.tab[i]);
     }
     free(_plateau.tab);
@@ -66,8 +160,8 @@ int init_manche(plateau _plateau){
 }
 
 faction* liste_faction(){
-    faction factions[NOMBRE_JOUEUR];
-    for(int i = 0; i < NOMBRE_JOUEUR; i++){
+    faction factions[NOMBRE_JOUEURS];
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction faction;
         faction->nom = "Joueur "+i;
         faction->nombre_points_DDRS = 0;
@@ -84,27 +178,27 @@ void poser(plateau _plateau, carte _carte, int* _position){
 
 carte retourner(plateau _plateau, faction* _factions){
     Case _case;
-    for(int i = 0; i < LENGTH; i++){
-        for(int j = 0; j < LENGTH; j++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
+        for(int j = 0; j < TAILLE_PLATEAU; j++){
             if(i != j){
-                if(_plateau.tab[i][j].etat != 0){
-                    _case = _plateau.tab[i][j];
-                    goto cartetrouvé;
+                if(_plateau->tab[i][j].etat != 0){
+                    _case = _plateau->tab[i][j];
+                    goto cartetrouve;
                 }
-                if(_plateau.tab[j][i].etat != 0){
-                    _case = _plateau.tab[j][i];
-                    goto cartetrouvé;
+                if(_plateau->tab[j][i].etat != 0){
+                    _case = _plateau->tab[j][i];
+                    goto cartetrouve;
                 }
             }else{
-                if(_plateau.tab[j][j].etat != 0){
-                    _case = _plateau.tab[j][j];
-                    goto cartetrouvé;
+                if(_plateau->tab[j][j].etat != 0){
+                    _case = _plateau->tab[j][j];
+                    goto cartetrouve;
                 }
             }
         }
     }
 
-cartetrouvé:
+cartetrouve:
     if(_case.carte->nom == "FISE"){
         FISE(_factions[_case.id_faction]);
     }else if(_case.carte->nom == "FISA"){

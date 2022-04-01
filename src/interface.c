@@ -1,33 +1,34 @@
-#ifndef INTERFACE_H
-#define INTERFACE_H
-
-/* importation du module carte */
-#include "carte.h"
-
-/* importation du module faction */
-#include "faction.h"
 
 /* importation du module plateau */
-#include "plateau.h"
+#include "../headers/interface.h"
 
-
+#include <stdio.h>
 
 /* 
 @requires rien
 @assigns rien
 @ensures Affiche le plateau de jeu dans son état actuel
 */
-void affiche_plateau(plateau p);
+void affiche_plateau(plateau _plateau);
 
 /* 
 @requires rien
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void affiche_main(faction f);
+void affiche_main(faction _faction) {
+    // on vérifie que la pile n'est pas vide
+    if(pile_est_vide(get_faction_main(_faction))){
+        printf("La main est vide.\n");
+    }
+    // tant que la pile est vide on affiche le nom de la carte
+    while(!pile_est_vide(get_faction_main(_faction)) ) {
+        printf("-> [ %s ] ", get_carte_nom(pile_sommet(get_faction_main(_faction))) );
+    }
+    // on affiche un saut de ligne par soucis esthétique
+    printf("\n");
+}
 
-//NB : j'ai supposé que la main et le plateau sont stocké en tant que variables globales,
-//     à changer l'argument selon l'implémentation
 
 /* 
 @requires rien
@@ -41,21 +42,21 @@ int decision(); //à changer selon l'implémentation des factions
 @assigns rien
 @ensures retourne la carte qui va être posée
 */
-carte carte_choisie(faction f); //potentiellement une variable contenant la main
+carte carte_choisie(faction _faction); //potentiellement une variable contenant la main
 
 /* 
 @requires plateau valide
 @assigns rien
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
-int* carte_positon(plateau p);
+int* carte_positon(plateau _plateau);
 
 /* 
 @requires carte valide
 @assigns rien
 @ensures affiche les effets de la carte
 */
-void afficher_effet(carte c);
+void afficher_effet(carte _carte);
 
 /* 
 @requires liste faction valide
@@ -69,9 +70,7 @@ void gagnant(faction* factions);
 @assigns rien
 @ensures affiche string sur l'écran
 */
-void affiche(char string);
-
-
-#endif
-
+void affiche(char string) {
+    printf("%s\n",string);
+}
 

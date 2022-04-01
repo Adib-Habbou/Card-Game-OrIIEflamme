@@ -10,5 +10,8 @@
 /* importation du module plateau */
 #include "plateau.h"
 
+/* importation du module strcuture */
+#include "structure.h"
+
 /* Pour le null */
 #include <stddef.h>

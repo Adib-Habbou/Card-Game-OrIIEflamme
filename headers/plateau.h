@@ -2,16 +2,22 @@
 #define PLATEAU_H
 
 /* importation du module carte */
-#include "../headers/carte.h"
+#include "carte.h"
 
 /* importation du module faction */
-#include "../headers/faction.h"
+#include "faction.h"
+
+/* importation du module structure */
+#include "structure.h"
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case Case;
 
 /* implémentation du type abstrait plateau */
-typedef struct plateau plateau;
+typedef struct plateau *plateau;
+
+
+// INTERFACES DES FONCTIONS
 
 /*  @requires   rien
     @assigns    rien
@@ -45,19 +51,85 @@ void poser(plateau plateau, carte carte, int* position);
                 renvoie la carte retournée ou NULL si toutes les cartes du plateau sont déjà face visible */
 carte retourner(plateau plateau, faction* liste_faction);
 
+
+// CONSTANTES ET VARIABLES GLOBALES
+
+/* nombre de lignes et nombres de colonnes d'un plateau */
+#define TAILLE_PLATEAU 1000
+
+/* nombre de joueurs pour une partie */
+#define NOMBRE_JOUEURS 2
+
+/* nombre de manches gagnantes */
+#define NOMBRE_MANCHES_GAGNANTES 2
+
+/* nombre des phases d'une manche */
+#define NOMBRE_PHASES_MANCHE 2
+
+/* nombre de cartes posées sur le plateau */
+#define NOMBRE_CARTES_POSEES 16
+
+
+// GETTERS ET SETTERS
+
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case case);
+carte get_case_carte(Case _case);
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
-int get_case_etat(Case case);
+int get_case_etat(Case _case);
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
-faction get_case_faction(Case case);
+faction get_case_faction(Case _case);
+
+/*  @requires   une case valide et un entier
+    @assigns    case
+    @ensures    modifie l'état de la carte posé sur la case */
+void set_case_etat(Case _case, int etat);
+
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
+int* get_plateau_carte_premier(plateau plateau);
+
+/*  @requires   un plateau valide
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
+int* get_plateau_carte_dernier(plateau plateau);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
+Case get_plateau_case(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus à gauche  */
+int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus à droite  */
+int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en haut  */
+int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en bas  */
+int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie le nom de la carte dans la case */
+char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
 
 #endif

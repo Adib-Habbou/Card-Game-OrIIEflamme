@@ -18,21 +18,21 @@ struct plateau {
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
 carte get_case_carte(Case _case) {
-    return _case->carte;
+    return _case.carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
 int get_case_etat(Case _case) {
-    return _case->etat;
+    return _case.etat;
 }
 
 /*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
-    _case->etat = etat;
+    _case.etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -77,50 +77,11 @@ carte get_plateau_carte_dernier(plateau plateau) {
     }
     return (ligne, colonne);
 
-
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
-    int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
-        if (ligne_bis == 0) {
-            affiche("Pas de carte à gauche");
-            exit(1);
-        }
-        ligne_bis -= 1;
-    }
-    return (ligne_bis, colonne);
-}
-
-/*  @requires   un plateau valide et deux entiers
-    @assigns    rien
-    @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
-    int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
-        if (ligne_bis == 1000) {
-            affiche("Pas de carte à droite");
-            exit(1);
-        }
-        ligne_bis += 1;
-    }
-    return (ligne_bis, colonne);
-
-}
-
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la carte la plus en haut  */
 carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
-    int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
-        if (colonne_bis == 0) {
-            affiche("Pas de carte en haut");
-            exit(1);
-        }
+    int colonne_bis = coloncase
         colonne_bis -= 1;
     }
     return (ligne, colonne_bis);
@@ -144,8 +105,8 @@ carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case) {
-    liste_faction = liste_faction();
-    return liste_faction[_case->id_faction];
+    faction* liste_faction = liste_faction();
+    return liste_faction[_case.id_faction];
 }
 
 /*  @requires   un plateau valide et deux entiers

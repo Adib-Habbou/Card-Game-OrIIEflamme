@@ -94,38 +94,38 @@ void set_case_etat(Case _case, int etat);
 
 /*  @requires   un plateau valide
     @assigns    rien
-    @ensures    renvoie la carte la plus en haut à gauche du plateau */
-carte get_plateau_carte_premier(plateau plateau);
+    @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
+int* get_plateau_carte_premier(plateau plateau);
 
 /*  @requires   un plateau valide
     @assigns    rien
-    @ensures    renvoie la carte la plus en bas à droite du plateau  */
-carte get_plateau_carte_dernier(plateau plateau);
+    @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
+int* get_plateau_carte_dernier(plateau plateau);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
-case get_plateau_case(plateau plateau, int ligne, int colonne);
+Case get_plateau_case(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus à gauche  */
-carte get_plateau_carte_gauche(plateau plateau, int ligne, int colonne);
+    @ensures    renvoie les coodronnées de la carte la plus à gauche  */
+int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus à droite  */
-carte get_plateau_carte_droite(plateau plateau, int ligne, int colonne);
+    @ensures    renvoie les coodronnées de la carte la plus à droite  */
+int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus en haut  */
-carte get_plateau_carte_haut(plateau plateau, int ligne, int colonne);
+    @ensures    renvoie les coodronnées de la carte la plus en haut  */
+int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
-    @ensures    renvoie la carte la plus en bas  */
-carte get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
+    @ensures    renvoie les coodronnées de la carte la plus en bas  */
+int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien

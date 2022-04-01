@@ -39,7 +39,6 @@ void empile(pile* _pile, carte carte) {
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
     if (res == NULL) {
-        affiche("Erreur d'allocation mémoire.");
         exit(1);
     }
     // on empile la carte
@@ -54,7 +53,6 @@ void empile(pile* _pile, carte carte) {
 void depile(pile* pile) {
     // on vérifie que la pile n'est pas vide
     if(*pile == NULL) {
-        affiche("La pile est vide.");
         exit(1);
     }
     // on supprime le sommet de la pile

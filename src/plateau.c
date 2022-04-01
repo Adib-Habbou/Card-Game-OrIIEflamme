@@ -39,6 +39,13 @@ void set_case_etat(Case case, int etat) {
     case->etat = etat;
 }
 
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la case de coordonées i, j sur le plateau */
+case get_plateau_case(plateau plateau, int i, int j) {
+    return plateau->tab[i][j];
+}
+
 /*  @requires   un plateau valide
     @assigns    rien
     @ensures    renvoie la carte la plus en haut à gauche du plateau */

@@ -7,9 +7,6 @@
 /* importation du module faction */
 #include "faction.h"
 
-/* importation du module faction */
-#include "../src/faction.c"
-
 /* importation du module structure */
 #include "structure.h"
 
@@ -104,6 +101,11 @@ carte get_plateau_carte_premier(plateau plateau);
     @assigns    rien
     @ensures    renvoie la carte la plus en bas à droite du plateau  */
 carte get_plateau_carte_dernier(plateau plateau);
+
+/*  @requires   un plateau valide et deux entiers
+    @assigns    rien
+    @ensures    renvoie la case de coordonées i, j sur le plateau */
+case get_plateau_case(plateau plateau, int i, int j);
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien

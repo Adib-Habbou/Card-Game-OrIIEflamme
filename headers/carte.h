@@ -4,6 +4,38 @@
 /* définition du type abstrait des cartes */
 typedef struct carte *carte;
 
+// GETTERS ET SETTERS 
+
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie le nom de la carte */
+char* get_carte_nom(carte carte);
+
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie la description de la carte */
+char* get_carte_description(carte carte);
+
+/*  @requires   une carte valide
+    @assigns    rien
+    @ensures    renvoie le nombre d'occurrences de la carte */
+int get_carte_nombre_occurrences(carte carte);
+
+/*  @requires   une carte valide et une chaîne de caractères
+    @assigns    carte
+    @ensures    modifie le nom de la carte */
+void set_carte_nom(carte carte, char* nom);
+
+/*  @requires   une carte valide et une chaîne de caractères
+    @assigns    carte
+    @ensures    modifie la description de la carte */
+void set_carte_description(carte carte, char* description);
+
+/*  @requires   une carte valide et un entier
+    @assigns    carte
+    @ensures    modifie le nomnre d'occurrences de la carte */
+void set_carte_nombre_occurrences(carte carte, int nombre_occurrences);
+
 
 // CONSTANTES ET VARIABLES GLOBALES 
 
@@ -199,38 +231,5 @@ carte Laurent_Prével;
 set_carte_nom(Laurent_Prével, "Laurent Prével");
 set_carte_description(Laurent_Prével, "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.");
 set_carte_nombre_occurrences(Laurent_Prével, 1);
-
-
-// GETTERS ET SETTERS 
-
-/*  @requires   une carte valide
-    @assigns    rien
-    @ensures    renvoie le nom de la carte */
-char get_carte_nom(carte carte);
-
-/*  @requires   une carte valide
-    @assigns    rien
-    @ensures    renvoie la description de la carte */
-char get_carte_description(carte carte);
-
-/*  @requires   une carte valide
-    @assigns    rien
-    @ensures    renvoie le nombre d'occurrences de la carte */
-int get_carte_nombre_occurrences(carte carte);
-
-/*  @requires   une carte valide et une chaîne de caractères
-    @assigns    carte
-    @ensures    modifie le nom de la carte */
-void set_carte_nom(carte carte, char nom);
-
-/*  @requires   une carte valide et une chaîne de caractères
-    @assigns    carte
-    @ensures    modifie la description de la carte */
-void set_carte_description(carte carte, char description);
-
-/*  @requires   une carte valide et un entier
-    @assigns    carte
-    @ensures    modifie le nomnre d'occurrences de la carte */
-void set_carte_nombre_occurrences(carte carte, int nombre_occurrences);
 
 #endif

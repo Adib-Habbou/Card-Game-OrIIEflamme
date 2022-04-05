@@ -39,7 +39,7 @@ void set_case_etat(Case _case, int etat) {
     @assigns    rien
     @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
 Case get_plateau_case(plateau plateau, int ligne, int colonne) {
-    return plateau.tab[ligne][colonne];
+    return plateau->tab[ligne][colonne];
 }
 
 /*  @requires   un plateau valide
@@ -48,7 +48,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(plateau.tab[ligne][colonne].carte != NULL) {
+    while(plateau->tab[ligne][colonne].carte != NULL) {
         if (colonne < 1000) {
              colonne += 1;
         }
@@ -65,7 +65,7 @@ int* get_plateau_carte_premier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
         if (ligne_bis == 0) {
             affiche("Pas de carte à gauche");
             exit(1);
@@ -80,7 +80,7 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
         if (ligne_bis == 1000) {
             affiche("Pas de carte à droite");
             exit(1);
@@ -97,7 +97,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 0) {
             affiche("Pas de carte en haut");
             exit(1);
@@ -113,7 +113,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);

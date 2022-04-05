@@ -133,7 +133,7 @@ faction get_case_faction(Case _case) {
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
-    plateau->tab[ligne][colonne]->carte->nom;
+    return get_carte_nom(plateau->tab[ligne][colonne]);
 }
 
 plateau init_plateau(){

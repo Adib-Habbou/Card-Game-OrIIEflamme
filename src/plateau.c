@@ -6,7 +6,7 @@
 struct Case {
     carte carte; // carte posée sur la case en question
     int id_faction; // 0 ou 1 qui détermine la faction qui a posée la carte
-    int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
+    int etat; // 0 si la carte est face cachée ou 1 si elle est face visible ou -1 si la carte est retiré
 };
 
 /* implémentation du type plateau */
@@ -32,6 +32,11 @@ int get_case_etat(Case _case) {
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
+    if (etat == -1) {
+        _case.carte = NULL;
+        _case.id_faction = NULL;
+        _case.etat = NULL;
+    }
     _case.etat = etat;
 }
 
@@ -39,7 +44,7 @@ void set_case_etat(Case _case, int etat) {
     @assigns    rien
     @ensures    renvoie la case de coordonées ligne, colonne sur le plateau */
 Case get_plateau_case(plateau plateau, int ligne, int colonne) {
-    return plateau.tab[ligne][colonne];
+    return plateau->tab[ligne][colonne];
 }
 
 /*  @requires   un plateau valide
@@ -48,7 +53,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(plateau.tab[ligne][colonne].carte != NULL) {
+    while(plateau->tab[ligne][colonne].carte != NULL) {
         if (colonne < 1000) {
              colonne += 1;
         }
@@ -65,7 +70,7 @@ int* get_plateau_carte_premier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
         if (ligne_bis == 0) {
             affiche("Pas de carte à gauche");
             exit(1);
@@ -80,15 +85,14 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau.tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
         if (ligne_bis == 1000) {
             affiche("Pas de carte à droite");
             exit(1);
         }
         ligne_bis += 1;
     }
-    return (ligne_bis, colonne)
-
+    return (ligne_bis, colonne);
 }
 
 
@@ -97,15 +101,14 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 0) {
             affiche("Pas de carte en haut");
             exit(1);
         }
         colonne_bis -= 1;
     }
-    return (ligne, colonne_bis)
-
+    return (ligne, colonne_bis);
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -113,7 +116,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau.tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
         if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);
@@ -127,15 +130,15 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case) {
-    faction* liste_faction = liste_faction();
-    return liste_faction[_case.id_faction];
+    faction* factions = liste_faction();
+    return factions[_case.id_faction];
 }
 
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
-    plateau->tab[ligne][colonne]->carte->nom;
+    return get_carte_nom(plateau->tab[ligne][colonne].carte);
 }
 
 plateau init_plateau(){

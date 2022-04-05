@@ -143,6 +143,13 @@ void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int 
     plateau->tab[ligne][colonne].etat = etat;
 }
 
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'id faction de la case */
+int get_case_id_faction(Case _case) {
+    _case->id_faction;
+}
+
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */

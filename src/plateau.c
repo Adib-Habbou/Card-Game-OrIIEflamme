@@ -1,6 +1,5 @@
+/* importation du module plateau */
 #include "../headers/plateau.h"
-
-#include <stddef.h>
 
 /* implémentation du type case */
 struct Case {

@@ -10,7 +10,7 @@
 /* importation du module plateau */
 #include "plateau.h"
 
-
+#include <stdio.h>
 
 /* 
 @requires rien

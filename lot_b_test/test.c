@@ -5,13 +5,6 @@
 #include "main.h"
 
 
-/* 
-arrange
-act 
-assert
-
-pas de aléatoire : on veut tjs meme resultat 
-*/
 
 
 // Initialisations 
@@ -35,7 +28,7 @@ void test_initialisation_faction() {
     CU_ASSERT(get_faction_nombre_points_DDRS(faction) == 0);
         // La main de la faction est vide
     CU_ASSERT_TRUE(pile_est_vide(get_faction_main(faction)));
-        // La pioche contient encore l'entierete des cartes 
+        // La pioche contient encore l'entierete des cartes
     CU_ASSERT(NULL == get_faction_pioche(faction));
         // L'option rémélanger n'a pas encore été utilisée par la faction  
     CU_ASSERT(get_faction_option_remelanger(faction) == test_remelanger(faction));
@@ -50,17 +43,27 @@ void test_initialisation_faction() {
 
 /* Vérifie la bonne initialisation d'un plateau :
     - bonne allocation de mémoire
-    - . */
+    - il n'y a que deux joueurs pour une partie
+    -  */
 void test_initialisation_plateau(plateau plateau) {
-    // arrange 
+    // arrange
+        // On initialise les factions à placer sur le plateau
     faction faction = init_faction();
 
     // action
     plateau plateau = init_plateau();
 
     // test
-    CU_ASSERT(length(liste_faction()) == NOMBRE_JOUEURS);
+        // Nombre correct de joueurs sur le plateau
+    CU_ASSERT_NULL(liste_faction[NOMBRE_JOUEURS]);
+        // Plateau vide
+    CU_ASSERT
 }
+
+
+
+
+
 
 
 

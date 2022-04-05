@@ -252,7 +252,52 @@ les mélange et les repose face cachées une par une sur la gauche de la carte l
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
 void lIIEns(faction _faction, plateau _plateau) {
+    int i,j;
 
+    carte* liste_carte;
+    int* liste_faction;
+    int indice=0;
+
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "FC") || (get_plateau_carte_nom(_plateau,i,j) == "FISE") || (get_plateau_carte_nom(_plateau,i,j) == "FISA") )) {
+                
+                liste_carte[indice]= get_case_carte(get_plateau_case(_plateau,i,j));
+                liste_faction[indice]=get_case_id_faction(get_plateau_case(_plateau,i,j));
+                indice++; //on a ajouté la carte à la liste qui va permettre de reposer les cartes
+
+                set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
+            }
+        }
+    }
+    carte tempCarte;
+    int tempInt;
+    int random;
+    int newrandom;
+    for (i=0;i<50;i++) {//on mélange la liste 50 fois
+        random=rand() % indice;
+        newrandom=rand() % indice;
+
+        if (random==newrandom) { //on mélange forcément
+            newrandom = (newrandom+1)%indice;
+        }
+
+        tempCarte = liste_carte[random];
+        tempInt = liste_faction[random];
+
+        liste_carte[random]=liste_carte[newrandom];
+        liste_faction[random]=liste_faction[newrandom];
+
+        liste_carte[newrandom]=tempCarte;
+        liste_faction[newrandom]=tempInt;
+    }
+   
+    int ligne_début = get_plateau_carte_premier(_plateau)[0];
+    int colonne_début = get_plateau_carte_premier(_plateau)[1];
+
+    for (i=0; i<indice; i++) {
+        set_plateau_case(_plateau,ligne_début,colonne_début-i,liste_carte[i],liste_faction[i],0);
+    }
 
 }
 
@@ -270,7 +315,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
  
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "Alcool") {
+            if (get_tableau_carte_nom(_plateau,i,j) == "Alcool" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_alcool=1;
                 break;
             }
@@ -657,10 +702,10 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
     int total_carte_spe = 0;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "Heures supplémentaires") {
+            if (get_tableau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_heures_supp=1;
             }
-            if ((get_plateau_carte_nom(_plateau,i,j) == "Catherine Dubois") || (get_plateau_carte_nom(_plateau,i,j) == "Dimitri Watel")  || (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest") || (get_plateau_carte_nom(_plateau,i,j) == "Thomas Lim") || (get_plateau_carte_nom(_plateau,i,j) == "Anne-Laure Ligozat") || (get_plateau_carte_nom(_plateau,i,j) == "Guillaume Burel") || (get_plateau_carte_nom(_plateau,i,j) == "Christophe Mouilleron")) {
+            if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ((get_plateau_carte_nom(_plateau,i,j) == "Catherine Dubois") || (get_plateau_carte_nom(_plateau,i,j) == "Dimitri Watel")  || (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest") || (get_plateau_carte_nom(_plateau,i,j) == "Thomas Lim") || (get_plateau_carte_nom(_plateau,i,j) == "Anne-Laure Ligozat") || (get_plateau_carte_nom(_plateau,i,j) == "Guillaume Burel") || (get_plateau_carte_nom(_plateau,i,j) == "Christophe Mouilleron") )) {
                 total_carte_spe++;
             }
         }
@@ -793,7 +838,7 @@ void Christophe_Mouilleron(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "Heures supplémentaires") {
+            if (get_tableau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                     drapeau_heures_supp=1;
             }
         }
@@ -826,29 +871,37 @@ Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plat
 */
 void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     int Julien_Forest_present = 0;
+    int i,j;
 
-    //TODO présence Julien via historique
+    for (i=0;i<1000;i++) {  //recherche de Julien
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "Julien Forest" && get_case_etat(get_plateau_case(_plateau, i, j)==1 )) {
+                Julien_Forest_present = 1;
+            }
+        }
+    }
 
     int nb_FISE = 0;
-    int i,j;
+    
         
-    for (i=0;i<1000;i++) {  //plateau de taille 1000
+    for (i=0;i<1000;i++) {  //compte le nb de FISE
         for (j=0;j<1000;j++) {  
-            if (get_tableau_carte_nom(_plateau,i,j) == "FISE") {
+            if (get_tableau_carte_nom(_plateau,i,j) == "FISE" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 nb_FISE+=1;
             }
         }
     }
 
     if (Julien_Forest_present) {
-        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+3*nb_FISE);
-    }
-
-    else { 
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)-nb_FISE);
         if (get_faction_nombre_points_DDRS(_faction_oppose)<0) {
             set_faction_nombre_points_DDRS(_faction_oppose,0);
         }
+    }
+
+    else { 
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+3*nb_FISE);
+        
     }
     
 }
@@ -861,12 +914,18 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
 void Julien_Forest(faction _faction, plateau _plateau) {
     int nb_FISE = 0;
     int i,j;
-    int drapeau = 0;
+    int drapeau_cafe = 0;
 
-    //TODO historique cartes retounéés 
+    for (i=0;i<1000;i++) {  
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "Café") {
+                drapeau_cafe=1;
+            }
+        }
+    }
 
-    if (drapeau) { 
-        for (i=0;i<1000;i++) {  //plateau de taille 1000
+    if (drapeau_cafe) { 
+        for (i=0;i<1000;i++) { 
             for (j=0;j<1000;j++) {  
                 if (get_tableau_carte_nom(_plateau,i,j) == "FISE") {
                     nb_FISE+=1;
@@ -885,11 +944,17 @@ void Julien_Forest(faction _faction, plateau _plateau) {
 void Dimitri_Watel(faction _faction, plateau _plateau) {
     int nb_FISA_FC = 0;
     int i,j;
-    int drapeau = 0;
+    int drapeau_the = 0;
 
-    //TODO historique cartes retounéés 
+    for (i=0;i<1000;i++) {  
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "Thé") {
+                drapeau_the=1;
+            }
+        }
+    }
 
-    if (drapeau) { 
+    if (drapeau_the) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
                 if (get_tableau_carte_nom(_plateau,i,j) == "FISA" || get_tableau_carte_nom(_plateau,i,j) == "FC" ) {
@@ -931,8 +996,105 @@ Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
 void Eric_Lejeune(faction _faction, plateau _plateau) {
-
     
+    int i,j;
+    carte* liste_carte; //liste total
+    int* liste_faction;
+    int* memo_indice; //liste qui va servir à supprimer les cartes dans le cas ou le drapeau est nulle
+    int indice=0;
+
+    for (i=0;i<1000;i++) {  //création de la liste des cartes retournées
+        for (j=0;j<1000;j++) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+                
+                liste_carte[indice]= get_case_carte(get_plateau_case(_plateau,i,j));
+                liste_faction[indice]=get_case_id_faction(get_plateau_case(_plateau,i,j));
+                indice++; //on a ajouté la carte à la liste qui va permettre de reposer les cartes
+
+                set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
+            }
+        }
+    }
+
+    carte* liste_carte_5; //liste réduite à 5
+    int* liste_faction_5;
+
+    int random;
+    int newrandom;
+
+    for (i=0;i<5;i++) {//on prend 5 cartes au hasard
+        random=rand() % indice;
+        while (liste_carte[random]==NULL) {
+            random = rand() % indice;
+        }
+        liste_carte_5[i]=liste_carte[random];
+        liste_faction_5[i]=liste_faction[random];
+        memo_indice[i]=random;
+
+        liste_carte[random] = NULL;
+        liste_faction[random] = NULL;
+    }
+
+    int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente
+
+    for (i=0;i<5;i++){ 
+        if (get_carte_nom(liste_carte_5[i])== "Catherine Dubois" || get_carte_nom(liste_carte_5[i])== "Anne-Laure Ligozat" || get_carte_nom(liste_carte_5[i])== "Guillaume Burel" || get_carte_nom(liste_carte_5[i])== "Christophe Mouilleron" || get_carte_nom(liste_carte_5[i])== "Thomas Lim" || get_carte_nom(liste_carte_5[i])== "Julien Forest" || get_carte_nom(liste_carte_5[i])== "Dimitri Watel" ) {
+            drapeau_spe=1;
+            break;
+        }
+    } 
+
+
+    if (drapeau_spe) {
+        carte tempCarte;
+        int tempInt;
+    
+        for (i=0;i<50;i++) {//on mélange la liste 50 fois
+            random=rand() % indice;
+            newrandom=rand() % indice;
+
+            if (random==newrandom) { //on mélange forcément
+                newrandom = (newrandom+1)%indice;
+            }
+
+            tempCarte = liste_carte_5[random];
+            tempInt = liste_faction_5[random];
+
+            liste_carte_5[random]=liste_carte_5[newrandom];
+            liste_faction_5[random]=liste_faction_5[newrandom];
+
+            liste_carte_5[newrandom]=tempCarte;
+            liste_faction_5[newrandom]=tempInt;
+        
+    
+            int ligne_début = get_plateau_carte_premier(_plateau)[0];
+            int colonne_début = get_plateau_carte_premier(_plateau)[1];
+
+            for (i=0; i<indice; i++) {
+                set_plateau_case(_plateau,ligne_début,colonne_début-i,liste_carte[i],liste_faction[i],0);
+            }
+        }
+    }
+    else {//on supprime les cartes du plateau 
+        int l=0; //indice de parcours de memo_indice
+        int compteur=0; //compte l'occurence d'une carte retournée, que l'on va comparer à l'élement de memo_indice
+        
+        for (i=0;i<1000;i++) {  
+            for (j=0;j<1000;j++) {  
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+
+                    if (compteur==memo_indice[l] && memo_indice[l]!=NULL ){
+                        set_case_etat(get_plateau_case(_plateau,i,j), -1);
+                        l++;
+                    }
+                    compteur++;
+                }
+        }
+    }
+
+    }
+
+
 }
 
 /*

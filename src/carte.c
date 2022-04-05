@@ -250,7 +250,7 @@ void EcologIIE_F(faction _faction, plateau _plateau) {
             }
         }
     }
-    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+total) ;//TODO setter 
+    set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+total) ;
 }
 
 
@@ -278,7 +278,49 @@ Supprime ensuite la première et la dernière ligne du plateau->
 Sinon la faction qui a posé cette carte gagne 5 points DDRS
 */
 void Soiree_sans_alcool_F(faction _faction, plateau _plateau) {
+    int i,j;
+    int drapeau_alcool = 0;
+ 
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "Alcool") {
+                drapeau_alcool=1;
+                break;
+            }
+        }
+    }
 
+    if (drapeau_alcool) {
+        int colonne = get_plateau_carte_premier(_plateau)[1];
+        int ligne = get_plateau_carte_premier(_plateau)[0];
+
+        for (j=0;j<1000;j++) { //suppression de la ligne
+            if (get_plateau_case(_plateau,ligne,j)!= NULL){
+                set_case_etat( get_plateau_case(_plateau,ligne,j) , -1 );
+            }
+        }
+
+        for (i=0;i<1000;i++) { //suppression de la colonne
+            if (get_plateau_case(_plateau,i,colonne)!= NULL){
+                set_case_etat( get_plateau_case(_plateau,i,colonne) , -1 );
+            }
+        }
+
+        for (i=0;i<1000;i++) {  //plateau de taille 1000
+            for (j=0;j<1000;j++) {  
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "FC") || (get_plateau_carte_nom(_plateau,i,j) == "FISE") || (get_plateau_carte_nom(_plateau,i,j) == "FISA") )) {
+                    set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
+                }
+            }
+        }
+    }
+
+    
+
+    else {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+5);
+    }
+    
     
 }
 
@@ -332,6 +374,10 @@ void Cafe_F(faction _faction, plateau _plateau) {
     }
     else {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)-1);
+
+        if (get_faction_nombre_points_DDRS(_faction)<0) {
+            set_faction_nombre_points_DDRS(_faction,0); //pas de points négatifs
+        }
     }
     
 }
@@ -365,6 +411,10 @@ void The_F(faction _faction, plateau _plateau) {
         }
         else {
             set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)-1);
+
+            if (get_faction_nombre_points_DDRS(_faction)<0) {
+            set_faction_nombre_points_DDRS(_faction,0); //pas de points négatifs
+            }
         }
         
 }
@@ -385,7 +435,18 @@ void Ecocup_F() {
 */
 void Reprographie_F(faction _faction, plateau _plateau) {
 
-    
+
+
+
+
+
+
+
+
+
+    if (get_faction_nombre_points_DDRS(_faction)<0) {
+        set_faction_nombre_points_DDRS(_faction,0); //pas de points négatifs
+    }
 }
 
 /*
@@ -445,7 +506,17 @@ void Parcours_sobriete_numerique_F(faction _faction, plateau _plateau) {
 */
 void Heures_supplementaires(faction _faction, plateau _plateau) {
 
-    
+
+
+
+
+
+
+
+
+    if (get_faction_nombre_points_DDRS(_faction)<0) {
+        set_faction_nombre_points_DDRS(_faction,0); //pas de points négatifs
+    }
 }
 
 
@@ -520,8 +591,38 @@ supprimez toutes les cartes de la ligne et de la colonne où est posée cette ca
 Sinon la faction qui a posé cette carte gagne 1 point DDRS par carte Catherine Dubois, 
 Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest et Dimitri Watel retournée sur le plateau
 */
-void Fetia_Bannour_F(faction _faction, plateau _plateau) {
+void Fetia_Bannour_F(faction _faction, plateau _plateau, int ligne, int colonne) {
+    int i,j;
+    int drapeau_heures_supp = 0;
+    int total_carte_spe = 0;
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_tableau_carte_nom(_plateau,i,j) == "Heures supplémentaires") {
+                drapeau_heures_supp=1;
+            }
+            if ((get_plateau_carte_nom(_plateau,i,j) == "Catherine Dubois") || (get_plateau_carte_nom(_plateau,i,j) == "Dimitri Watel")  || (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest") || (get_plateau_carte_nom(_plateau,i,j) == "Thomas Lim") || (get_plateau_carte_nom(_plateau,i,j) == "Anne-Laure Ligozat") || (get_plateau_carte_nom(_plateau,i,j) == "Guillaume Burel") || (get_plateau_carte_nom(_plateau,i,j) == "Christophe Mouilleron")) {
+                total_carte_spe++;
+            }
+        }
+    }
 
+    if (drapeau_heures_supp) {
+        for (j=0;j<1000;j++) { //suppression de la ligne
+            if (get_plateau_case(_plateau,ligne,j)!= NULL){
+                set_case_etat( get_plateau_case(_plateau,ligne,j) , -1 );
+            }
+        }
+
+        for (i=0;i<1000;i++) { //suppression de la ligne
+            if (get_plateau_case(_plateau,i,colonne)!= NULL){
+                set_case_etat( get_plateau_case(_plateau,i,colonne) , -1 );
+            }
+        }
+    }
+
+    else {
+        set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+total_carte_spe);
+    }
     
 }
 
@@ -536,7 +637,27 @@ void Fetia_Bannour_F(faction _faction, plateau _plateau) {
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
 void Catherine_Dubois_F(faction _faction, plateau _plateau, int ligne, int colonne) {
-
+    
+//carte la plus à gauche
+    int ligneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[0];
+    int colonneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[1];
+    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+//carte la plus à droite
+    int ligned = get_plateau_carte_droite(_plateau,ligne,colonne)[0];
+    int colonned = get_plateau_carte_droite(_plateau,ligne,colonne)[1];
+    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+//carte la plus en haut
+    int ligneh = get_plateau_carte_haut(_plateau,ligne,colonne)[0];
+    int colonneh = get_plateau_carte_haut(_plateau,ligne,colonne)[1];
+    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+//carte la plus en bas
+    int ligneb = get_plateau_carte_bas(_plateau,ligne,colonne)[0];
+    int colonneb = get_plateau_carte_bas(_plateau,ligne,colonne)[1];
+    set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
     
 }
 
@@ -547,7 +668,28 @@ void Catherine_Dubois_F(faction _faction, plateau _plateau, int ligne, int colon
 la faction qui a posé cette carte gagne 3 points DDRS et la dernière carte non retournée du plateau est supprimée
 */
 void Anne_Laure_Ligozat_F(faction _faction, plateau _plateau) {
+    int nb_carte_retournée = 0;
+    int i,j;
 
+    for (i=0;i<1000;i++) {  //plateau de taille 1000
+        for (j=0;j<1000;j++) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "EcologIIE") || (get_plateau_carte_nom(_plateau,i,j) == "Ecocup") || (get_plateau_carte_nom(_plateau,i,j) == "Isolation du bâtiment") || (get_plateau_carte_nom(_plateau,i,j) == "Isolation du bâtiment") )) {
+                nb_carte_retournée+=1; 
+            }
+        }
+    }
+    set_faction_nombre_points_DDRS(_faction, get_faction_nombre_points_DDRS(_faction) + 3*nb_carte_retournée);
+
+    for (i=1000;i>0;i--) {  //on décrémente car on part de la fin du plateau
+        for (j=1000;j>0;j--) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
+
+                set_case_etat(get_plateau_case(_plateau,i,j),-1);
+                return; //arrêt total de la fonction
+
+            }
+        }
+    }
     
 }
 
@@ -561,9 +703,23 @@ void Anne_Laure_Ligozat_F(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel_F(faction _faction, plateau _plateau) {
+void Guillaume_Burel_F(faction _faction, faction _faction_oppose, plateau _plateau) {
 
-    
+    if (get_faction_nombre_points_DDRS(_faction_oppose) > get_faction_nombre_points_DDRS(_faction) ) {
+
+        
+
+        if (get_faction_nombre_points_DDRS(_faction_oppose)<3) {
+            set_faction_nombre_points_DDRS(_faction, get_faction_nombre_points_DDRS(_faction) + get_faction_nombre_points_DDRS(_faction_oppose));
+            set_faction_nombre_points_DDRS(_faction_oppose,0); 
+        }
+
+        else {
+            set_faction_nombre_points_DDRS(_faction_oppose, get_faction_nombre_points_DDRS(_faction_oppose) - 3);
+            set_faction_nombre_points_DDRS(_faction, get_faction_nombre_points_DDRS(_faction) + 3);
+        }
+
+    }
 }
 
 /*
@@ -630,6 +786,9 @@ void Thomas_Lim_F(faction _faction, faction _faction_oppose, plateau _plateau) {
 
     else { 
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)-nb_FISE);
+        if (get_faction_nombre_points_DDRS(_faction_oppose)<0) {
+            set_faction_nombre_points_DDRS(_faction_oppose,0);
+        }
     }
     
 }
@@ -799,11 +958,14 @@ void Katrin_Salhab_F(faction _faction, plateau _plateau, int ligne, int colonne)
 }
 
 /*
-@requires faction valide
-@assigns rien
+@requires factions valides
+@assigns les points DDRS de la faction
 @ensures Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions
 */
-void Laurent_Prevel_F(faction _faction, plateau _plateau, int ligne, int colonne) {
+void Laurent_Prevel_F(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
 
+    if ( (ligne == get_plateau_carte_dernier(_plateau)[0]) && (colonne == get_plateau_carte_dernier(_plateau)[1] )) {
+        set_faction_nombre_points_DDRS( _faction, max( get_faction_nombre_points_DDRS(_faction) , get_faction_nombre_points_DDRS(_faction_oppose) ) + 100  );
+    }
     
 }

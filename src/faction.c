@@ -7,6 +7,7 @@ struct faction {
     pile main; /* type liste défini dans structure.h et structure.c */
     carte* pioche; /* type pile défini dans structure.h et structure.c */
     int option_remelanger; /* 0 si la faction n'a pas encore remélanger et 1 si la fonction a déjà remélanger */
+    int mache_gagne; /* nombre de manche gagnée par la faction 0, 1 ou 2 */
 };
 
 /*  @requires   une faction valide

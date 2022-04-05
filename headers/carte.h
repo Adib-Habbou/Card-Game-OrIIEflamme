@@ -6,6 +6,11 @@ typedef struct carte *carte;
 
 // GETTERS ET SETTERS 
 
+/*  @requires   rien
+    @assigns    rien
+    @ensures    renvoie la liste de toutes les cartes du jeu */
+carte* get_liste_carte();
+
 /*  @requires   une carte valide
     @assigns    rien
     @ensures    renvoie le nom de la carte */

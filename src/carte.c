@@ -124,6 +124,18 @@ carte* liste_carte = { &c_FISE, &c_FISA, &c_FC, &c_EcologIIE, &c_lIIEns, &c_Soir
 
 /*  @requires   rien
     @assigns    rien
+    @ensures    renvoie le nombre de carte dans liste_carte */
+int get_nombre_liste_carte() {
+    int nombre_liste_carte = 0;
+    carte* liste_carte = get_liste_carte();
+    for (int i = 0; i < NOMBRE_TYPES_CARTES; i++) {
+        nombre_liste_carte += get_carte_nombre_occurrences(liste_carte[i]);
+    }
+    return nombre_liste_carte;
+}
+
+/*  @requires   rien
+    @assigns    rien
     @ensures    renvoie la liste de toutes les cartes du jeu */
 carte* get_liste_carte() {
     return liste_carte;

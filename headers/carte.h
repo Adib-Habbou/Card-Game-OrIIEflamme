@@ -8,6 +8,11 @@ typedef struct carte *carte;
 
 /*  @requires   rien
     @assigns    rien
+    @ensures    renvoie le nombre de carte dans liste_carte */
+int get_nombre_liste_carte();
+
+/*  @requires   rien
+    @assigns    rien
     @ensures    renvoie la liste de toutes les cartes du jeu */
 carte* get_liste_carte();
 

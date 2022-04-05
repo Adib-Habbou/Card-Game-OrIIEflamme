@@ -1,6 +1,5 @@
+/* importation du module plateau */
 #include "../headers/plateau.h"
-
-#include <stddef.h>
 
 /* implémentation du type case */
 struct Case {
@@ -141,6 +140,13 @@ void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int 
     plateau->tab[ligne][colonne].carte = carte;
     plateau->tab[ligne][colonne].id_faction = id_faction;
     plateau->tab[ligne][colonne].etat = etat;
+}
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'id faction de la case */
+int get_case_id_faction(Case _case) {
+    _case->id_faction;
 }
 
 /*  @requires   un plateau valide et deux entiers

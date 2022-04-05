@@ -7,8 +7,7 @@
 /* importation du module faction */
 #include "faction.h"
 
-/* importation du module structure */
-#include "structure.h"
+#include <stddef.h>
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case *Case;
@@ -131,6 +130,11 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'id faction de la case */
+int get_case_id_faction(Case _case);
 
 /*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
     @assigns    plateau

@@ -1,10 +1,22 @@
 #ifndef CARTE_H  /* pour éviter des inclusions multiples */
 #define CARTE_H
 
+/* importation du module plateau */
+#include "plateau.h"
+
+#include<stddef.h>
+#include <time.h>
+#include <stdlib.h>
+
 /* définition du type abstrait des cartes */
 typedef struct carte *carte;
 
 // GETTERS ET SETTERS 
+
+/*  @requires   rien
+    @assigns    rien
+    @ensures    renvoie le nombre de carte dans liste_carte */
+int get_nombre_liste_carte();
 
 /*  @requires   rien
     @assigns    rien

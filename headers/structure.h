@@ -4,6 +4,9 @@
 /* importation du fichier pour avoir accès au type carte */
 #include "carte.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /*  implementation des piles avec des listes chaînées */
 typedef struct maillon *pile;
 

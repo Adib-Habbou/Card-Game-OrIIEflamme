@@ -115,39 +115,7 @@ carte c_Katrin_Salhab = { "Katrin Salhab", "Si les cartes Djibril-Aurélien Djem
 carte c_Laurent_Prevel = { "Laurent Prével", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", 1};
 
 // Liste de toutes les cartes
-carte* liste_carte;
-empile(liste_carte, c_FISE);
-empile(liste_carte, c_FISA);
-empile(liste_carte, c_FC);
-empile(liste_carte, c_EcologIIE);
-empile(liste_carte, c_lIIEns);
-empile(liste_carte, c_Soiree_sans_alcool);
-empile(liste_carte, c_Alcool);
-empile(liste_carte, c_Cafe);
-empile(liste_carte, c_The);
-empile(liste_carte, c_Ecocup);
-empile(liste_carte, c_Reprographie);
-empile(liste_carte, c_Isolation_du_batiment);
-empile(liste_carte, c_Parcours_sobriete_numérique);
-empile(liste_carte, c_Heures_supplementaires);
-empile(liste_carte, c_Kahina_Bouchama);
-empile(liste_carte, c_Kevin_Goilard);
-empile(liste_carte, c_Massinissa_Merabet);
-empile(liste_carte, c_Vitera_Y);
-empile(liste_carte, c_Jonas_Senizergues);
-empile(liste_carte, c_Fetia_Bannour);
-empile(liste_carte, c_Catherine_Dubois);
-empile(liste_carte, c_Anne_Laure_Ligozat);
-empile(liste_carte, c_Guillaume_Burel);
-empile(liste_carte, c_Christophe_Mouilleron);
-empile(liste_carte, c_Thomas_Lim);
-empile(liste_carte, c_Julien_Forest);
-empile(liste_carte, c_Dimitri_Watel);
-empile(liste_carte, c_Djibril_Aurelien_Dembele_Cabot);
-empile(liste_carte, c_Eric_Lejeune);
-empile(liste_carte, c_Lucienne_Pacave);
-empile(liste_carte, c_Katrin_Salhab);
-empile(liste_carte, c_Laurent_Prevel);
+carte* liste_carte = { c_FISE, c_FISA, c_FC, c_EcologIIE, c_lIIEns, c_Soiree_sans_alcool, c_Alcool, c_Cafe, c_The, c_Ecocup, c_Reprographie, c_Isolation_du_batiment, c_Parcours_sobriete_numérique, c_Heures_supplementaires, c_Kahina_Bouchama, c_Kevin_Goilard, c_Massinissa_Merabet, c_Vitera_Y, c_Jonas_Senizergues, c_Fetia_Bannour, c_Catherine_Dubois, c_Anne_Laure_Ligozat, c_Guillaume_Burel, c_Christophe_Mouilleron, c_Thomas_Lim, c_Julien_Forest, c_Dimitri_Watel, c_Djibril_Aurelien_Dembele_Cabot, c_Eric_Lejeune, c_Lucienne_Pacave, c_Katrin_Salhab, c_Laurent_Prevel};
 
 
 // GETTERS ET SETTERS

@@ -34,7 +34,7 @@ pile get_faction_main(faction faction) {
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie la pioche de la faction */
-pile get_faction_pioche(faction faction) {
+carte* get_faction_pioche(faction faction) {
     return faction->pioche;
 }
 

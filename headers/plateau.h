@@ -132,4 +132,9 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
 
+/*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
+    @assigns    plateau
+    @ensures    modifie la case du plateau */
+void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat);
+
 #endif

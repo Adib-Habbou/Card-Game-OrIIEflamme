@@ -134,6 +134,15 @@ faction get_case_faction(Case _case) {
     return factions[_case.id_faction];
 }
 
+/*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
+    @assigns    plateau
+    @ensures    modifie la case du plateau */
+void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat) {
+    plateau->tab[ligne][colonne].carte = carte;
+    plateau->tab[ligne][colonne].id_faction = id_faction;
+    plateau->tab[ligne][colonne].etat = etat;
+}
+
 /*  @requires   un plateau valide et deux entiers
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */

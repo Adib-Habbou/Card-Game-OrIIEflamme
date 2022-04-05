@@ -6,7 +6,7 @@
 struct Case {
     carte carte; // carte posée sur la case en question
     int id_faction; // 0 ou 1 qui détermine la faction qui a posée la carte
-    int etat; // 0 si la carte est face cachée ou 1 si elle est face visible
+    int etat; // 0 si la carte est face cachée ou 1 si elle est face visible ou -1 si la carte est retiré
 };
 
 /* implémentation du type plateau */
@@ -32,6 +32,11 @@ int get_case_etat(Case _case) {
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
+    if (etat == -1) {
+        _case.carte = NULL;
+        _case.id_faction = NULL;
+        _case.etat = NULL;
+    }
     _case.etat = etat;
 }
 

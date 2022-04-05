@@ -7,6 +7,9 @@
 /* importation du module carte */
 #include "carte.h"
 
+/* importation du module plateau */
+#include "plateau.h"
+
 /* définition du type abstrait des factions */
 typedef struct faction *faction;
 
@@ -90,17 +93,17 @@ pile get_faction_main(faction faction);
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie la pioche de la faction */
-pile get_faction_pioche(faction faction);
+carte* get_faction_pioche(faction faction);
 
 /*  @requires   une faction valide
     @assigns    faction
     @ensures    renvoie l'option remelanger */
-int get_faction_option_remelanger();
+int get_faction_option_remelanger(faction faction);
 
 /*  @requires   une faction valide
     @assigns    faction
     @ensures    renvoie le nombre de manches gagnées */
-int get_faction_manches_gagnees();
+int get_faction_manches_gagnees(faction faction);
 
 /*  @requires   une faction valide et un chaîne de caractères
     @assigns    faction

@@ -87,8 +87,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
         }
         ligne_bis += 1;
     }
-    return (ligne_bis, colonne)
-
+    return (ligne_bis, colonne);
 }
 
 
@@ -104,8 +103,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
         }
         colonne_bis -= 1;
     }
-    return (ligne, colonne_bis)
-
+    return (ligne, colonne_bis);
 }
 
 /*  @requires   un plateau valide et deux entiers

@@ -7,6 +7,9 @@
 /* importation du module carte */
 #include "carte.h"
 
+/* importation du module plateau */
+#include "plateau.h"
+
 /* définition du type abstrait des factions */
 typedef struct faction *faction;
 

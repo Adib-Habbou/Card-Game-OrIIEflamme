@@ -11,7 +11,7 @@
 #include "structure.h"
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
-typedef struct Case Case;
+typedef struct Case *Case;
 
 /* implémentation du type abstrait plateau */
 typedef struct plateau *plateau;
@@ -33,7 +33,7 @@ void libere_plateau(plateau plateau);
     @assigns    rien
     @ensures    renvoie 1 si il initialise une nouvelle manche de jeu
                 renvoie 0 si le jeu est terminé */
-int init_manche(plateau plateau, faction* liste_faction);
+int init_manche(plateau plateau, faction* factions);
 
 /*  @requires   rien
     @assigns    rien

@@ -7,7 +7,7 @@
 typedef struct maillon {
     carte sommet; // la valeur du premier maillon représente le sommet de la pile
     struct maillon *suivant;
-} *pile;
+};
 
 /*  @requires rien
     @assigns rien

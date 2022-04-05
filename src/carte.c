@@ -117,7 +117,7 @@ carte c_Katrin_Salhab = { "Katrin Salhab", "Si les cartes Djibril-Aurélien Djem
 carte c_Laurent_Prevel = { "Laurent Prével", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", 1};
 
 // Liste de toutes les cartes
-carte* liste_carte = { c_FISE, c_FISA, c_FC, c_EcologIIE, c_lIIEns, c_Soiree_sans_alcool, c_Alcool, c_Cafe, c_The, c_Ecocup, c_Reprographie, c_Isolation_du_batiment, c_Parcours_sobriete_numérique, c_Heures_supplementaires, c_Kahina_Bouchama, c_Kevin_Goilard, c_Massinissa_Merabet, c_Vitera_Y, c_Jonas_Senizergues, c_Fetia_Bannour, c_Catherine_Dubois, c_Anne_Laure_Ligozat, c_Guillaume_Burel, c_Christophe_Mouilleron, c_Thomas_Lim, c_Julien_Forest, c_Dimitri_Watel, c_Djibril_Aurelien_Dembele_Cabot, c_Eric_Lejeune, c_Lucienne_Pacave, c_Katrin_Salhab, c_Laurent_Prevel };
+carte* liste_carte = { &c_FISE, &c_FISA, &c_FC, &c_EcologIIE, &c_lIIEns, &c_Soiree_sans_alcool, &c_Alcool, &c_Cafe, &c_The, &c_Ecocup, &c_Reprographie, &c_Isolation_du_batiment, &c_Parcours_sobriete_numerique, &c_Heures_supplementaires, &c_Kahina_Bouchama, &c_Kevin_Goilard, &c_Massinissa_Merabet, &c_Vitera_Y, &c_Jonas_Senizergues, &c_Fetia_Bannour, &c_Catherine_Dubois, &c_Anne_Laure_Ligozat, &c_Guillaume_Burel, &c_Christophe_Mouilleron, &c_Thomas_Lim, &c_Julien_Forest, &c_Dimitri_Watel, &c_Djibril_Aurelien_Dembele_Cabot, &c_Eric_Lejeune, &c_Lucienne_Pacave, &c_Katrin_Salhab, &c_Laurent_Prevel };
 
 
 // GETTERS ET SETTERS

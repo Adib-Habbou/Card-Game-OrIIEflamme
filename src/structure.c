@@ -20,7 +20,7 @@ pile pile_vide() {
     @assigns rien
     @ensures renvoie 1 si la pile est vide ou 0 sinon */
 int pile_est_vide(pile pile) {
-    return (pile == NULL);
+    return pile == NULL;
 }
 
 /*  @requires une pile valide
@@ -33,7 +33,7 @@ carte pile_sommet(pile pile) {
 /*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
-void empile(pile* _pile, carte carte) {
+void empile(pile _pile, carte carte) {
     // on alloue la mémoire nécessaire à la variable res
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
@@ -42,21 +42,21 @@ void empile(pile* _pile, carte carte) {
     }
     // on empile la carte
     res->sommet = carte;
-    res->suivant = *_pile;
-    *_pile = res;
+    res->suivant = _pile;
+    _pile = res;
 }
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
     @ensures supprime la carte au sommet de la pile */
-void depile(pile* pile) {
+void depile(pile pile) {
     // on vérifie que la pile n'est pas vide
-    if(*pile == NULL) {
+    if (pile == NULL) {
         exit(1);
     }
     // on supprime le sommet de la pile
-    carte sommet = (*pile)->sommet;
-    (*pile) = (*pile)->suivant;
+    carte sommet = pile->sommet;
+    pile = pile->suivant;
     // on libère la mémoire du sommet supprimé
     free(sommet);
 }

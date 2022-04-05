@@ -42,7 +42,7 @@ carte* get_faction_pioche(faction faction) {
     @assigns    faction
     @ensures    renvoie l'option remelanger */
 int get_faction_option_remelanger(faction faction) {
-    return faction->option_remlanger;
+    return faction->option_remelanger;
 }
 
 /*  @requires   une faction valide
@@ -117,8 +117,8 @@ void melanger_pioche(faction _faction){
 
 void repiocher(faction _faction){
     int* liste_index;
-    int size_liste_index = NOMBRE_DE_TYPE_DE_CARTE;
-    for(int i = 0; i < NOMBRE_DE_TYPE_DE_CARTE; i++){
+    int size_liste_index = NOMBRE_TYPES_CARTES;
+    for(int i = 0; i < NOMBRE_TYPES_CARTES; i++){
         liste_index[i] = i;
     }
     for(int i = 0; i < NOMBRE_CARTES_MAIN_INITIAL; i++){

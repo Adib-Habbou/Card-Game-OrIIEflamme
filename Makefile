@@ -12,4 +12,4 @@ test.o : src/test.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 test : $(OBJETS) obj/test.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ -lcunit

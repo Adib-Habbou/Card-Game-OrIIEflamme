@@ -166,9 +166,17 @@ int init_manche(plateau _plateau, faction* _factions){
             winner = i;
         }
     }
-    if(get)
-    //tire carte
-    // 1 si fin 0 sinon
+    if(maxddrs == 0 && winner == 0){
+        set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
+    }
+    if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+        return 1;
+    }
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
+        remelanger(_factions[i]);
+    }
+    libere_plateau(_plateau);
+    _plateau = init_plateau();
 }
 
 faction* liste_faction(){

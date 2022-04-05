@@ -34,8 +34,8 @@ int get_case_etat(Case _case) {
 void set_case_etat(Case _case, int etat) {
     if (etat == -1) {
         _case.carte = NULL;
-        _case.id_faction = -1;
-        _case.etat = -1;
+        _case.id_faction = NULL;
+        _case.etat = NULL;
     }
     _case.etat = etat;
 }

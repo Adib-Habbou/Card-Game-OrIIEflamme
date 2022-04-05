@@ -13,3 +13,6 @@ test.o : src/test.c
 
 test : $(OBJETS) obj/test.o
 	$(CC) -o $@ $^ -lcunit
+
+clean:
+	rm -rf obj/*.o

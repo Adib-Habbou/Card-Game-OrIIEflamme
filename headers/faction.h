@@ -99,8 +99,8 @@ int get_faction_option_remelanger();
 
 /*  @requires   une faction valide
     @assigns    faction
-    @ensures    renvoie le nombre de manche gagnée */
-int get_faction_mache_gange();
+    @ensures    renvoie le nombre de manches gagnées */
+int get_faction_manches_gagnees();
 
 /*  @requires   une faction valide et un chaîne de caractères
     @assigns    faction
@@ -129,7 +129,7 @@ void set_faction_option_remelanger(faction faction, int option_remelanger);
 
 /*  @requires   une faction valide et un entier
     @assigns    faction
-    @ensures    modifie le nombre de manche gagnée de la faction */
-void set_faction_mache_gange(faction faction, int manche_gagne);
+    @ensures    modifie le nombre de manches gagnées de la faction */
+void set_faction_manches_gagnees(faction faction, int manches_gagnees);
 
 #endif

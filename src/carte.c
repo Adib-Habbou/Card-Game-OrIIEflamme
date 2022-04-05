@@ -1,13 +1,5 @@
-
-/* importation du module plateau */
-#include "../headers/plateau.h"
-
-/* importation du module structure */
-#include "../headers/structure.h"
-
-#include<stddef.h>
-#include <time.h>
-#include <stdlib.h>
+/* importation du module carte */
+#include "../headers/carte.h"
 
 /* définition de la structure des cartes */
 struct carte {

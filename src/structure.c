@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+/* importation du module structure */
 #include "../headers/structure.h"
 
 /*  implementation des piles avec des listes chaînées */

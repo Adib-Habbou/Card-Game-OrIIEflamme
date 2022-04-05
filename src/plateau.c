@@ -133,7 +133,7 @@ faction get_case_faction(Case _case) {
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
-    return get_carte_nom(plateau->tab[ligne][colonne]);
+    return get_carte_nom(plateau->tab[ligne][colonne].carte);
 }
 
 plateau init_plateau(){
@@ -152,7 +152,16 @@ void libere_plateau(plateau _plateau){
     free(_plateau->tab);
 }
 
-int init_manche(plateau _plateau){
+int init_manche(plateau _plateau, faction* _factions){
+    int winner = 0;
+    int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
+    for(int i = 1; i < NOMBRE_JOUEURS; i++){
+        if(maxddrs < get_faction_nombre_points_DDRS(_factions[i])){
+            maxddrs = get_faction_nombre_points_DDRS(_factions[i]);
+            winner = i;
+        }
+    }
+    if(get)
     //tire carte
     // 1 si fin 0 sinon
 }

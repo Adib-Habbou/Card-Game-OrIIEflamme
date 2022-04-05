@@ -18,11 +18,12 @@ int main(){
             // Affichage la main de la faction i dans la console
             affiche_main(_factions[i]);
             // Demande à la faction actuelle si elle veut utiliser son option permettant de repiocher
-            decision();
-            // Renvoie 1 si l'option remélanger a été utilisée, 0 autrement 
-            if(test_remelanger(_factions[i]))
-            // Remelange les cartes de la fonction
-                remelanger(_factions[i]);
+            if(decision()){
+                // Renvoie 1 si l'option remélanger a été utilisée, 0 autrement 
+                if(test_remelanger(_factions[i]))
+                    // Remelange les cartes de la fonction
+                    remelanger(_factions[i]);
+            }
         }
 
         // Phase 1 :

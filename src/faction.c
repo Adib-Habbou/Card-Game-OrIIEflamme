@@ -7,7 +7,7 @@ struct faction {
     pile main; /* type liste défini dans structure.h et structure.c */
     carte* pioche; /* type pile défini dans structure.h et structure.c */
     int option_remelanger; /* 0 si la faction n'a pas encore remélanger et 1 si la fonction a déjà remélanger */
-    int mache_gagne; /* nombre de manche gagnée par la faction 0, 1 ou 2 */
+    int manches_gagnees; /* nombre de manche gagnée par la faction 0, 1 ou 2 */
 };
 
 /*  @requires   une faction valide
@@ -47,9 +47,9 @@ int get_faction_option_remelanger() {
 
 /*  @requires   une faction valide
     @assigns    faction
-    @ensures    renvoie le nombre de manche gagnée */
-int get_faction_mache_gange() {
-    return faction->manche_gagne;
+    @ensures    renvoie le nombre de manches gagnées */
+int get_faction_manches_gagnees() {
+    return faction->manches_gagnees;
 }
 
 /*  @requires   une faction valide et un entier
@@ -82,9 +82,9 @@ void set_faction_option_remelanger(faction faction, int option_remelanger) {
 
 /*  @requires   une faction valide et un entier
     @assigns    faction
-    @ensures    modifie le nombre de manche gagnée de la faction */
-void set_faction_mache_gange(faction faction, int manche_gagne) {
-    faction->manche_gagne = manche_gagne;
+    @ensures    modifie le nombre de manches gagnées de la faction */
+void set_faction_manches_gagnees(faction faction, int manches_gagnees) {
+    faction->manches_gagnees = manches_gagnees;
 }
 
 int test_remelanger(faction _faction){

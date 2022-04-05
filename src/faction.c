@@ -41,14 +41,14 @@ pile get_faction_pioche(faction faction) {
 /*  @requires   une faction valide
     @assigns    faction
     @ensures    renvoie l'option remelanger */
-int get_faction_option_remelanger() {
+int get_faction_option_remelanger(faction faction) {
     return faction->option_remlanger;
 }
 
 /*  @requires   une faction valide
     @assigns    faction
     @ensures    renvoie le nombre de manches gagnées */
-int get_faction_manches_gagnees() {
+int get_faction_manches_gagnees(faction faction) {
     return faction->manches_gagnees;
 }
 

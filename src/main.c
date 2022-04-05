@@ -12,7 +12,7 @@ int main(){
     affiche_plateau(_plateau);
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_plateau) != 0){
+    while(init_manche(_plateau, _factions) != 0){
         // Initialisation des joueurs
         for(int i = 0; i < 2; i++){
             // Affichage la main de la faction i dans la console

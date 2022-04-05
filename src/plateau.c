@@ -157,9 +157,26 @@ void libere_plateau(plateau _plateau){
     free(_plateau->tab);
 }
 
-int init_manche(plateau _plateau){
-    //tire carte
-    // 1 si fin 0 sinon
+int init_manche(plateau _plateau, faction* _factions){
+    int winner = 0;
+    int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
+    for(int i = 1; i < NOMBRE_JOUEURS; i++){
+        if(maxddrs < get_faction_nombre_points_DDRS(_factions[i])){
+            maxddrs = get_faction_nombre_points_DDRS(_factions[i]);
+            winner = i;
+        }
+    }
+    if(maxddrs == 0 && winner == 0){
+        set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
+    }
+    if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+        return 1;
+    }
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
+        remelanger(_factions[i]);
+    }
+    libere_plateau(_plateau);
+    _plateau = init_plateau();
 }
 
 faction* liste_faction(){

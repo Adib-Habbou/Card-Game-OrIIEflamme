@@ -33,7 +33,7 @@ void libere_plateau(plateau plateau);
     @assigns    rien
     @ensures    renvoie 1 si il initialise une nouvelle manche de jeu
                 renvoie 0 si le jeu est terminé */
-int init_manche(plateau plateau);
+int init_manche(plateau plateau, faction* liste_faction);
 
 /*  @requires   rien
     @assigns    rien

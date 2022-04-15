@@ -2,7 +2,7 @@
 #include "../headers/structure.h"
 
 /*  implementation des piles avec des listes chaînées */
-typedef struct maillon {
+struct maillon {
     carte sommet; // la valeur du premier maillon représente le sommet de la pile
     struct maillon *suivant;
 };
@@ -53,10 +53,7 @@ void depile(pile pile) {
         exit(1);
     }
     // on supprime le sommet de la pile
-    carte sommet = pile->sommet;
     pile = pile->suivant;
-    // on libère la mémoire du sommet supprimé
-    free(sommet);
 }
 
 /*  @requires une pile valide

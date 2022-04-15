@@ -102,7 +102,7 @@ int get_faction_manches_gagnees(faction faction);
 /*  @requires   une faction valide et un chaîne de caractères
     @assigns    faction
     @ensures    modifie le nom de la faction */
-void set_faction_nom(faction faction, char nom);
+void set_faction_nom(faction faction, char* nom);
 
 /*  @requires   une faction valide et un entier
     @assigns    faction

@@ -70,7 +70,7 @@ void set_faction_main(faction faction, pile main) {
 /*  @requires   une faction valide et une pile
     @assigns    faction
     @ensures    modifie la pioche de la faction */
-void set_faction_pioche(faction faction, pile pioche) {
+void set_faction_pioche(faction faction, carte* pioche) {
     faction->pioche = pioche;
 }
 

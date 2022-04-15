@@ -380,7 +380,7 @@ void Alcool(plateau _plateau, int ligne, int colonne) {
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(plateau _plateau) {
+void Cafe(faction _faction, plateau _plateau) {
     int i,j;
     int drapeau_Ecocup = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -388,8 +388,8 @@ void Cafe(plateau _plateau) {
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0)) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
             }
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup"))) {
-           ) == 0 )     drapeau_Ecocup = 1;
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
+                drapeau_Ecocup = 1;
             }
         }
     }

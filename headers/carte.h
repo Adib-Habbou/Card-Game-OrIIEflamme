@@ -117,7 +117,7 @@ void Alcool(plateau _plateau, int ligne, int colonne) ;
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(plateau _plateau);
+void Cafe(faction _faction, plateau _plateau);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -354,7 +354,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
 @assigns le plateau
 @ensures Supprimez du plateau toutes les cartes qui touchent cette carte Alcool
 */
-void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) {
+void Alcool(plateau _plateau, int ligne, int colonne) {
 
     if (get_plateau_case(_plateau,ligne+1,colonne) != NULL) {
         set_case_etat(get_plateau_case(_plateau,ligne+1,colonne),-1);
@@ -380,7 +380,7 @@ void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) {
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(faction _faction, plateau _plateau) {
+void Cafe(plateau _plateau) {
     int i,j;
     int drapeau_Ecocup = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -529,7 +529,7 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
 @assigns le plateau
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
-void Parcours_sobriete_numerique(faction _faction, plateau _plateau) {
+void Parcours_sobriete_numerique(plateau _plateau) {
     int ligne;
     for (ligne = 0;ligne <TAILLE_PLATEAU; ligne++) {
         int ligne1 = get_plateau_carte_gauche(_plateau,ligne,1)[0];
@@ -574,7 +574,7 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
 @assigns le plateau
 @ensures Supprimez une carte non retournée du plateau choisie au hasard
 */
-void Kahina_Bouchama(faction _faction, plateau _plateau) {
+void Kahina_Bouchama(plateau _plateau) {
     int i,j;
     int* liste_ligne_carte_verso;
     int* liste_colonne_carte_verso;
@@ -648,7 +648,7 @@ void Massinissa_Merabet(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS d'une faction
 @ensures La faction qui a le moins de points DDRS gagne 3 points DDRS
 */
-void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau) {
+void Vitera_Y(faction _faction, faction _faction_oppose) {
     if (get_faction_nombre_points_DDRS(_faction) > get_faction_nombre_points_DDRS(_faction_oppose)) {
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)+3);
     }
@@ -669,7 +669,7 @@ void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau) {
 @assigns le plateau
 @ensures Supprimez toutes les cartes Heures supplémentaires retournées du plateau
 */
-void Jonas_Senizergues(faction _faction, plateau _plateau) {
+void Jonas_Senizergues(plateau _plateau) {
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
@@ -841,7 +841,7 @@ void Christophe_Mouilleron(plateau _plateau) {
         
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") != 0) && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") != 0) ) ) {
+            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") != 0) && (strcmp(get_plateau_carte_nom(_plateau,i,j),"Heures supplémentaires")!=0) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1);
              }
         }
@@ -1183,7 +1183,13 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
 void Laurent_Prevel(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
 
     if ( (ligne == get_plateau_carte_dernier(_plateau)[0]) && (colonne == get_plateau_carte_dernier(_plateau)[1] )) {
-        set_faction_nombre_points_DDRS( _faction, max( get_faction_nombre_points_DDRS(_faction) , get_faction_nombre_points_DDRS(_faction_oppose) ) + 100  );
+
+        if (get_faction_nombre_points_DDRS(_faction) > get_faction_nombre_points_DDRS(_faction_oppose)) {
+            set_faction_nombre_points_DDRS( _faction, get_faction_nombre_points_DDRS(_faction) + 100  );
+        }
+        else {
+            set_faction_nombre_points_DDRS( _faction, get_faction_nombre_points_DDRS(_faction_oppose) + 100  );
+        }
     }
     
 }

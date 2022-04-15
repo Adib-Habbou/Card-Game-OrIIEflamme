@@ -13,8 +13,7 @@ struct plateau {
     Case** tab; // matrice de cases de taille 1000 x 1000
 };
 
-/* variable globale de la dernière carte retrounée sur le plateau */
-carte derniere_carte_retrounee;
+
 
 /*  @requires   une case valide
     @assigns    rien
@@ -273,7 +272,7 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "Vitéra Y") == 0){
         Vitera_Y(_factions[_case->id_faction], _factions[1 - _case->id_faction]);
     }else if(strcmp(get_carte_nom(_case->carte), "Massinissa Merabet") == 0){
-        Massinissa_Merabet(_factions[_case->id_faction], _plateau);
+        Massinissa_Merabet(_factions[_case->id_faction],_factions[1-_case->id_faction], _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(_case->carte), "Jonas Senizergues") == 0){
         Jonas_Senizergues(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Fetia Bannour") == 0){

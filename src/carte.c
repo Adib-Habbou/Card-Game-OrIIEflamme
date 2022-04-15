@@ -8,7 +8,8 @@ struct carte {
     char* description;
     int nombre_occurrences;
 };
-
+/* variable globale de la dernière carte retrounée sur le plateau */
+carte derniere_carte_retournee;
 
 // CONSTANTES ET VARIABLES GLOBALES 
 

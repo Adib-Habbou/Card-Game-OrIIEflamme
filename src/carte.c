@@ -296,7 +296,7 @@ void lIIEns(faction _faction, plateau _plateau) {
     int colonne_debut = get_plateau_carte_premier(_plateau)[1];
 
     for (i=0; i<indice; i++) {
-        set_plateau_case(_plateau,ligne_debut,colonne_debut-i,liste_carte[i],liste_faction[i],0);
+        set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
     }
 
 }
@@ -1068,10 +1068,10 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
         
     
             int ligne_debut = get_plateau_carte_premier(_plateau)[0];
-            int colonne_début = get_plateau_carte_premier(_plateau)[1];
+            int colonne_debut = get_plateau_carte_premier(_plateau)[1];
 
             for (i=0; i<indice; i++) {
-                set_plateau_case(_plateau,ligne_debut,colonne_début-i,liste_carte[i],liste_faction[i],0);
+                set_plateau_case(_plateau,ligne_debut,colonne_debut-i,liste_carte[i],liste_faction[i],0);
             }
         }
     }

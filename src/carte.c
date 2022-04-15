@@ -1038,7 +1038,7 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
     int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente
 
     for (i=0;i<5;i++){ 
-      (if (strcmp(get_carte_nom(liste_carte_5[i]), "Catherine Dubois") == 0 ) || strcmp( get_carte_nom(liste_carte_5[i]), "Anne-Laure Ligozat") == 0 ) || (  strcmp(get_carte_nom(liste_carte_5[i]), "Guillaume Burel")  == 0 ) || strcmp(get_carte_nom(liste_carte_5[i], "Christophe Mouilleron( st == 0 )rcmp" |)| get_carte_nom(liste_carte_5[i], "Thomas Lim( strcmp" || ge == 0 )t_carte)_nom(liste_carte_5[i], "Julien Forest( strcmp" || == 0 ) get_ca)rte_nom(liste_carte_5[i], "Dimitri Watel" ) {
+      if( (strcmp(get_carte_nom(liste_carte_5[i]), "Catherine Dubois") == 0 ) || (strcmp( get_carte_nom(liste_carte_5[i]), "Anne-Laure Ligozat") == 0 ) || (  strcmp(get_carte_nom(liste_carte_5[i]), "Guillaume Burel")  == 0 ) || (strcmp(get_carte_nom(liste_carte_5[i], "Christophe Mouilleron")) == 0 ) || (strcmp(get_carte_nom(liste_carte_5[i], "Thomas Lim")) == 0) || (strcmp(get_carte_nom(liste_carte_5[i], "Julien Forest")) == 0) || (strcmp(get_carte_nom(liste_carte_5[i], "Dimitri Watel" )) == 0)) {
             drapeau_spe=1;
             break;
         }
@@ -1111,14 +1111,14 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
 
 //parcours de la ligne
     for (i=0;i<1000;i++) {
-        if (get_( strcmpplateau_carte_nom(_plateau,i,colonne, "FISA") {
-            dra) == 0 )peau_FISA = 1;
+        if ( strcmp(get_plateau_carte_nom(_plateau,i,colonne, "FISA") ) == 0 ){
+            drapeau_FISA = 1;
         }
     }
 //parcours de la colonne
     for (i=0;i<1000;i++) {
-        if (get( strcmp_plateau_carte_nom(_plateau,ligne,i), "FISA") {
-            dra) == 0 )peau_FISA = 1;
+        if ( strcmp(get_plateau_carte_nom(_plateau,ligne,i), "FISA") == 0 ) {
+            drapeau_FISA = 1;
         }
     }
     }
@@ -1146,14 +1146,14 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     for(i=0;i<1000;i++){
         for(j=0;j<1000;j++){
 
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembel) == 0 )e-Cabeau") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembele-Cabeau") == 0 ) {
             drapeau_Djibril = 1;
             }
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") {
-       ) == 0 )     drapeau_Eric = 1;
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") == 0 ) {
+            drapeau_Eric = 1;
             }
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") {
-    ) == 0 )        drapeau_Lucienne = 1;
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") == 0 ) {
+            drapeau_Lucienne = 1;
             }
         }
         }

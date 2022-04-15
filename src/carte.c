@@ -232,8 +232,8 @@ void EcologIIE(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "FC") || (get_plateau_carte_nom(_plateau,i,j) == "FISE") || (get_plateau_carte_nom(_plateau,i,j) == "FISA") )) {
-                total+=1; 
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") || (( strcmpget_plat == 0 )eau_car)te_nom(_plateau,i,j), "FISE") || (( strcmpget_pl == 0 )ateau_c)arte_nom(_plateau,i,j), "FISA") )) {
+            ) == 0 )    total+=1; 
             }
         }
     }
@@ -260,8 +260,8 @@ void lIIEns(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "FC") || (get_plateau_carte_nom(_plateau,i,j) == "FISE") || (get_plateau_carte_nom(_plateau,i,j) == "FISA") )) {
-                
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") || (( strcmpget_plat == 0 )eau_car)te_nom(_plateau,i,j), "FISE") || (( strcmpget_pl == 0 )ateau_c)arte_nom(_plateau,i,j), "FISA") )) {
+            ) == 0 )    
                 liste_carte[indice]= get_case_carte(get_plateau_case(_plateau,i,j));
                 liste_faction[indice]=get_case_id_faction(get_plateau_case(_plateau,i,j));
                 indice++; //on a ajouté la carte à la liste qui va permettre de reposer les cartes
@@ -315,7 +315,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
  
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Alcool" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Alcool" && get_case_etat) == 0 )(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_alcool=1;
                 break;
             }
@@ -340,8 +340,8 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "FC") || (get_plateau_carte_nom(_plateau,i,j) == "FISE") || (get_plateau_carte_nom(_plateau,i,j) == "FISA") )) {
-                    set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") || (( strcmpget_plat == 0 )eau_car)te_nom(_plateau,i,j), "FISE") || (( strcmpget_pl == 0 )ateau_c)arte_nom(_plateau,i,j), "FISA") )) {
+            ) == 0 )        set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
                 }
             }
         }
@@ -392,11 +392,11 @@ void Cafe(faction _faction, plateau _plateau) {
     int drapeau_Ecocup = 0;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Thé") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
-                set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Thé") || (( strcmpget_pla == 0 )teau_ca)rte_nom(_plateau,i,j), "Alcool")) ) {
+          ) == 0 )      set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
             }
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
-                drapeau_Ecocup = 1;
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup"))) {
+           ) == 0 )     drapeau_Ecocup = 1;
             }
         }
     }
@@ -429,11 +429,11 @@ void The(faction _faction, plateau _plateau) {
         int drapeau_Ecocup = 0;
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Café") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
-                    set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Café") || (( strcmpget_pl == 0 )ateau_c)arte_nom(_plateau,i,j), "Alcool")) ) {
+          ) == 0 )          set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
                 }
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
-                    drapeau_Ecocup = 1;
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup"))) {
+           ) == 0 )         drapeau_Ecocup = 1;
                 }
             }
         }
@@ -559,7 +559,7 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
     int nb_carte_heures_supp;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 &&  (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires") ) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 &&  ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires")) == 0 ) ) {
                 nb_carte_heures_supp+=1; 
             }
         }
@@ -680,7 +680,7 @@ void Jonas_Senizergues(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires")) == 0 ) {
                 set_case_etat(get_plateau_case(_plateau,i,j), -1);
             }
         }
@@ -702,10 +702,10 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
     int total_carte_spe = 0;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 )&& get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_heures_supp=1;
             }
-            if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ((get_plateau_carte_nom(_plateau,i,j) == "Catherine Dubois") || (get_plateau_carte_nom(_plateau,i,j) == "Dimitri Watel")  || (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest") || (get_plateau_carte_nom(_plateau,i,j) == "Thomas Lim") || (get_plateau_carte_nom(_plateau,i,j) == "Anne-Laure Ligozat") || (get_plateau_carte_nom(_plateau,i,j) == "Guillaume Burel") || (get_plateau_carte_nom(_plateau,i,j) == "Christophe Mouilleron") )) {
+            if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Catherine Dubois") == 0 ) || -strcmp(get_plateau_carte_nom(_plateau,i,j), "Dimitri Watel") == 0)  || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Thomas Lim") == 0) || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Anne-Laure Ligozat") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Guillaume Burel") == 0 ) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") == 0 ))) {
                 total_carte_spe++;
             }
         }
@@ -778,7 +778,7 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "EcologIIE") || (get_plateau_carte_nom(_plateau,i,j) == "Ecocup") || (get_plateau_carte_nom(_plateau,i,j) == "Isolation du bâtiment") || (get_plateau_carte_nom(_plateau,i,j) == "Isolation du bâtiment") )) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "EcologIIE") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0 ) || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") ) == 0 )|| ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") ) == 0 ))) {
                 nb_carte_retournee+=1; 
             }
         }
@@ -838,7 +838,7 @@ void Christophe_Mouilleron(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                     drapeau_heures_supp=1;
             }
         }
@@ -847,7 +847,7 @@ void Christophe_Mouilleron(faction _faction, plateau _plateau) {
         
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (get_plateau_carte_nom(_plateau,i,j) != "Christophe Mouilleron") && (get_plateau_carte_nom(_plateau,i,j) != "Heures supplémentaires") ) {
+            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron")) != 0 ) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1);
              }
         }
@@ -875,7 +875,7 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  //recherche de Julien
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest" && get_case_etat(get_plateau_case(_plateau, i, j)==1 )) {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j)==1 )) {
                 Julien_Forest_present = 1;
             }
         }
@@ -886,7 +886,7 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
         
     for (i=0;i<1000;i++) {  //compte le nb de FISE
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "FISE" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 nb_FISE+=1;
             }
         }
@@ -918,8 +918,8 @@ void Julien_Forest(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Café") {
-                drapeau_cafe=1;
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Café") == 0 )  {
+               drapeau_cafe=1;
             }
         }
     }
@@ -927,7 +927,7 @@ void Julien_Forest(faction _faction, plateau _plateau) {
     if (drapeau_cafe) { 
         for (i=0;i<1000;i++) { 
             for (j=0;j<1000;j++) {  
-                if (get_plateau_carte_nom(_plateau,i,j) == "FISE") {
+                if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 ){
                     nb_FISE+=1;
                 }
             }
@@ -948,7 +948,7 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
 
     for (i=0;i<1000;i++) {  
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Thé") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Thé") == 0 ) {
                 drapeau_the=1;
             }
         }
@@ -957,7 +957,7 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
     if (drapeau_the) { 
         for (i=0;i<1000;i++) {  //plateau de taille 1000
             for (j=0;j<1000;j++) {  
-                if (get_plateau_carte_nom(_plateau,i,j) == "FISA" || get_plateau_carte_nom(_plateau,i,j) == "FC" ) {
+                if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FISA" == 0) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 ) {
                     nb_FISA_FC+=1;
                 }
             }
@@ -1038,7 +1038,7 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
     int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente
 
     for (i=0;i<5;i++){ 
-        if (get_carte_nom(liste_carte_5[i])== "Catherine Dubois" || get_carte_nom(liste_carte_5[i])== "Anne-Laure Ligozat" || get_carte_nom(liste_carte_5[i])== "Guillaume Burel" || get_carte_nom(liste_carte_5[i])== "Christophe Mouilleron" || get_carte_nom(liste_carte_5[i])== "Thomas Lim" || get_carte_nom(liste_carte_5[i])== "Julien Forest" || get_carte_nom(liste_carte_5[i])== "Dimitri Watel" ) {
+      (if (strcmp(get_carte_nom(liste_carte_5[i]), "Catherine Dubois") == 0 ) || strcmp( get_carte_nom(liste_carte_5[i]), "Anne-Laure Ligozat") == 0 ) || (  strcmp(get_carte_nom(liste_carte_5[i]), "Guillaume Burel")  == 0 ) || strcmp(get_carte_nom(liste_carte_5[i], "Christophe Mouilleron( st == 0 )rcmp" |)| get_carte_nom(liste_carte_5[i], "Thomas Lim( strcmp" || ge == 0 )t_carte)_nom(liste_carte_5[i], "Julien Forest( strcmp" || == 0 ) get_ca)rte_nom(liste_carte_5[i], "Dimitri Watel" ) {
             drapeau_spe=1;
             break;
         }
@@ -1111,14 +1111,14 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
 
 //parcours de la ligne
     for (i=0;i<1000;i++) {
-        if (get_plateau_carte_nom(_plateau,i,colonne)== "FISA") {
-            drapeau_FISA = 1;
+        if (get_( strcmpplateau_carte_nom(_plateau,i,colonne, "FISA") {
+            dra) == 0 )peau_FISA = 1;
         }
     }
 //parcours de la colonne
     for (i=0;i<1000;i++) {
-        if (get_plateau_carte_nom(_plateau,ligne,i) == "FISA") {
-            drapeau_FISA = 1;
+        if (get( strcmp_plateau_carte_nom(_plateau,ligne,i), "FISA") {
+            dra) == 0 )peau_FISA = 1;
         }
     }
     }
@@ -1146,14 +1146,14 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     for(i=0;i<1000;i++){
         for(j=0;j<1000;j++){
 
-            if (get_plateau_carte_nom(_plateau,i,j) == "Djibril-Aurélien Djembele-Cabeau") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembel) == 0 )e-Cabeau") {
             drapeau_Djibril = 1;
             }
-            if (get_plateau_carte_nom(_plateau,i,j) == "Eric Lejeune") {
-            drapeau_Eric = 1;
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") {
+       ) == 0 )     drapeau_Eric = 1;
             }
-            if (get_plateau_carte_nom(_plateau,i,j) == "Lucienne Pacavé") {
-            drapeau_Lucienne = 1;
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") {
+    ) == 0 )        drapeau_Lucienne = 1;
             }
         }
         }

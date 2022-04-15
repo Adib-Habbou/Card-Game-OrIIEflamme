@@ -11,8 +11,16 @@ int main(){
     // Affichage du plateau sur la console
     affiche_plateau(_plateau);
 
+    int manche = 1;
+    int JoueurCommence;
+
     // Initialisation d'une manche si le jeu n'est pas terminé 
     while(init_manche(_plateau, _factions) != 0){
+        if(manche%2 == 0){
+            JoueurCommence = rand()%2;
+        }else{
+            JoueurCommence++;
+        }
         // Initialisation des joueurs
         for(int i = 0; i < 2; i++){
             // Affichage la main de la faction i dans la console
@@ -28,8 +36,7 @@ int main(){
 
         // Phase 1 :
 
-        // Boucle pour chaque carte qu'on va poser
-        for(int i = 0; i < 16; i++){
+        for(int i = JoueurCommence; i < 16+JoueurCommence; i++){
             // Affiche la main d'une faction tour par tour
             affiche_main(_factions[i%2]);
             // Retourne la carte choisi par la faction
@@ -50,6 +57,7 @@ int main(){
                 break;
             afficher_effet(_carte);
         }
+        manche++;
     }
 
     // Affichage du gagnant

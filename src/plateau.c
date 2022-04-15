@@ -271,6 +271,8 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "Kevin Goilard") == 0){
         Kevin_Goilard(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Vitéra Y") == 0){
+        Vitera_Y(_factions[_case->id_faction], _factions[1 - _case->id_faction])
+    }else if(strcmp(get_carte_nom(_case->carte), "Massinissa Merabet") == 0){
         Massinissa_Merabet(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Jonas Senizergues") == 0){
         Jonas_Senizergues(_plateau);

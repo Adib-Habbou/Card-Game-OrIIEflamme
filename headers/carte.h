@@ -230,7 +230,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne);
 @assigns le plateau
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
-void Catherine_Dubois(faction _faction, plateau _plateau, int ligne, int colonne);
+void Catherine_Dubois(plateau _plateau, int ligne, int colonne);
 /*
 @requires faction valide
 @assigns le plateau, l'attribut DDRS de la faction
@@ -247,14 +247,14 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) ;
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel(faction _faction, faction _faction_oppose, plateau _plateau) ;
+void Guillaume_Burel(faction _faction, faction _faction_oppose) ;
 
 /*
 @requires faction valide
 @assigns le plateau
 @ensures Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires
 */
-void Christophe_Mouilleron(faction _faction, plateau _plateau) ;
+void Christophe_Mouilleron(plateau _plateau) ;
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -298,7 +298,7 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(faction _faction, plateau _plateau) ;
+void Eric_Lejeune(plateau _plateau) ;
 
 /*
 @requires faction valide

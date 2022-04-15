@@ -8,7 +8,8 @@ struct carte {
     char* description;
     int nombre_occurrences;
 };
-
+/* variable globale de la dernière carte retrounée sur le plateau */
+carte derniere_carte_retournee;
 
 // CONSTANTES ET VARIABLES GLOBALES 
 
@@ -244,11 +245,11 @@ void EcologIIE(faction _faction, plateau _plateau) {
 les mélange et les repose face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, 
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
-void lIIEns(faction _faction, plateau _plateau) {
+void lIIEns(plateau _plateau) {
     int i,j;
 
-    carte* liste_carte;
-    int* liste_faction;
+    carte* liste_carte = (carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte));
+    int* liste_faction= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
     int indice=0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -291,7 +292,9 @@ void lIIEns(faction _faction, plateau _plateau) {
     for (i=0; i<indice; i++) {
         set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
     }
-
+    //libération de la mémoire
+    free(liste_carte);
+    free(liste_faction);
 }
 
 /*
@@ -464,7 +467,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
     int k=0; //parcours la liste stockant les cartes retournées
 
     int nb_de_paire = 0;
-    char** liste_carte;
+    char** liste_carte= (char**) malloc(NOMBRE_CARTES_POSEES*sizeof(char**));
     int indice;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
@@ -472,7 +475,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
 
                 while (k<indice) {
-                    if (liste_carte[k]== get_plateau_carte_nom(_plateau,i,j)) { //si la carte a déjà été retournée
+                    if ( strcmp(liste_carte[k], get_plateau_carte_nom(_plateau,i,j)) ==0 ) { //si la carte a déjà été retournée
                         nb_de_paire++;
                         k=indice;//sort de la boucle
                     }
@@ -490,6 +493,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
     if (get_faction_nombre_points_DDRS(_faction_oppose)<0) {
         set_faction_nombre_points_DDRS(_faction_oppose,0); //pas de points négatifs
     }
+    free(liste_carte);
 }
 
 /*
@@ -534,10 +538,13 @@ void Parcours_sobriete_numerique(plateau _plateau) {
     for (ligne = 0;ligne <TAILLE_PLATEAU; ligne++) {
         int ligne1 = get_plateau_carte_gauche(_plateau,ligne,1)[0];
         int colonne1 = get_plateau_carte_gauche(_plateau,ligne,1)[1];
+
         int ligne2 = get_plateau_carte_droite(_plateau,ligne,1)[0];
         int colonne2 = get_plateau_carte_droite(_plateau,ligne,1)[1];
+
         set_case_etat( get_plateau_case(_plateau,ligne1,colonne1) , 1 );
         set_case_etat( get_plateau_case(_plateau,ligne2,colonne2) , 1 );
+        derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne2,colonne2));
     }
     
 }
@@ -576,8 +583,8 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
 */
 void Kahina_Bouchama(plateau _plateau) {
     int i,j;
-    int* liste_ligne_carte_verso;
-    int* liste_colonne_carte_verso;
+    int* liste_ligne_carte_verso = (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
+    int* liste_colonne_carte_verso= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
 
     int indice = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
@@ -598,6 +605,9 @@ void Kahina_Bouchama(plateau _plateau) {
 
     set_case_etat(get_plateau_case(_plateau,ligne_supp,colonne_supp), -1);
     
+    //libère la mémoire
+    free(liste_colonne_carte_verso);
+    free(liste_ligne_carte_verso);
 }
 
 /*
@@ -649,7 +659,7 @@ void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plate
         EcologIIE(_faction, _plateau);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "lIIEns") == 0){
-        lIIEns(_faction, _plateau);
+        lIIEns(_plateau);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Soirée sans alcool") == 0){
         Soiree_sans_alcool(_faction, _plateau);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Alcool") == 0){
@@ -1077,9 +1087,9 @@ Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprime
 void Eric_Lejeune(plateau _plateau) {
     
     int i,j;
-    carte* liste_carte; //liste total
-    int* liste_faction;
-    int* memo_indice; //liste qui va servir à supprimer les cartes dans le cas ou le drapeau est nulle
+    carte* liste_carte=(carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte)); //liste total
+    int* liste_faction=(int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
+    int* memo_indice= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int)); //liste qui va servir à supprimer les cartes dans le cas ou le drapeau est nulle
     int indice=0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //création de la liste des cartes retournées
@@ -1095,8 +1105,8 @@ void Eric_Lejeune(plateau _plateau) {
         }
     }
 
-    carte* liste_carte_5; //liste réduite à 5
-    int* liste_faction_5;
+    carte* liste_carte_5= (carte*) malloc(5*sizeof(carte)); //liste réduite à 5
+    int* liste_faction_5= (int*) malloc(5*sizeof(int));
 
     int random;
     int newrandom;
@@ -1174,7 +1184,12 @@ void Eric_Lejeune(plateau _plateau) {
     }
 
     }
-
+    //on libère la mémoire
+    free(liste_carte);
+    free(liste_carte_5);
+    free(liste_faction);
+    free(liste_faction_5);
+    free(memo_indice);
 
 }
 
@@ -1249,13 +1264,17 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
         for(j=0;j<TAILLE_PLATEAU;j++) {
             if (get_plateau_case(_plateau,ligne,j) != NULL) {
                 set_case_etat( get_plateau_case(_plateau,ligne,j) , 1 );
+                derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,j));
             }
+            
         }
         //pareil sur la colonne
         for(j=0;j<TAILLE_PLATEAU;j++) {
             if (get_plateau_case(_plateau,j,colonne) != NULL) {
                 set_case_etat(get_plateau_case(_plateau,j,colonne),1);
+                derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,j,colonne));
             }
+            
         }
     }
 }

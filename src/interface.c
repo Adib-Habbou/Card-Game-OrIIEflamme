@@ -12,9 +12,9 @@ void affiche_plateau(plateau _plateau) {
     int i,j;
     char* dot = ".";
     char* card = "X";
-    for (i=0;i<TAILLE_TABLEAU+1;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
+    for (i=0;i<TAILLE_PLATEAU+1;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
         
-        for (j=0;j<TAILLE_TABLEAU+1;j++){
+        for (j=0;j<TAILLE_PLATEAU+1;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
                 printf("%4d ",j);
@@ -25,7 +25,7 @@ void affiche_plateau(plateau _plateau) {
                     printf("%4d ",i); //quadrillage des lignes
                 }
                 else {
-                    if (get_plateau_case(_plateau)!=NULL) {
+                    if (get_plateau_case(_plateau,i,j)!=NULL) {
                         printf("%4s",dot);
                     }
                     else{
@@ -52,11 +52,11 @@ void affiche_main(faction _faction) {
     }
     // tant que la pile est non vide on affiche le nom de la carte
 
-    pile* buffer_main = get_faction_main(_faction); 
+    pile buffer_main = get_faction_main(_faction); 
 
     while(buffer_main != NULL ) {
         printf("-> [ %s ] ", get_carte_nom(pile_sommet(buffer_main)) );
-        buffer_main = buffer_main->suivant;
+        buffer_main=pile_suivant(buffer_main);
     }
 
     // on affiche un saut de ligne par soucis esthétique
@@ -109,10 +109,11 @@ int* carte_positon(plateau _plateau) {
 
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
     if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
-        return;
+        return position;
     }
     else {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
+        exit(0);
     }
 
 }
@@ -135,11 +136,11 @@ void afficher_effet(carte _carte) {
 void gagnant(faction* factions) {
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n");
+        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
         char* nom_gagnant = get_faction_nom(factions[1]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n");
+        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
     }
 }
 
@@ -148,7 +149,7 @@ void gagnant(faction* factions) {
 @assigns rien
 @ensures affiche string sur l'écran
 */
-void affiche(char string) {
+void affiche(char* string) {
     printf("%s\n",string);
 }
 

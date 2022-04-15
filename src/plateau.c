@@ -13,6 +13,9 @@ struct plateau {
     Case** tab; // matrice de cases de taille 1000 x 1000
 };
 
+/* variable globale de la dernière carte retrounée sur le plateau */
+carte derniere_carte_retrounee;
+
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */

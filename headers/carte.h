@@ -109,7 +109,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) ;
 @assigns le plateau
 @ensures Supprimez du plateau toutes les cartes qui touchent cette carte Alcool
 */
-void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) ;
+void Alcool(plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
@@ -117,7 +117,7 @@ void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) ;
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(faction _faction, plateau _plateau);
+void Cafe(plateau _plateau);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -160,7 +160,7 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
 @assigns le plateau
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
-void Parcours_sobriete_numerique(faction _faction, plateau _plateau) ;
+void Parcours_sobriete_numerique(plateau _plateau) ;
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction adverse

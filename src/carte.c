@@ -395,8 +395,8 @@ void Cafe(faction _faction, plateau _plateau) {
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Thé") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
             }
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
-                drapeau_Ecocup = 1;
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup"))) {
+           ) == 0 )     drapeau_Ecocup = 1;
             }
         }
     }
@@ -432,8 +432,8 @@ void The(faction _faction, plateau _plateau) {
                 if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Café") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
                     set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
                 }
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Ecocup"))) {
-                    drapeau_Ecocup = 1;
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup"))) {
+           ) == 0 )         drapeau_Ecocup = 1;
                 }
             }
         }
@@ -705,7 +705,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
             if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_heures_supp=1;
             }
-            if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ((get_plateau_carte_nom(_plateau,i,j) == "Catherine Dubois") || (get_plateau_carte_nom(_plateau,i,j) == "Dimitri Watel")  || (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest") || (get_plateau_carte_nom(_plateau,i,j) == "Thomas Lim") || (get_plateau_carte_nom(_plateau,i,j) == "Anne-Laure Ligozat") || (get_plateau_carte_nom(_plateau,i,j) == "Guillaume Burel") || (get_plateau_carte_nom(_plateau,i,j) == "Christophe Mouilleron") )) {
+            if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Catherine Dubois") == 0 ) || -strcmp(get_plateau_carte_nom(_plateau,i,j), "Dimitri Watel") == 0)  || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Thomas Lim") == 0) || (( strcmp(get_plateau_carte_nom(_plateau,i,j), "Anne-Laure Ligozat") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Guillaume Burel") == 0 ) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") == 0 ))) {
                 total_carte_spe++;
             }
         }
@@ -1038,7 +1038,7 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
     int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente
 
     for (i=0;i<5;i++){ 
-        if (get_carte_nom(liste_carte_5[i])== "Catherine Dubois" || get_carte_nom(liste_carte_5[i])== "Anne-Laure Ligozat" || get_carte_nom(liste_carte_5[i])== "Guillaume Burel" || get_carte_nom(liste_carte_5[i])== "Christophe Mouilleron" || get_carte_nom(liste_carte_5[i])== "Thomas Lim" || get_carte_nom(liste_carte_5[i])== "Julien Forest" || get_carte_nom(liste_carte_5[i])== "Dimitri Watel" ) {
+      if( (strcmp(get_carte_nom(liste_carte_5[i]), "Catherine Dubois") == 0 ) || (strcmp( get_carte_nom(liste_carte_5[i]), "Anne-Laure Ligozat") == 0 ) || (  strcmp(get_carte_nom(liste_carte_5[i]), "Guillaume Burel")  == 0 ) || (strcmp(get_carte_nom(liste_carte_5[i], "Christophe Mouilleron")) == 0 ) || (strcmp(get_carte_nom(liste_carte_5[i], "Thomas Lim")) == 0) || (strcmp(get_carte_nom(liste_carte_5[i], "Julien Forest")) == 0) || (strcmp(get_carte_nom(liste_carte_5[i], "Dimitri Watel" )) == 0)) {
             drapeau_spe=1;
             break;
         }
@@ -1146,13 +1146,13 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     for(i=0;i<TAILLE_PLATEAU;i++){
         for(j=0;j<TAILLE_PLATEAU;j++){
 
-            if (get_plateau_carte_nom(_plateau,i,j) == "Djibril-Aurélien Djembele-Cabeau") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembele-Cabeau") == 0 ) {
             drapeau_Djibril = 1;
             }
-            if (get_plateau_carte_nom(_plateau,i,j) == "Eric Lejeune") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") == 0 ) {
             drapeau_Eric = 1;
             }
-            if (get_plateau_carte_nom(_plateau,i,j) == "Lucienne Pacavé") {
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") == 0 ) {
             drapeau_Lucienne = 1;
             }
         }

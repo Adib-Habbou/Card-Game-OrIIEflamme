@@ -50,7 +50,7 @@ carte retourner(plateau plateau, faction* liste_faction);
 // CONSTANTES ET VARIABLES GLOBALES
 
 /* nombre de lignes et nombres de colonnes d'un plateau */
-#define TAILLE_PLATEAU 1000
+#define TAILLE_PLATEAU 50
 
 /* nombre de joueurs pour une partie */
 #define NOMBRE_JOUEURS 2

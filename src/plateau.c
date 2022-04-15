@@ -130,7 +130,7 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case) {
     faction* factions = liste_faction();
-    return factions[_case.id_faction];
+    return factions[_case->id_faction];
 }
 
 /*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 

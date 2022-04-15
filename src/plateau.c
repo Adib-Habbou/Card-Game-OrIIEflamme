@@ -14,7 +14,7 @@ struct plateau {
 };
 
 /* variable globale de la dernière carte retrounée sur le plateau */
-carte derniere_carte_retrounee;
+carte derniere_carte_retournee;
 
 /*  @requires   une case valide
     @assigns    rien

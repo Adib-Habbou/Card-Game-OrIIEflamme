@@ -8,6 +8,7 @@
 #include "faction.h"
 
 #include <stddef.h>
+#include <string.h>
 
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case *Case;

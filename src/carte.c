@@ -9,6 +9,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+
+
 /* définition de la structure des cartes */
 struct carte {
     char* nom;
@@ -700,6 +702,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
     int i,j;
     int drapeau_heures_supp = 0;
     int total_carte_spe = 0;
+
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
             if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
@@ -741,7 +744,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
 @assigns le plateau
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
-void Catherine_Dubois(faction _faction, plateau _plateau, int ligne, int colonne) {
+void Catherine_Dubois(plateau _plateau, int ligne, int colonne) {
     
 //carte la plus à gauche
     int ligneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[0];
@@ -808,7 +811,7 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel(faction _faction, faction _faction_oppose, plateau _plateau) {
+void Guillaume_Burel(faction _faction, faction _faction_oppose) {
 
     if (get_faction_nombre_points_DDRS(_faction_oppose) > get_faction_nombre_points_DDRS(_faction) ) {
 
@@ -832,13 +835,13 @@ void Guillaume_Burel(faction _faction, faction _faction_oppose, plateau _plateau
 @assigns le plateau
 @ensures Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires
 */
-void Christophe_Mouilleron(faction _faction, plateau _plateau) {
+void Christophe_Mouilleron(plateau _plateau) {
     int i,j;
     int drapeau_heures_supp = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
+            if(( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1))  {
                     drapeau_heures_supp=1;
             }
         }
@@ -995,7 +998,7 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(faction _faction, plateau _plateau) {
+void Eric_Lejeune(plateau _plateau) {
     
     int i,j;
     carte* liste_carte; //liste total
@@ -1032,7 +1035,7 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
         memo_indice[i]=random;
 
         liste_carte[random] = NULL;
-        liste_faction[random] = NULL;
+        liste_faction[random] = -1;
     }
 
     int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente
@@ -1071,7 +1074,9 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
             int colonne_debut = get_plateau_carte_premier(_plateau)[1];
 
             for (i=0; i<indice; i++) {
-                set_plateau_case(_plateau,ligne_debut,colonne_debut-i,liste_carte[i],liste_faction[i],0);
+                if (liste_carte[i]!= NULL){
+                    set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
+                }
             }
         }
     }
@@ -1083,7 +1088,7 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
             for (j=0;j<TAILLE_PLATEAU;j++) {  
                 if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
 
-                    if (compteur==memo_indice[l] && memo_indice[l]!=NULL ){
+                    if (compteur==memo_indice[l]){
                         set_case_etat(get_plateau_case(_plateau,i,j), -1);
                         l++;
                     }
@@ -1107,7 +1112,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
     int i;
 
    
-    while (drapeau_FISA = 0) {
+    while (drapeau_FISA == 0) {
 
 //parcours de la ligne
     for (i=0;i<TAILLE_PLATEAU;i++) {

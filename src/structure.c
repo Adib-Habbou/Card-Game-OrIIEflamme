@@ -46,8 +46,8 @@ void empile(pile _pile, carte carte) {
         exit(1);
     }
     // on empile la carte
-    pile_sommet(res) = carte;
-    pile_suivant(res) = _pile;
+    res->sommet = carte;
+    res->suivant = _pile;
     _pile = res;
 }
 

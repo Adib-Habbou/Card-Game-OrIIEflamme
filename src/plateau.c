@@ -14,7 +14,6 @@ struct plateau {
 };
 
 
-
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */

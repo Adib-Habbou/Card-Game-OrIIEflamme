@@ -1264,13 +1264,17 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
         for(j=0;j<TAILLE_PLATEAU;j++) {
             if (get_plateau_case(_plateau,ligne,j) != NULL) {
                 set_case_etat( get_plateau_case(_plateau,ligne,j) , 1 );
+                derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,j));
             }
+            
         }
         //pareil sur la colonne
         for(j=0;j<TAILLE_PLATEAU;j++) {
             if (get_plateau_case(_plateau,j,colonne) != NULL) {
                 set_case_etat(get_plateau_case(_plateau,j,colonne),1);
+                derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,j,colonne));
             }
+            
         }
     }
 }

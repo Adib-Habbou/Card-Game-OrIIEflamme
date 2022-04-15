@@ -308,11 +308,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
  
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-<<<<<<< HEAD
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0 && (get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
-=======
-            if (get_plateau_carte_nom(_plateau,i,j) == "Alcool" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
->>>>>>> 44c3656aeef0d0359728b47c112f6b5b0652a593
+            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0 && (get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
                 drapeau_alcool=1;
                 break;
             }
@@ -426,7 +422,7 @@ void The(faction _faction, plateau _plateau) {
         int drapeau_Ecocup = 0;
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
             for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Café") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "Café") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0)) ) {
                     set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
                 }
                 if ((get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
@@ -700,11 +696,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-<<<<<<< HEAD
             if ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
-=======
-            if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
->>>>>>> 44c3656aeef0d0359728b47c112f6b5b0652a593
                 drapeau_heures_supp=1;
             }
             if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Catherine Dubois") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Dimitri Watel") == 0)  || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Thomas Lim") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Anne-Laure Ligozat") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Guillaume Burel") == 0 ) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") == 0 ) ) ) {
@@ -849,7 +841,7 @@ void Christophe_Mouilleron(plateau _plateau) {
         
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (get_plateau_carte_nom(_plateau,i,j) != "Christophe Mouilleron") && (get_plateau_carte_nom(_plateau,i,j) != "Heures supplémentaires") ) {
+            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") != 0) && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") != 0) ) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1);
              }
         }

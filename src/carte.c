@@ -836,15 +836,9 @@ void Christophe_Mouilleron(faction _faction, plateau _plateau) {
     int i,j;
     int drapeau_heures_supp = 0;
 
-<<<<<<< HEAD
-    for (i=0;i<1000;i++) {  //plateau de taille 1000
-        for (j=0;j<1000;j++) {  
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
-=======
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Heures supplémentaires" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
->>>>>>> aec1a3c704279570109bb5de3c82b4646a79230c
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
                     drapeau_heures_supp=1;
             }
         }
@@ -879,15 +873,9 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     int Julien_Forest_present = 0;
     int i,j;
 
-<<<<<<< HEAD
-    for (i=0;i<1000;i++) {  //recherche de Julien
-        for (j=0;j<1000;j++) {  
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1 )) {
-=======
     for (i=0;i<TAILLE_PLATEAU;i++) {  //recherche de Julien
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "Julien Forest" && get_case_etat(get_plateau_case(_plateau, i, j)==1 )) {
->>>>>>> aec1a3c704279570109bb5de3c82b4646a79230c
+            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1 )) {
                 Julien_Forest_present = 1;
             }
         }
@@ -896,15 +884,9 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
     int nb_FISE = 0;
     
         
-<<<<<<< HEAD
-    for (i=0;i<1000;i++) {  //compte le nb de FISE
-        for (j=0;j<1000;j++) {  
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
-=======
     for (i=0;i<TAILLE_PLATEAU;i++) {  //compte le nb de FISE
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "FISE" && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
->>>>>>> aec1a3c704279570109bb5de3c82b4646a79230c
+            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
                 nb_FISE+=1;
             }
         }
@@ -973,15 +955,9 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
     }
 
     if (drapeau_the) { 
-<<<<<<< HEAD
-        for (i=0;i<1000;i++) {  //plateau de taille 1000
-            for (j=0;j<1000;j++) {  
-                if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 )) {
-=======
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
             for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if (get_plateau_carte_nom(_plateau,i,j) == "FISA" || get_plateau_carte_nom(_plateau,i,j) == "FC" ) {
->>>>>>> aec1a3c704279570109bb5de3c82b4646a79230c
+                if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 )) {
                     nb_FISA_FC+=1;
                 }
             }
@@ -1134,13 +1110,8 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
     while (drapeau_FISA = 0) {
 
 //parcours de la ligne
-<<<<<<< HEAD
-    for (i=0;i<1000;i++) {
-        if ( strcmp(get_plateau_carte_nom(_plateau,i,colonne), "FISA") == 0 ){
-=======
     for (i=0;i<TAILLE_PLATEAU;i++) {
-        if (get_plateau_carte_nom(_plateau,i,colonne)== "FISA") {
->>>>>>> aec1a3c704279570109bb5de3c82b4646a79230c
+        if ( strcmp(get_plateau_carte_nom(_plateau,i,colonne), "FISA") == 0 ){
             drapeau_FISA = 1;
         }
     }

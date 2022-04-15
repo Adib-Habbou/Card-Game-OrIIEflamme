@@ -245,7 +245,7 @@ void EcologIIE(faction _faction, plateau _plateau) {
 les mélange et les repose face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, 
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
-void lIIEns(faction _faction, plateau _plateau) {
+void lIIEns(plateau _plateau) {
     int i,j;
 
     carte* liste_carte = (carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte));
@@ -659,7 +659,7 @@ void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plate
         EcologIIE(_faction, _plateau);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "lIIEns") == 0){
-        lIIEns(_faction, _plateau);
+        lIIEns(_plateau);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Soirée sans alcool") == 0){
         Soiree_sans_alcool(_faction, _plateau);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Alcool") == 0){

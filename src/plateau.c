@@ -245,7 +245,7 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "EcologIIE") == 0){
         EcologIIE(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "lIIEns") == 0){
-        lIIEns(_factions[_case->id_faction], _plateau);
+        lIIEns(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Soirée sans alcool") == 0){
         Soiree_sans_alcool(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Alcool") == 0){

@@ -93,7 +93,7 @@ void EcologIIE(faction _faction, plateau _plateau) ;
 les mélange et les repose face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, 
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
-void lIIEns(faction _faction, plateau _plateau);
+void lIIEns(plateau _plateau);
 
 /*
 @requires faction valide

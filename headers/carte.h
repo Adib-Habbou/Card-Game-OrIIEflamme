@@ -1,6 +1,7 @@
 #ifndef CARTE_H  /* pour éviter des inclusions multiples */
 #define CARTE_H
 
+#include "faction.h"
 
 #include <stddef.h>
 #include <time.h>

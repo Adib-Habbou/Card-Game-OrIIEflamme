@@ -297,7 +297,7 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(faction _faction, plateau _plateau) ;
+void Eric_Lejeune(plateau _plateau) ;
 
 /*
 @requires faction valide

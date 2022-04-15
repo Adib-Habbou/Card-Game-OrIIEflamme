@@ -1,6 +1,7 @@
 #ifndef CARTE_H  /* pour éviter des inclusions multiples */
 #define CARTE_H
 
+
 #include <stddef.h>
 #include <time.h>
 #include <stdlib.h>
@@ -108,7 +109,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) ;
 @assigns le plateau
 @ensures Supprimez du plateau toutes les cartes qui touchent cette carte Alcool
 */
-void Alcool(faction _faction, plateau _plateau, int ligne, int colonne) ;
+void Alcool(plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
@@ -159,7 +160,7 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
 @assigns le plateau
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
-void Parcours_sobriete_numerique(faction _faction, plateau _plateau) ;
+void Parcours_sobriete_numerique(plateau _plateau) ;
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction adverse
@@ -174,7 +175,7 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau);
 @assigns le plateau
 @ensures Supprimez une carte non retournée du plateau choisie au hasard
 */
-void Kahina_Bouchama(faction _faction, plateau _plateau);
+void Kahina_Bouchama(plateau _plateau);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
@@ -199,7 +200,7 @@ void Massinissa_Merabet(faction _faction, plateau _plateau) ;
 @assigns l'attribut DDRS d'une faction
 @ensures La faction qui a le moins de points DDRS gagne 3 points DDRS
 */
-void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau);
+void Vitera_Y(faction _faction, faction _faction_oppose);
 
 
 
@@ -209,7 +210,7 @@ void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau);
 @assigns le plateau
 @ensures Supprimez toutes les cartes Heures supplémentaires retournées du plateau
 */
-void Jonas_Senizergues(faction _faction, plateau _plateau);
+void Jonas_Senizergues(plateau _plateau);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
@@ -229,7 +230,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne);
 @assigns le plateau
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
-void Catherine_Dubois(faction _faction, plateau _plateau, int ligne, int colonne);
+void Catherine_Dubois(plateau _plateau, int ligne, int colonne);
 /*
 @requires faction valide
 @assigns le plateau, l'attribut DDRS de la faction
@@ -246,14 +247,14 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) ;
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel(faction _faction, faction _faction_oppose, plateau _plateau) ;
+void Guillaume_Burel(faction _faction, faction _faction_oppose) ;
 
 /*
 @requires faction valide
 @assigns le plateau
 @ensures Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires
 */
-void Christophe_Mouilleron(faction _faction, plateau _plateau) ;
+void Christophe_Mouilleron(plateau _plateau) ;
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -297,7 +298,7 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(faction _faction, plateau _plateau) ;
+void Eric_Lejeune(plateau _plateau) ;
 
 /*
 @requires faction valide

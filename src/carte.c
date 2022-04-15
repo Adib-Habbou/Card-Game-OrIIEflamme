@@ -308,7 +308,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
  
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) && (get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0 && (get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
                 drapeau_alcool=1;
                 break;
             }
@@ -422,7 +422,7 @@ void The(faction _faction, plateau _plateau) {
         int drapeau_Ecocup = 0;
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
             for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (get_plateau_carte_nom(_plateau,i,j) == "Café") || (get_plateau_carte_nom(_plateau,i,j) == "Alcool")) ) {
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "Café") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0)) ) {
                     set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
                 }
                 if ((get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {

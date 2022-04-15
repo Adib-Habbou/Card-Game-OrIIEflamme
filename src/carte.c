@@ -234,7 +234,7 @@ void EcologIIE(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) )) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ((strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) )) {
                 total+=1; 
             }
         }
@@ -262,7 +262,7 @@ void lIIEns(faction _faction, plateau _plateau) {
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) )) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ((strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) )) {
                 
                 liste_carte[indice]= get_case_carte(get_plateau_case(_plateau,i,j));
                 liste_faction[indice]=get_case_id_faction(get_plateau_case(_plateau,i,j));
@@ -342,7 +342,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
 
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
             for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) )) {
+                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ((strcmp( get_plateau_carte_nom(_plateau,i,j), "FC") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) ) ) {
                     set_case_etat( get_plateau_case(_plateau,i,j) , -1 );
                 }
             }
@@ -394,7 +394,7 @@ void Cafe(faction _faction, plateau _plateau) {
     int drapeau_Ecocup = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) ) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
             }
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
@@ -434,8 +434,8 @@ void The(faction _faction, plateau _plateau) {
                 if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "Café") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) ) ) {
                     set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
                 }
-                if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
-           ) == 0 )         drapeau_Ecocup = 1;
+                if ((get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
+                    drapeau_Ecocup = 1;
                 }
             }
         }
@@ -841,11 +841,7 @@ void Christophe_Mouilleron(plateau _plateau) {
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-<<<<<<< HEAD
             if(( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1))  {
-=======
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
->>>>>>> 203ac7973dca5769f149a146b9fc8b1e49525a24
                     drapeau_heures_supp=1;
             }
         }

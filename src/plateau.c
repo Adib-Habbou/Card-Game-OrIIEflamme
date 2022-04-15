@@ -251,7 +251,7 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "Soirée sans alcool") == 0){
         Soiree_sans_alcool(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Alcool") == 0){
-        Alcool(_factions[_case->id_faction], _plateau, ligne, colonne);
+        Alcool(_plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(_case->carte), "Café") == 0){
         Cafe(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Thé") == 0){
@@ -263,27 +263,29 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "Isolation du bâtiment") == 0){
         Isolation_du_batiment(_factions[_case->id_faction],_factions[(1 - _case->id_faction)],  _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Parcours sobriété numérique") == 0){
-        Parcours_sobriete_numerique(_factions[_case->id_faction], _plateau);
+        Parcours_sobriete_numerique(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Heures supplémentaires") == 0){
         Heures_supplementaires(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Kahina Bouchama") == 0){
-        Kahina_Bouchama(_factions[_case->id_faction], _plateau);
+        Kahina_Bouchama(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Kevin Goilard") == 0){
         Kevin_Goilard(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Vitéra Y") == 0){
+        Vitera_Y(_factions[_case->id_faction], _factions[1 - _case->id_faction]);
+    }else if(strcmp(get_carte_nom(_case->carte), "Massinissa Merabet") == 0){
         Massinissa_Merabet(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Jonas Senizergues") == 0){
-        Jonas_Senizergues(_factions[_case->id_faction], _plateau);
+        Jonas_Senizergues(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Fetia Bannour") == 0){
         Fetia_Bannour(_factions[_case->id_faction], _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(_case->carte), "Catherine Dubois") == 0){
-        Catherine_Dubois(_factions[_case->id_faction], _plateau, ligne, colonne);
+        Catherine_Dubois(_plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(_case->carte), "Anne-Laure Ligozat") == 0){
         Anne_Laure_Ligozat(_factions[_case->id_faction], _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Guillaume Burel") == 0){
-        Guillaume_Burel(_factions[_case->id_faction],_factions[(1 - _case->id_faction)], _plateau);
+        Guillaume_Burel(_factions[_case->id_faction],_factions[(1 - _case->id_faction)]);
     }else if(strcmp(get_carte_nom(_case->carte), "Christophe Mouilleron") == 0){
-        Christophe_Mouilleron(_factions[_case->id_faction], _plateau);
+        Christophe_Mouilleron(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Thomas Lim") == 0){
         Thomas_Lim(_factions[_case->id_faction],_factions[(1 - _case->id_faction)],  _plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Julien Forest") == 0){
@@ -293,7 +295,7 @@ cartetrouve:
     }else if(strcmp(get_carte_nom(_case->carte), "Djibril-Aurélien Dembele-Cabot") == 0){
         Djibril_Aurelien_Dembele_Cabot(_factions[_case->id_faction], _plateau, ligne);
     }else if(strcmp(get_carte_nom(_case->carte), "Eric Lejeune") == 0){
-        Eric_Lejeune(_factions[_case->id_faction], _plateau);
+        Eric_Lejeune(_plateau);
     }else if(strcmp(get_carte_nom(_case->carte), "Lucienne Pacavé") == 0){
         Lucienne_Pacave(_factions[_case->id_faction], _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(_case->carte), "Katrin Salhab") == 0){

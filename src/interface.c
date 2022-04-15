@@ -71,18 +71,17 @@ void affiche_main(faction _faction) {
 */
 int decision() {
     int decision;
-    printf("Voulez-vous remélanger votre main ? [1]Oui [2]Non");
+    printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non");
     scanf("%d",&decision);
 
     //vérification de la cohérence de la réponse de l'utilisateur
-    if (decision!=1 || decision!=2) {
+    while (decision!=1 || decision!=2) {
         printf("Veuillez entrer 1 pour Oui, 2 pour Non");
-        decision();
+        printf("Voulez-vous remélanger votre main ? [1]Oui [2]Non");
+        scanf("%d",&decision);
     }
-
-    else {
-        return decision;
-    }
+    return decision;
+  
 } 
 
 /* 

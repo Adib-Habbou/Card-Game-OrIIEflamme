@@ -212,7 +212,7 @@ void FC(faction _faction, plateau _plateau) {
     int i,j;
     for (i=0;i<1000;i++) {  //plateau de taille 1000
         for (j=0;j<1000;j++) {  
-            if (get_plateau_carte_nom(_plateau,i,j) == "FC" && get_case_etat(get_plateau_case(_plateau,i,j))==1) {
+            if (strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 && get_case_etat(get_plateau_case(_plateau,i,j))==1) {
                 drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
             }
         }

@@ -69,7 +69,7 @@ void gagnant(faction* factions);
 @assigns rien
 @ensures affiche string sur l'écran
 */
-void affiche(char string);
+void affiche(char *string);
 
 
 #endif

@@ -8,7 +8,8 @@ struct carte {
     char* description;
     int nombre_occurrences;
 };
-
+/* variable globale de la dernière carte retrounée sur le plateau */
+carte derniere_carte_retournee;
 
 // CONSTANTES ET VARIABLES GLOBALES 
 
@@ -638,9 +639,94 @@ void Kevin_Goilard(faction _faction, plateau _plateau) {
 @assigns le plateau et/ou l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte réactive l'effet de la dernière carte retournée avant Massinissa Merabet, en faisant comme elle l'avait posée elle-même, même si ce n'est pas le cas
 */
-void Massinissa_Merabet(faction _faction, plateau _plateau) {
+void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    if(strcmp(get_carte_nom(derniere_carte_retournee), "FISE") == 0){
+        FISE(_faction);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "FISA") == 0){
+        FISA(_faction, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "FC") == 0){
+        FC(_faction, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "EcologIIE") == 0){
+        EcologIIE(_faction, _plateau);
 
-    
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "lIIEns") == 0){
+        lIIEns(_faction, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Soirée sans alcool") == 0){
+        Soiree_sans_alcool(_faction, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Alcool") == 0){
+        Alcool(_plateau, ligne, colonne);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Café") == 0){
+        Cafe(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Thé") == 0){
+        The(_faction, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Ecocup") == 0){
+        Ecocup();
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Reprographie") == 0){
+        Reprographie(_faction_oppose, _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Isolation du bâtiment") == 0){
+        Isolation_du_batiment(_faction,_faction_oppose,  _plateau);
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Parcours sobriété numérique") == 0){
+        Parcours_sobriete_numerique(_plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Heures supplémentaires") == 0){
+        Heures_supplementaires(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Kahina Bouchama") == 0){
+        Kahina_Bouchama(_plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Kevin Goilard") == 0){
+        Kevin_Goilard(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Massinissa Merabet") == 0){
+        Massinissa_Merabet(_faction,_faction_oppose,_plateau,ligne,colonne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Vitéra Y") == 0){
+        Vitera_Y(_faction,_faction_oppose);
+        
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Jonas Senizergues") == 0){
+        Jonas_Senizergues(_plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Fetia Bannour") == 0){
+        Fetia_Bannour(_faction, _plateau, ligne, colonne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Catherine Dubois") == 0){
+        Catherine_Dubois(_plateau, ligne, colonne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Anne-Laure Ligozat") == 0){
+        Anne_Laure_Ligozat(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Guillaume Burel") == 0){
+        Guillaume_Burel(_faction,_faction_oppose);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Christophe Mouilleron") == 0){
+        Christophe_Mouilleron(_plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Thomas Lim") == 0){
+        Thomas_Lim(_faction,_faction_oppose,  _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Julien Forest") == 0){
+        Julien_Forest(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Dimitri Watel") == 0){
+        Dimitri_Watel(_faction, _plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Djibril-Aurélien Dembele-Cabot") == 0){
+        Djibril_Aurelien_Dembele_Cabot(_faction, _plateau, ligne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Eric Lejeune") == 0){
+        Eric_Lejeune(_plateau);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Lucienne Pacavé") == 0){
+        Lucienne_Pacave(_faction, _plateau, ligne, colonne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Katrin Salhab") == 0){
+        Katrin_Salhab(_faction, _plateau, ligne, colonne);
+
+    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Laurent Prével") == 0){
+        Laurent_Prevel(_faction, _faction_oppose, _plateau, ligne, colonne);
+    }
 }
 
 /*

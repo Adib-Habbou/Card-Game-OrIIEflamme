@@ -52,7 +52,7 @@ void affiche_main(faction _faction) {
     }
     // tant que la pile est non vide on affiche le nom de la carte
 
-    pile* buffer_main = get_faction_main(_faction); 
+    pile buffer_main = get_faction_main(_faction); 
 
     while(buffer_main != NULL ) {
         printf("-> [ %s ] ", get_carte_nom(pile_sommet(buffer_main)) );
@@ -75,9 +75,9 @@ int decision() {
     scanf("%d",&decision);
 
     //vérification de la cohérence de la réponse de l'utilisateur
-    while (decision!=1 || decision!=2) {
-        printf("Veuillez entrer 1 pour Oui, 2 pour Non");
-        printf("Voulez-vous remélanger votre main ? [1]Oui [2]Non");
+    while (decision!=1 || decision!=0) {
+        printf("Veuillez entrer 1 pour Oui, 0 pour Non");
+        printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non");
         scanf("%d",&decision);
     }
     return decision;
@@ -109,10 +109,11 @@ int* carte_positon(plateau _plateau) {
 
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
     if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
-        return;
+        return position;
     }
     else {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
+        exit(0);
     }
 
 }
@@ -135,11 +136,11 @@ void afficher_effet(carte _carte) {
 void gagnant(faction* factions) {
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n");
+        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
         char* nom_gagnant = get_faction_nom(factions[1]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n");
+        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
     }
 }
 
@@ -148,7 +149,7 @@ void gagnant(faction* factions) {
 @assigns rien
 @ensures affiche string sur l'écran
 */
-void affiche(char string) {
+void affiche(char* string) {
     printf("%s\n",string);
 }
 

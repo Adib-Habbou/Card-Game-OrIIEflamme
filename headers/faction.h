@@ -72,7 +72,7 @@ void repiocher(faction fact);
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie le nom de la faction */
-char get_faction_nom(faction faction);
+char* get_faction_nom(faction faction);
 
 /*  @requires   une faction valide
     @assigns    rien

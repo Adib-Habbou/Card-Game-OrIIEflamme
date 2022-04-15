@@ -194,7 +194,7 @@ void Kevin_Goilard(faction _faction, plateau _plateau) ;
 @assigns le plateau et/ou l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte réactive l'effet de la dernière carte retournée avant Massinissa Merabet, en faisant comme elle l'avait posée elle-même, même si ce n'est pas le cas
 */
-void Massinissa_Merabet(faction _faction, plateau _plateau) ;
+void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide

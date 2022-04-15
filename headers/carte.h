@@ -1,6 +1,7 @@
 #ifndef CARTE_H  /* pour éviter des inclusions multiples */
 #define CARTE_H
 
+
 #include <stddef.h>
 #include <time.h>
 #include <stdlib.h>
@@ -174,7 +175,7 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau);
 @assigns le plateau
 @ensures Supprimez une carte non retournée du plateau choisie au hasard
 */
-void Kahina_Bouchama(faction _faction, plateau _plateau);
+void Kahina_Bouchama(plateau _plateau);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
@@ -199,7 +200,7 @@ void Massinissa_Merabet(faction _faction, plateau _plateau) ;
 @assigns l'attribut DDRS d'une faction
 @ensures La faction qui a le moins de points DDRS gagne 3 points DDRS
 */
-void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau);
+void Vitera_Y(faction _faction, faction _faction_oppose);
 
 
 
@@ -209,7 +210,7 @@ void Vitera_Y(faction _faction, faction _faction_oppose, plateau _plateau);
 @assigns le plateau
 @ensures Supprimez toutes les cartes Heures supplémentaires retournées du plateau
 */
-void Jonas_Senizergues(faction _faction, plateau _plateau);
+void Jonas_Senizergues(plateau _plateau);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction

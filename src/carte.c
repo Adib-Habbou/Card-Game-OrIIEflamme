@@ -248,8 +248,8 @@ dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 void lIIEns(faction _faction, plateau _plateau) {
     int i,j;
 
-    carte* liste_carte;
-    int* liste_faction;
+    carte* liste_carte = (carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte));
+    int* liste_faction= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
     int indice=0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -292,7 +292,9 @@ void lIIEns(faction _faction, plateau _plateau) {
     for (i=0; i<indice; i++) {
         set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
     }
-
+    //libération de la mémoire
+    free(liste_carte);
+    free(liste_faction);
 }
 
 /*
@@ -465,7 +467,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
     int k=0; //parcours la liste stockant les cartes retournées
 
     int nb_de_paire = 0;
-    char** liste_carte;
+    char** liste_carte= (char**) malloc(NOMBRE_CARTES_POSEES*sizeof(char**));
     int indice;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
@@ -473,7 +475,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
 
                 while (k<indice) {
-                    if (liste_carte[k]== get_plateau_carte_nom(_plateau,i,j)) { //si la carte a déjà été retournée
+                    if ( strcmp(liste_carte[k], get_plateau_carte_nom(_plateau,i,j)) ==0 ) { //si la carte a déjà été retournée
                         nb_de_paire++;
                         k=indice;//sort de la boucle
                     }
@@ -491,6 +493,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
     if (get_faction_nombre_points_DDRS(_faction_oppose)<0) {
         set_faction_nombre_points_DDRS(_faction_oppose,0); //pas de points négatifs
     }
+    free(liste_carte);
 }
 
 /*
@@ -580,8 +583,8 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
 */
 void Kahina_Bouchama(plateau _plateau) {
     int i,j;
-    int* liste_ligne_carte_verso;
-    int* liste_colonne_carte_verso;
+    int* liste_ligne_carte_verso = (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
+    int* liste_colonne_carte_verso= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
 
     int indice = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
@@ -602,6 +605,9 @@ void Kahina_Bouchama(plateau _plateau) {
 
     set_case_etat(get_plateau_case(_plateau,ligne_supp,colonne_supp), -1);
     
+    //libère la mémoire
+    free(liste_colonne_carte_verso);
+    free(liste_ligne_carte_verso);
 }
 
 /*
@@ -1081,9 +1087,9 @@ Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprime
 void Eric_Lejeune(plateau _plateau) {
     
     int i,j;
-    carte* liste_carte; //liste total
-    int* liste_faction;
-    int* memo_indice; //liste qui va servir à supprimer les cartes dans le cas ou le drapeau est nulle
+    carte* liste_carte=(carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte)); //liste total
+    int* liste_faction=(int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
+    int* memo_indice= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int)); //liste qui va servir à supprimer les cartes dans le cas ou le drapeau est nulle
     int indice=0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //création de la liste des cartes retournées
@@ -1099,8 +1105,8 @@ void Eric_Lejeune(plateau _plateau) {
         }
     }
 
-    carte* liste_carte_5; //liste réduite à 5
-    int* liste_faction_5;
+    carte* liste_carte_5= (carte*) malloc(5*sizeof(carte)); //liste réduite à 5
+    int* liste_faction_5= (int*) malloc(5*sizeof(int));
 
     int random;
     int newrandom;
@@ -1178,7 +1184,12 @@ void Eric_Lejeune(plateau _plateau) {
     }
 
     }
-
+    //on libère la mémoire
+    free(liste_carte);
+    free(liste_carte_5);
+    free(liste_faction);
+    free(liste_faction_5);
+    free(memo_indice);
 
 }
 

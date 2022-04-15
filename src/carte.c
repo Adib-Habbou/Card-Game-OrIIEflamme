@@ -535,10 +535,13 @@ void Parcours_sobriete_numerique(plateau _plateau) {
     for (ligne = 0;ligne <TAILLE_PLATEAU; ligne++) {
         int ligne1 = get_plateau_carte_gauche(_plateau,ligne,1)[0];
         int colonne1 = get_plateau_carte_gauche(_plateau,ligne,1)[1];
+
         int ligne2 = get_plateau_carte_droite(_plateau,ligne,1)[0];
         int colonne2 = get_plateau_carte_droite(_plateau,ligne,1)[1];
+
         set_case_etat( get_plateau_case(_plateau,ligne1,colonne1) , 1 );
         set_case_etat( get_plateau_case(_plateau,ligne2,colonne2) , 1 );
+        derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne2,colonne2));
     }
     
 }

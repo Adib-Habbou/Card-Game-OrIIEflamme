@@ -12,9 +12,9 @@ void affiche_plateau(plateau _plateau) {
     int i,j;
     char* dot = ".";
     char* card = "X";
-    for (i=0;i<TAILLE_TABLEAU+1;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
+    for (i=0;i<TAILLE_PLATEAU+1;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
         
-        for (j=0;j<TAILLE_TABLEAU+1;j++){
+        for (j=0;j<TAILLE_PLATEAU+1;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
                 printf("%4d ",j);
@@ -25,7 +25,7 @@ void affiche_plateau(plateau _plateau) {
                     printf("%4d ",i); //quadrillage des lignes
                 }
                 else {
-                    if (get_plateau_case(_plateau)!=NULL) {
+                    if (get_plateau_case(_plateau,i,j)!=NULL) {
                         printf("%4s",dot);
                     }
                     else{
@@ -56,7 +56,7 @@ void affiche_main(faction _faction) {
 
     while(buffer_main != NULL ) {
         printf("-> [ %s ] ", get_carte_nom(pile_sommet(buffer_main)) );
-        buffer_main = buffer_main->suivant;
+        buffer_main=pile_suivant(buffer_main);
     }
 
     // on affiche un saut de ligne par soucis esthétique

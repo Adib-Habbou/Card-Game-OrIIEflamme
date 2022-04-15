@@ -29,6 +29,13 @@ carte pile_sommet(pile pile) {
 }
 
 /*  @requires un pointeur vers une pile valide
+    @assigns rien
+    @ensures renvoie l'élement suivant de la pile */
+pile pile_suivant(pile pile) {
+    return pile->suivant;
+}
+
+/*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
 void empile(pile _pile, carte carte) {
@@ -39,8 +46,8 @@ void empile(pile _pile, carte carte) {
         exit(1);
     }
     // on empile la carte
-    res->sommet = carte;
-    res->suivant = _pile;
+    pile_sommet(res) = carte;
+    pile_suivant(res) = _pile;
     _pile = res;
 }
 
@@ -49,11 +56,11 @@ void empile(pile _pile, carte carte) {
     @ensures supprime la carte au sommet de la pile */
 void depile(pile pile) {
     // on vérifie que la pile n'est pas vide
-    if (pile == NULL) {
+    if (pile_est_vide(pile)) {
         exit(1);
     }
     // on supprime le sommet de la pile
-    pile = pile->suivant;
+    pile = pile_suivant(pile);
 }
 
 /*  @requires une pile valide
@@ -65,7 +72,7 @@ int taille_pile(pile pile) {
     // tant que la pile n'est pas vide on incrémente la taille
     while(!pile_est_vide(pile)) {
         taille += 1;
-        pile = pile->suivant;
+        pile = pile_suivant(pile);
     }
     // on renvoie la taille
     return taille;

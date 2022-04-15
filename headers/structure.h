@@ -23,12 +23,12 @@ int pile_est_vide(pile pile);
 /*  @requires une pile valide
     @assigns rien
     @ensures renvoie la carte au sommet de la pile */
-carte pile_sommet(pile pile);
+carte* pile_sommet(pile pile);
 
 /*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
-void empile(pile pile, carte carte);
+void empile(pile pile, carte* carte);
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile

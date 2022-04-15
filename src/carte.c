@@ -292,11 +292,11 @@ void lIIEns(faction _faction, plateau _plateau) {
         liste_faction[newrandom]=tempInt;
     }
    
-    int ligne_début = get_plateau_carte_premier(_plateau)[0];
-    int colonne_début = get_plateau_carte_premier(_plateau)[1];
+    int ligne_debut = get_plateau_carte_premier(_plateau)[0];
+    int colonne_debut = get_plateau_carte_premier(_plateau)[1];
 
     for (i=0; i<indice; i++) {
-        set_plateau_case(_plateau,ligne_début,colonne_début-i,liste_carte[i],liste_faction[i],0);
+        set_plateau_case(_plateau,ligne_debut,colonne_debut-i,liste_carte[i],liste_faction[i],0);
     }
 
 }
@@ -613,13 +613,13 @@ void Kahina_Bouchama(faction _faction, plateau _plateau) {
 @ensures Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi->
 */
 void Kevin_Goilard(faction _faction, plateau _plateau) {
-    int ligne_début,ligne_fin,compteur_carte_supp;
+    int ligne_debut,ligne_fin,compteur_carte_supp;
 
-    ligne_début = get_plateau_carte_premier(_plateau)[0];
+    ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];
-    int modulo = abs(ligne_fin-ligne_début);
+    int modulo = abs(ligne_fin-ligne_debut);
 
-    int random_ligne = ligne_début + rand() % modulo;
+    int random_ligne = ligne_debut + rand() % modulo;
     int colonne;
 
     for (colonne = 0; colonne <1000; colonne++ ) {
@@ -1067,11 +1067,11 @@ void Eric_Lejeune(faction _faction, plateau _plateau) {
             liste_faction_5[newrandom]=tempInt;
         
     
-            int ligne_début = get_plateau_carte_premier(_plateau)[0];
+            int ligne_debut = get_plateau_carte_premier(_plateau)[0];
             int colonne_début = get_plateau_carte_premier(_plateau)[1];
 
             for (i=0; i<indice; i++) {
-                set_plateau_case(_plateau,ligne_début,colonne_début-i,liste_carte[i],liste_faction[i],0);
+                set_plateau_case(_plateau,ligne_debut,colonne_début-i,liste_carte[i],liste_faction[i],0);
             }
         }
     }

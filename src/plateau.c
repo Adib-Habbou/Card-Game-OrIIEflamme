@@ -17,14 +17,14 @@ struct plateau {
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
 carte get_case_carte(Case _case) {
-    return _case.carte;
+    return _case->carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
 int get_case_etat(Case _case) {
-    return _case.etat;
+    return _case->etat;
 }
 
 /*  @requires   une case valide et un entier
@@ -32,11 +32,11 @@ int get_case_etat(Case _case) {
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
     if (etat == -1) {
-        _case.carte = NULL;
-        _case.id_faction = NULL;
-        _case.etat = NULL;
+        _case->carte = NULL;
+        _case->id_faction = NULL;
+        _case->etat = NULL;
     }
-    _case.etat = etat;
+    _case->etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -52,7 +52,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(plateau->tab[ligne][colonne].carte != NULL) {
+    while(plateau->tab[ligne][colonne]->carte != NULL) {
         if (colonne < 1000) {
              colonne += 1;
         }
@@ -69,7 +69,7 @@ int* get_plateau_carte_premier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne]->carte != NULL) {
         if (ligne_bis == 0) {
             affiche("Pas de carte à gauche");
             exit(1);
@@ -84,7 +84,7 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne]->carte != NULL) {
         if (ligne_bis == 1000) {
             affiche("Pas de carte à droite");
             exit(1);
@@ -100,7 +100,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis]->carte != NULL) {
         if (colonne_bis == 0) {
             affiche("Pas de carte en haut");
             exit(1);
@@ -115,7 +115,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis]->carte != NULL) {
         if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);
@@ -130,16 +130,16 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case) {
     faction* factions = liste_faction();
-    return factions[_case.id_faction];
+    return factions[_case->id_faction];
 }
 
 /*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
     @assigns    plateau
     @ensures    modifie la case du plateau */
 void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat) {
-    plateau->tab[ligne][colonne].carte = carte;
-    plateau->tab[ligne][colonne].id_faction = id_faction;
-    plateau->tab[ligne][colonne].etat = etat;
+    plateau->tab[ligne][colonne]->carte = carte;
+    plateau->tab[ligne][colonne]->id_faction = id_faction;
+    plateau->tab[ligne][colonne]->etat = etat;
 }
 
 /*  @requires   une case valide
@@ -153,7 +153,7 @@ int get_case_id_faction(Case _case) {
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
-    return get_carte_nom(plateau->tab[ligne][colonne].carte);
+    return get_carte_nom(plateau->tab[ligne][colonne]->carte);
 }
 
 plateau init_plateau(){
@@ -235,67 +235,67 @@ carte retourner(plateau _plateau, faction* _factions){
     }
 
 cartetrouve:
-    if(get_carte_nom(_case->carte) == "FISE"){
+    if(strcmp(get_carte_nom(_case->carte), "FISE") == 0){
         FISE(_factions[_case->id_faction]);
-    }else if(get_carte_nom(_case->carte) == "FISA"){
+    }else if(strcmp(get_carte_nom(_case->carte), "FISA") == 0){
         FISA(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "FC"){
+    }else if(strcmp(get_carte_nom(_case->carte), "FC") == 0){
         FC(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "EcologIIE"){
+    }else if(strcmp(get_carte_nom(_case->carte), "EcologIIE") == 0){
         EcologIIE(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "lIIEns"){
+    }else if(strcmp(get_carte_nom(_case->carte), "lIIEns") == 0){
         lIIEns(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Soirée sans alcool"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Soirée sans alcool") == 0){
         Soiree_sans_alcool(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Alcool"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Alcool") == 0){
         Alcool(_factions[_case->id_faction], _plateau, ligne, colonne);
-    }else if(get_carte_nom(_case->carte) == "Café"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Café") == 0){
         Cafe(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Thé"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Thé") == 0){
         The(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Ecocup"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Ecocup") == 0){
         Ecocup(_factions[_case->id_faction]);
-    }else if(get_carte_nom(_case->carte) == "Reprographie"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Reprographie") == 0){
         Reprographie(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Isolation du bâtiment"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Isolation du bâtiment") == 0){
         Isolation_du_batiment(_factions[_case->id_faction],_factions[(1 - _case->id_faction)],  _plateau);
-    }else if(get_carte_nom(_case->carte) == "Parcours sobriété numérique"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Parcours sobriété numérique") == 0){
         Parcours_sobriete_numerique(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Heures supplémentaires"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Heures supplémentaires") == 0){
         Heures_supplementaires(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Kahina Bouchama"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Kahina Bouchama") == 0){
         Kahina_Bouchama(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Kevin Goilard"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Kevin Goilard") == 0){
         Kevin_Goilard(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Vitéra Y"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Vitéra Y") == 0){
         Massinissa_Merabet(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Jonas Senizergues"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Jonas Senizergues") == 0){
         Jonas_Senizergues(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Fetia Bannour"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Fetia Bannour") == 0){
         Fetia_Bannour(_factions[_case->id_faction], _plateau, ligne, colonne);
-    }else if(get_carte_nom(_case->carte) == "Catherine Dubois"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Catherine Dubois") == 0){
         Catherine_Dubois(_factions[_case->id_faction], _plateau, ligne, colonne);
-    }else if(get_carte_nom(_case->carte) == "Anne-Laure Ligozat"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Anne-Laure Ligozat") == 0){
         Anne_Laure_Ligozat(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Guillaume Burel"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Guillaume Burel") == 0){
         Guillaume_Burel(_factions[_case->id_faction],_factions[(1 - _case->id_faction)], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Christophe Mouilleron"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Christophe Mouilleron") == 0){
         Christophe_Mouilleron(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Thomas Lim"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Thomas Lim") == 0){
         Thomas_Lim(_factions[_case->id_faction],_factions[(1 - _case->id_faction)],  _plateau);
-    }else if(get_carte_nom(_case->carte) == "Julien Forest"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Julien Forest") == 0){
         Julien_Forest(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Dimitri Watel"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Dimitri Watel") == 0){
         Dimitri_Watel(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Djibril-Aurélien Dembele-Cabot"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Djibril-Aurélien Dembele-Cabot") == 0){
         Djibril_Aurelien_Dembele_Cabot(_factions[_case->id_faction], _plateau, ligne);
-    }else if(get_carte_nom(_case->carte) == "Eric Lejeune"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Eric Lejeune") == 0){
         Eric_Lejeune(_factions[_case->id_faction], _plateau);
-    }else if(get_carte_nom(_case->carte) == "Lucienne Pacavé"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Lucienne Pacavé") == 0){
         Lucienne_Pacave(_factions[_case->id_faction], _plateau, ligne, colonne);
-    }else if(get_carte_nom(_case->carte) == "Katrin Salhab"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Katrin Salhab") == 0){
         Katrin_Salhab(_factions[_case->id_faction], _plateau, ligne, colonne);
-    }else if(get_carte_nom(_case->carte) == "Laurent Prével"){
+    }else if(strcmp(get_carte_nom(_case->carte), "Laurent Prével") == 0){
         Laurent_Prevel(_factions[_case->id_faction], _factions[(1 - _case->id_faction)],_plateau, ligne, colonne);
     }
 }

@@ -1,19 +1,15 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
-/* importation du module carte */
-#include "carte.h"
+/* importation du module type */
+#include "type.h"
 
 /* importation du module faction */
 #include "faction.h"
 
 #include <stddef.h>
+#include <string.h>
 
-/* implémentation du type abstrait case utilisé pour implémenter plateau */
-typedef struct Case *Case;
-
-/* implémentation du type abstrait plateau */
-typedef struct plateau *plateau;
 
 
 // INTERFACES DES FONCTIONS

@@ -4,12 +4,6 @@
 /* importation du module structure */
 #include "structure.h"
 
-/* importation du module carte */
-#include "carte.h"
-
-/* importation du module plateau */
-#include "plateau.h"
-
 /* définition du type abstrait des factions */
 typedef struct faction *faction;
 
@@ -123,7 +117,7 @@ void set_faction_main(faction faction, pile main);
 /*  @requires   une faction valide et une pile
     @assigns    faction
     @ensures    modifie la pioche de la faction */
-void set_faction_pioche(faction faction, pile pioche);
+void set_faction_pioche(faction faction, carte* pioche);
 
 /*  @requires   une faction valide et un entier
     @assigns    faction

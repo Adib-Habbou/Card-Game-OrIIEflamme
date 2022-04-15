@@ -4,6 +4,9 @@
 /* importation du fichier pour avoir accès au type carte */
 #include "carte.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /*  implementation des piles avec des listes chaînées */
 typedef struct maillon *pile;
 
@@ -25,12 +28,12 @@ carte pile_sommet(pile pile);
 /*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
-void empile(pile* pile, carte carte);
+void empile(pile pile, carte carte);
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
     @ensures supprime la carte au sommet de la pile */
-void depile(pile* pile);
+void depile(pile pile);
 
 /*  @requires une pile valide
     @assigns rien

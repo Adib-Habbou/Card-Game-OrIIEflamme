@@ -1,20 +1,15 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
-/* importation du module carte */
-#include "carte.h"
+/* importation du module type */
+#include "type.h"
 
 /* importation du module faction */
 #include "faction.h"
 
-/* importation du module structure */
-#include "structure.h"
+#include <stddef.h>
+#include <string.h>
 
-/* implémentation du type abstrait case utilisé pour implémenter plateau */
-typedef struct Case *Case;
-
-/* implémentation du type abstrait plateau */
-typedef struct plateau *plateau;
 
 
 // INTERFACES DES FONCTIONS
@@ -55,7 +50,7 @@ carte retourner(plateau plateau, faction* liste_faction);
 // CONSTANTES ET VARIABLES GLOBALES
 
 /* nombre de lignes et nombres de colonnes d'un plateau */
-#define TAILLE_PLATEAU 1000
+#define TAILLE_PLATEAU 50
 
 /* nombre de joueurs pour une partie */
 #define NOMBRE_JOUEURS 2
@@ -131,5 +126,15 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne);
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne);
+
+/*  @requires   une case valide
+    @assigns    rien
+    @ensures    renvoie l'id faction de la case */
+int get_case_id_faction(Case _case);
+
+/*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
+    @assigns    plateau
+    @ensures    modifie la case du plateau */
+void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat);
 
 #endif

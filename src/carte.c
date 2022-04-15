@@ -1,13 +1,4 @@
-
-/* importation du module plateau */
-#include "../headers/plateau.h"
-
-/* importation du module structure */
-#include "../headers/structure.h"
-
-#include<stddef.h>
-#include <time.h>
-#include <stdlib.h>
+#include "../headers/carte.h"
 
 
 
@@ -317,7 +308,7 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
  
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0 && (get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
                 drapeau_alcool=1;
                 break;
             }
@@ -394,7 +385,7 @@ void Cafe(faction _faction, plateau _plateau) {
     int drapeau_Ecocup = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) ) {
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0)) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1); //ATTENTION A CHANGER PAR UNE FONCTION QUI MET LA CASE EN NULL
             }
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0)) {
@@ -512,11 +503,11 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j)) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0  ) {
+            if ( (get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0  ) {
                 nb_faction_1++;
             }
             
-            if ( get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j)) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
+            if ( (get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) == get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
                 nb_faction_2++;
             }
         }
@@ -705,7 +696,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) && get_case_etat(get_plateau_case(_plateau, i, j)==1)) {
+            if ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
                 drapeau_heures_supp=1;
             }
             if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Catherine Dubois") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Dimitri Watel") == 0)  || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Thomas Lim") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Anne-Laure Ligozat") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Guillaume Burel") == 0 ) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") == 0 ) ) ) {

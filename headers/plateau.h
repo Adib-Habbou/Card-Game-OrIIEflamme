@@ -4,6 +4,8 @@
 /* importation du module type */
 #include "type.h"
 
+#include "carte.h"
+
 /* importation du module faction */
 #include "faction.h"
 

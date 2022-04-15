@@ -2,7 +2,7 @@
 #define STRUCTURE_H
 
 /* importation du fichier pour avoir accès au type carte */
-#include "carte.h"
+#include "type.h"
 
 #include <stdio.h>
 #include <stdlib.h>

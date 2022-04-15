@@ -17,14 +17,14 @@ struct plateau {
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
 carte get_case_carte(Case _case) {
-    return _case.carte;
+    return _case->carte;
 }
 
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie l'état de la carte posé sur la case */
 int get_case_etat(Case _case) {
-    return _case.etat;
+    return _case->etat;
 }
 
 /*  @requires   une case valide et un entier
@@ -32,11 +32,11 @@ int get_case_etat(Case _case) {
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
     if (etat == -1) {
-        _case.carte = NULL;
-        _case.id_faction = NULL;
-        _case.etat = NULL;
+        _case->carte = NULL;
+        _case->id_faction = NULL;
+        _case->etat = NULL;
     }
-    _case.etat = etat;
+    _case->etat = etat;
 }
 
 /*  @requires   un plateau valide et deux entiers
@@ -52,7 +52,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(plateau->tab[ligne][colonne].carte != NULL) {
+    while(plateau->tab[ligne][colonne]->carte != NULL) {
         if (colonne < 1000) {
              colonne += 1;
         }
@@ -69,7 +69,7 @@ int* get_plateau_carte_premier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne]->carte != NULL) {
         if (ligne_bis == 0) {
             affiche("Pas de carte à gauche");
             exit(1);
@@ -84,7 +84,7 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(plateau->tab[ligne_bis][colonne].carte != NULL) {
+    while(plateau->tab[ligne_bis][colonne]->carte != NULL) {
         if (ligne_bis == 1000) {
             affiche("Pas de carte à droite");
             exit(1);
@@ -100,7 +100,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis]->carte != NULL) {
         if (colonne_bis == 0) {
             affiche("Pas de carte en haut");
             exit(1);
@@ -115,7 +115,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(plateau->tab[ligne][colonne_bis].carte != NULL) {
+    while(plateau->tab[ligne][colonne_bis]->carte != NULL) {
         if (colonne_bis == 1000) {
             affiche("Pas de carte en bas");
             exit(1);
@@ -137,9 +137,9 @@ faction get_case_faction(Case _case) {
     @assigns    plateau
     @ensures    modifie la case du plateau */
 void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat) {
-    plateau->tab[ligne][colonne].carte = carte;
-    plateau->tab[ligne][colonne].id_faction = id_faction;
-    plateau->tab[ligne][colonne].etat = etat;
+    plateau->tab[ligne][colonne]->carte = carte;
+    plateau->tab[ligne][colonne]->id_faction = id_faction;
+    plateau->tab[ligne][colonne]->etat = etat;
 }
 
 /*  @requires   une case valide
@@ -153,7 +153,7 @@ int get_case_id_faction(Case _case) {
     @assigns    rien
     @ensures    renvoie le nom de la carte dans la case */
 char* get_plateau_carte_nom(plateau plateau, int ligne, int colonne) {
-    return get_carte_nom(plateau->tab[ligne][colonne].carte);
+    return get_carte_nom(plateau->tab[ligne][colonne]->carte);
 }
 
 plateau init_plateau(){

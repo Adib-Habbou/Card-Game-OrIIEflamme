@@ -4,9 +4,9 @@
 /* importation du module structure */
 #include "structure.h"
 
-/* définition du type abstrait des factions */
-typedef struct faction *faction;
+#include "type.h"
 
+#include "carte.h"
 
 // INTERFACES DES FONCTIONS
 

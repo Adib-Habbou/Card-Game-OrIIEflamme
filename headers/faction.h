@@ -66,6 +66,9 @@ void repiocher(faction fact);
 /* nombre de types de cartes existants */
 #define NOMBRE_TYPES_CARTES 32
 
+/* nombre initial de points DDRS */
+#define NOMBRE_POINTS_DDRS_INITIAL 0
+
 
 // GETTERS ET SETTERS 
 

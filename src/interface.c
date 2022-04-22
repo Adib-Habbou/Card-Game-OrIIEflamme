@@ -12,9 +12,9 @@ void affiche_plateau(plateau _plateau) {
     int i,j;
     char* dot = ".";
     char* card = "X";
-    for (i=0;i<TAILLE_PLATEAU+1;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
+    for (i=0;i<TAILLE_PLATEAU;i++) { //on ajoute 1 à la taille pour pouvoir afficher les coordonnées
         
-        for (j=0;j<TAILLE_PLATEAU+1;j++){
+        for (j=0;j<TAILLE_PLATEAU;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
                 printf("%4d ",j);
@@ -55,7 +55,9 @@ void affiche_main(faction _faction) {
     pile buffer_main = get_faction_main(_faction); 
 
     while(buffer_main != NULL ) {
-        printf("-> [ %s ] ", get_carte_nom(pile_sommet(buffer_main)) );
+        int i = 1;
+        printf("-> %d [ %s ] ", i, get_carte_nom(pile_sommet(buffer_main)) );
+        i++;
         buffer_main=pile_suivant(buffer_main);
     }
 
@@ -71,13 +73,13 @@ void affiche_main(faction _faction) {
 */
 int decision() {
     int decision;
-    printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non");
+    printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
     scanf("%d",&decision);
 
     //vérification de la cohérence de la réponse de l'utilisateur
     while (decision!=1 || decision!=0) {
-        printf("Veuillez entrer 1 pour Oui, 0 pour Non");
-        printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non");
+        printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
+        printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         scanf("%d",&decision);
     }
     return decision;
@@ -90,8 +92,29 @@ int decision() {
 @ensures retourne la carte qui va être posée
 */
 carte carte_choisie(faction _faction){
-    return  get_faction_pioche(_faction)[0];
-} //potentiellement une variable contenant la main
+    int result;
+
+    debut_demande :
+
+        printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte\n");
+        scanf("%d",result);
+
+        pile buffer_main = get_faction_main(_faction); 
+        int indice = 0;
+
+
+        while(buffer_main != NULL && indice != result ) {
+            buffer_main=pile_suivant(buffer_main);
+            indice++;
+        }
+        if (buffer_main == NULL && indice != result ) {
+            printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
+            goto debut_demande;
+        }
+
+    
+    return pile_sommet(buffer_main);
+} 
 
 /* 
 @requires plateau valide
@@ -109,8 +132,25 @@ int* carte_positon(plateau _plateau) {
     int ligne = position[0];
     int colonne = position[1];
 
+    //vérification si plateau est vide
+    int drapeau_plateau_vide=1;
+    int i,j;
+    for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
+        for (j=0;j<TAILLE_PLATEAU;j++) {  
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+                drapeau_plateau_vide=0;  
+            }
+        }
+    }
+
+    //si c'est la première carte, on la place au milieu
+    if (drapeau_plateau_vide) {
+        position[0]=TAILLE_PLATEAU/2;
+        position[1]=TAILLE_PLATEAU/2;
+        return position;
+    }
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
+    else if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
         return position;
     }
     else {

@@ -38,7 +38,7 @@ pile pile_suivant(pile pile) {
 /*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
-void empile(pile _pile, carte carte) {
+void empile(pile *_pile, carte carte) {
     // on alloue la mémoire nécessaire à la variable res
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
@@ -47,20 +47,20 @@ void empile(pile _pile, carte carte) {
     }
     // on empile la carte
     res->sommet = carte;
-    res->suivant = _pile;
-    _pile = res;
+    res->suivant = *_pile;
+    *_pile = res;
 }
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
     @ensures supprime la carte au sommet de la pile */
-void depile(pile pile) {
+void depile(pile *pile) {
     // on vérifie que la pile n'est pas vide
-    if (pile_est_vide(pile)) {
+    if (pile_est_vide(*pile)) {
         exit(1);
     }
     // on supprime le sommet de la pile
-    pile = pile_suivant(pile);
+    *pile = pile_suivant(*pile);
 }
 
 /*  @requires une pile valide

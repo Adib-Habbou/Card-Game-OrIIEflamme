@@ -1,3 +1,6 @@
+#include "CUnit/CUnit.h"
+#include "CUnit/Basic.h"
+
 /* Vérifie la bonne initialisation d'une faction :
     - le nom n'est pas vide ;
     - le nombre initial de points DDRS est nul ;

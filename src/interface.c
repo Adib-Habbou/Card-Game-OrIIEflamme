@@ -77,7 +77,7 @@ int decision() {
     scanf("%d",&decision);
 
     //vérification de la cohérence de la réponse de l'utilisateur
-    while (decision!=1 || decision!=0) {
+    while (&decision!=1 || &decision!=0) {
         printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         scanf("%d",&decision);

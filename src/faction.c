@@ -3,7 +3,7 @@
 
 /* définition de la structure des factions */
 struct faction {
-    char nom;
+    char* nom;
     int nombre_points_DDRS;
     pile main; /* type liste défini dans structure.h et structure.c */
     carte* pioche; /* type pile défini dans structure.h et structure.c */
@@ -51,6 +51,13 @@ int get_faction_option_remelanger(faction faction) {
     @ensures    renvoie le nombre de manches gagnées */
 int get_faction_manches_gagnees(faction faction) {
     return faction->manches_gagnees;
+}
+
+/*  @requires   une faction valide et un char
+    @assigns    faction
+    @ensures    modifie nom de la faction */
+void set_faction_nom(faction faction, char* nom) {
+    faction->nom = nom;
 }
 
 /*  @requires   une faction valide et un entier
@@ -117,7 +124,7 @@ void melanger_pioche(faction _faction){
 
 
 void repiocher(faction _faction){
-    int* liste_index;
+    int* liste_index = (int*) malloc(NOMBRE_TYPES_CARTES*sizeof(int));
     int size_liste_index = NOMBRE_TYPES_CARTES;
     for(int i = 0; i < NOMBRE_TYPES_CARTES; i++){
         liste_index[i] = i;

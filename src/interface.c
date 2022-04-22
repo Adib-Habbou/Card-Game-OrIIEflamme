@@ -89,7 +89,9 @@ int decision() {
 @assigns rien
 @ensures retourne la carte qui va être posée
 */
-carte carte_choisie(faction _faction); //potentiellement une variable contenant la main
+carte carte_choisie(faction _faction){
+    return  get_faction_pioche(_faction)[0];
+} //potentiellement une variable contenant la main
 
 /* 
 @requires plateau valide
@@ -97,7 +99,7 @@ carte carte_choisie(faction _faction); //potentiellement une variable contenant 
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
 int* carte_positon(plateau _plateau) {
-    int* position;
+    int* position = (int*) malloc(2*sizeof(int));
     printf("Où souhaitez-vous poser votre carte ?\n");
     printf("ligne :\n");
     scanf("%d",&position[0]);
@@ -115,7 +117,7 @@ int* carte_positon(plateau _plateau) {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
         exit(0);
     }
-
+    free(position);
 }
 
 /* 

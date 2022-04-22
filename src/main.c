@@ -12,7 +12,7 @@ int main(){
     affiche_plateau(_plateau);
 
     int manche = 1;
-    int JoueurCommence;
+    int JoueurCommence = 0;
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
     while(init_manche(_plateau, _factions) != 0){
@@ -53,7 +53,7 @@ int main(){
         // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
             carte _carte = retourner(_plateau, _factions);
-            if(_carte == NULL)
+            if(get_carte_nom(_carte) == NULL)
                 break;
             afficher_effet(_carte);
         }

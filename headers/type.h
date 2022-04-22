@@ -10,4 +10,7 @@ typedef struct carte *carte;
 /* implémentation du type abstrait case utilisé pour implémenter plateau */
 typedef struct Case *Case;
 
+/* définition du type abstrait des factions */
+typedef struct faction *faction;
+
 #endif

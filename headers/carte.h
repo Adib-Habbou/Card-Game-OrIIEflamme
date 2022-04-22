@@ -1,15 +1,12 @@
 #ifndef CARTE_H  /* pour éviter des inclusions multiples */
 #define CARTE_H
 
-#include "faction.h"
+#include "type.h"
 
 #include <stddef.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-
-/* définition du type abstrait des cartes */
-typedef struct carte *carte;
 
 /* importation du module plateau */
 #include "plateau.h"

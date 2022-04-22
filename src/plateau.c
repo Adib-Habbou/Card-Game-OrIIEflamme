@@ -222,11 +222,11 @@ int init_manche(plateau _plateau, faction* _factions){
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
-        return 0;
+        return 1;
     }else{
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
         if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
-            return 1;
+            return 0;
         }
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
@@ -234,7 +234,7 @@ int init_manche(plateau _plateau, faction* _factions){
         libere_plateau(_plateau);
         _plateau = init_plateau();
     }
-    return 0;
+    return 1;
 }
 
 faction* liste_faction(){

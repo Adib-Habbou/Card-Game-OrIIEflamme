@@ -663,7 +663,7 @@ void Kevin_Goilard(faction _faction, plateau _plateau) {
     int ligne_debut,ligne_fin,compteur_carte_supp;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
-    ligne_fin = get_plateau_carte_premier(_plateau)[0];  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! dernier n'exite pas
+    ligne_fin = get_plateau_carte_dernier(_plateau)[0];  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! dernier n'exite pas
     int modulo = abs(ligne_fin-ligne_debut);
 
     int random_ligne = ligne_debut + rand() % modulo;

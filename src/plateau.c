@@ -198,16 +198,21 @@ int init_manche(plateau _plateau, faction* _factions){
         }
     }
     if(maxddrs == 0 && winner == 0){
+        for(int i = 0; i < NOMBRE_JOUEURS; i++){
+            remelanger(_factions[i]);
+        }
+        return 0;
+    }else{
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
+        if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+            return 1;
+        }
+        for(int i = 0; i < NOMBRE_JOUEURS; i++){
+            remelanger(_factions[i]);
+        }
+        libere_plateau(_plateau);
+        _plateau = init_plateau();
     }
-    if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
-        return 1;
-    }
-    for(int i = 0; i < NOMBRE_JOUEURS; i++){
-        remelanger(_factions[i]);
-    }
-    libere_plateau(_plateau);
-    _plateau = init_plateau();
     return 0;
 }
 

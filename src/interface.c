@@ -125,9 +125,10 @@ carte carte_choisie(faction _faction){
 int* carte_positon(plateau _plateau) {
     int* position = (int*) malloc(2*sizeof(int));
     printf("Où souhaitez-vous poser votre carte ?\n");
-    printf("ligne :\n");
+    printf("Ligne :  ");
     scanf("%d",&position[0]);
-    printf("colonne :\n");
+    printf("\n");
+    printf("Colonne :  ");
     scanf("%d",&position[1]);
 
     int ligne = position[0];

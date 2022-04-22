@@ -17,24 +17,25 @@ void affiche_plateau(plateau _plateau) {
         for (j=0;j<TAILLE_PLATEAU;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
-                printf("%4d ",j);
+                printf("%2d ",j);
             }
             
             else {
                 if (j==0){
-                    printf("%4d ",i); //quadrillage des lignes
+                    printf("%3d ",i); //quadrillage des lignes
                 }
                 else {
                     if (get_plateau_case(_plateau,i,j)!=NULL) {
-                        printf("%4s",dot);
+                        printf("%3s",dot);
                     }
                     else{
-                        printf("%4s",card);
+                        printf("%3s",card);
                     }
                 }
             }
-
+            
         }
+        printf("\n");
 
     }
 }
@@ -96,7 +97,7 @@ carte carte_choisie(faction _faction){
 
     debut_demande :
 
-        printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte\n");
+        printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte :\n");
         scanf("%d",&result);
 
         pile buffer_main = get_faction_main(_faction); 
@@ -178,11 +179,11 @@ void afficher_effet(carte _carte) {
 void gagnant(faction* factions) {
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
+        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
         char* nom_gagnant = get_faction_nom(factions[1]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
+        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
 }
 

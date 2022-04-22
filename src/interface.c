@@ -97,7 +97,7 @@ carte carte_choisie(faction _faction){
     debut_demande :
 
         printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte\n");
-        scanf("%d",result);
+        scanf("%d",&result);
 
         pile buffer_main = get_faction_main(_faction); 
         int indice = 0;

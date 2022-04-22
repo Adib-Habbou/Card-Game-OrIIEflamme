@@ -1,6 +1,17 @@
 #include "CUnit/CUnit.h"
 #include "CUnit/Basic.h"
 
+/* importation du module type */
+#include "type.h"
+
+/* importation du module carte */
+#include "carte.h"
+
+/* importation du module faction */
+#include "faction.h"
+
+#include <stdlib.h>
+
 /* Vérifie la bonne initialisation d'une faction :
     - le nom n'est pas vide ;
     - le nombre initial de points DDRS est nul ;

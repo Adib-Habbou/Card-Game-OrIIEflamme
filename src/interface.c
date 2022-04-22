@@ -54,9 +54,9 @@ void affiche_main(faction _faction) {
     // tant que la pile est non vide on affiche le nom de la carte
 
     pile buffer_main = get_faction_main(_faction); 
-
+    int i = 1;
     while(buffer_main != NULL ) {
-        int i = 1;
+       
         printf("-> %d [ %s ] ", i, get_carte_nom(pile_sommet(buffer_main)) );
         i++;
         buffer_main=pile_suivant(buffer_main);

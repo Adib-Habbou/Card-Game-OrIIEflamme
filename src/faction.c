@@ -113,7 +113,7 @@ void remelanger(faction _faction){
 
 void vider_main(faction _faction){
     while(!pile_est_vide(_faction->main)){
-        depile(_faction->main);
+        depile(&_faction->main);
     }
 }
 
@@ -140,7 +140,7 @@ void repiocher(faction _faction){
                 if(size_liste_index < 0)
                     break;
             }
-            empile(_faction->main, _faction->pioche[index]);
+            empile(&_faction->main, _faction->pioche[index]);
             set_carte_nombre_occurrences(_faction->pioche[index], get_carte_nombre_occurrences(_faction->pioche[index])-1);
         }
     }

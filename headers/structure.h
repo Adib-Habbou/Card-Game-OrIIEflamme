@@ -33,12 +33,12 @@ pile pile_suivant(pile pile);
 /*  @requires un pointeur vers une pile valide
     @assigns ajoute la carte au sommet de la pile
     @ensures rien */
-void empile(pile pile, carte carte);
+void empile(pile *pile, carte carte);
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
     @ensures supprime la carte au sommet de la pile */
-void depile(pile pile);
+void depile(pile *pile);
 
 /*  @requires une pile valide
     @assigns rien

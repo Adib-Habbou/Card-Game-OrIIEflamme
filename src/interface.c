@@ -17,24 +17,25 @@ void affiche_plateau(plateau _plateau) {
         for (j=0;j<TAILLE_PLATEAU;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
-                printf("%4d ",j);
+                printf("%3d",j);
             }
             
             else {
                 if (j==0){
-                    printf("%4d ",i); //quadrillage des lignes
+                    printf("%3d",i); //quadrillage des lignes
                 }
                 else {
                     if (get_plateau_case(_plateau,i,j)!=NULL) {
-                        printf("%4s",dot);
+                        printf("%3s",dot);
                     }
                     else{
-                        printf("%4s",card);
+                        printf("%3s",card);
                     }
                 }
             }
-
+            
         }
+        printf("\n");
 
     }
 }
@@ -53,9 +54,9 @@ void affiche_main(faction _faction) {
     // tant que la pile est non vide on affiche le nom de la carte
 
     pile buffer_main = get_faction_main(_faction); 
-
+    int i = 1;
     while(buffer_main != NULL ) {
-        int i = 1;
+       
         printf("-> %d [ %s ] ", i, get_carte_nom(pile_sommet(buffer_main)) );
         i++;
         buffer_main=pile_suivant(buffer_main);
@@ -77,7 +78,7 @@ int decision() {
     scanf("%d",&decision);
 
     //vérification de la cohérence de la réponse de l'utilisateur
-    while (decision!=1 || decision!=0) {
+    while ((decision!=1) && (decision!=0)) {
         printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         scanf("%d",&decision);
@@ -96,7 +97,7 @@ carte carte_choisie(faction _faction){
 
     debut_demande :
 
-        printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte\n");
+        printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte :\n");
         scanf("%d",&result);
 
         pile buffer_main = get_faction_main(_faction); 
@@ -122,42 +123,46 @@ carte carte_choisie(faction _faction){
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
 int* carte_positon(plateau _plateau) {
-    int* position = (int*) malloc(2*sizeof(int));
+    int ligneUser;
+    int colonneUser;
     printf("Où souhaitez-vous poser votre carte ?\n");
-    printf("ligne :\n");
-    scanf("%d",&position[0]);
-    printf("colonne :\n");
-    scanf("%d",&position[1]);
+    printf("Ligne :  ");
+    scanf("%d",&ligneUser);
 
-    int ligne = position[0];
-    int colonne = position[1];
+    printf("Colonne :  ");
+    scanf("%d",&colonneUser);
 
+    int* position = (int*) malloc(2*sizeof(int));
+    position[0] = ligneUser;
+    position[1] = colonneUser;
+    
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+            if (get_carte_nombre_occurrences(get_case_carte(get_plateau_case(_plateau,i,j))) != -1) {
                 drapeau_plateau_vide=0;  
             }
         }
     }
 
     //si c'est la première carte, on la place au milieu
+    
     if (drapeau_plateau_vide) {
         position[0]=TAILLE_PLATEAU/2;
         position[1]=TAILLE_PLATEAU/2;
         return position;
-    }
+    } 
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    else if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
+    else if ( (get_plateau_case(_plateau,ligneUser-1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser-1) != NULL) || (get_plateau_case(_plateau,ligneUser+1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser+1) != NULL)) {
         return position;
     }
     else {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
         exit(0);
     }
-    free(position);
+    
 }
 
 /* 
@@ -178,11 +183,11 @@ void afficher_effet(carte _carte) {
 void gagnant(faction* factions) {
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
+        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
         char* nom_gagnant = get_faction_nom(factions[1]);
-        printf(" Félicitation %s ! vous avez gagné la partie ! \n",nom_gagnant);
+        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
 }
 

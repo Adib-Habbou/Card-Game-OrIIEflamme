@@ -70,6 +70,27 @@ int* get_plateau_carte_premier(plateau plateau) {
 
 /*  @requires   un plateau valide
     @assigns    rien
+    @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
+int* get_plateau_carte_dernier(plateau plateau) {
+    int ligne = TAILLE_PLATEAU;
+    int colonne = TAILLE_PLATEAU;
+    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne]->carte) != -1) {
+        if (colonne > 0) {
+             colonne -= 1;
+        }
+        else {
+            colonne = 0;
+            ligne -= 1;
+        }
+    }
+    int* position = (int*) malloc(2*sizeof(int));
+    position[0] = ligne;
+    position[1] = colonne;
+    return position;
+}
+
+/*  @requires   un plateau valide
+    @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;

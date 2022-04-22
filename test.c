@@ -132,7 +132,7 @@ void test_presence_troisieme_manche() {
             set_faction_manches_gagnees(liste_factions[1], 1);
             // chacune des deux factions possède un nombre strictement supérieur à zero de points DDRS
             set_faction_nombre_points_DDRS(liste_factions[0], 20);
-            set_faction_nombre_points_DDRS(liste_factions[0], 34);
+            set_faction_nombre_points_DDRS(liste_factions[1], 34);
 
     // action
         // On initialise une troisième manche
@@ -144,7 +144,7 @@ void test_presence_troisieme_manche() {
         // Le plateau a été vidé : aucune case du plateau n'est occupée
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
-                CU_ASSERT_PTR_NULL(get_case_carte(plateau->tab[i][j]))
+                CU_ASSERT_PTR_NULL(get_case_carte(plateau->tab[i][j]));
             }   
         }
         // La main de chaque faction est vide
@@ -258,7 +258,9 @@ void test_placement_cartes_espace2D() {
 
 
 /* Vérifie la bonne activation des effets des cartes */
-void test_activation_effet_cartes() {
+
+// lIIEns
+void test_activation_effet_lIIEns() {
     // arrange
         // On initialise le plateau de jeu
         plateau plateau = init_plateau();
@@ -266,15 +268,149 @@ void test_activation_effet_cartes() {
         faction* liste_factions = liste_faction();
         faction faction = liste_factions[0];
 
+        // On positionne sur le plateau une carte lIIEns, qu'on gardera donc tout en haut à gauche
+        poser(plateau, c_lIIEns, [0, 4]); // Position [0, 4] pour laisser la place pour positionner les cartes FISE/FISA/FC après remélange
+
+        // On positionne sur le plateau des cartes FISE/FISA/FC retournées
+        poser(plateau, c_FISE, [0, 5]); // Position [0, 5] : à droite de lIIEns
+        poser(plateau, c_FISA, [1, 5]); // Position [1, 5] : en bas de FISE
+        poser(plateau, c_FC, [1, 4]); // Position [1, 4] : à gauche de FISA
+
+        Case case_FISE = plateau[0,5];
+        Case case_FISA = plateau[1,5];
+        Case case_FC = plateau[1,4];
+        set_case_etat(case_FISE, 1); // etat : 0 si la carte est face cachée
+        set_case_etat(case_FISA, 1);
+        set_case_etat(case_FC, 1);
+
     // action
+        retourner(plateau, faction) // lIIEns est la carte la plus en haut à gauche qui va donc être retournée
 
 
     // test
+        // Toutes les cartes FISE/FISA/FC retournées sur le plateau sont retirées
 
-        // Bonne mise à jour des points DDRS
+        // Toutes les cartes FISE/FISA/FC sont reposées face cachée 
+
+        // Toutes les cartes FISE/FISA/FC sont reposées sur la gauche de la carte la plus en haut à gauche du plateau
+
+}
 
 
-    // impact sur le plateau
+// Soirée sans alcool
+void test_activation_effet_soiree_sans_alcool() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        faction faction = liste_factions[0];
+
+        // On positionne sur le plateau une carte Soirée sans alcool, qu'on gardera donc tout en haut à gauche
+        poser(plateau, c_Soiree_sans_alcool, [0, 4]); // Position [0, 4] pour laisser la place pour positionner les cartes FISE/FISA/FC après remélange
+
+        // On positionne sur le plateau des cartes FISE/FISA/FC retournées
+        poser(plateau, c_FISE, [0, 5]); // Position [0, 5] : à droite de lIIEns
+        poser(plateau, c_FISA, [1, 5]); // Position [1, 5] : en bas de FISE
+        poser(plateau, c_FC, [1, 4]); // Position [1, 4] : à gauche de FISA
+
+        Case case_FISE = plateau[0,5];
+        Case case_FISA = plateau[1,5];
+        Case case_FC = plateau[1,4];
+        set_case_etat(case_FISE, 1); // etat : 0 si la carte est face cachée
+        set_case_etat(case_FISA, 1);
+        set_case_etat(case_FC, 1);
+
+       
+
+    // action
+        retourner(plateau, faction) // lIIEns est la carte la plus en haut à gauche qui va donc être retournée
+
+
+    // test
+        // Si au moins une carte alcool est retournée :
+            // Toutes les cartes FISE/FISA/FC retournées du plateau sont supprimées
+
+
+            // La première et la dernière ligne du plateau sont supprimées
+
+        // Si aucune carte alcool est retournée :
+            // La faction qui a posé la carte "Soirée sans alcol" gagne 5 points DDRS
+
+
+}
+
+
+
+
+
+
+/* Vérifie la bonne désignation du vainqueur de manche :
+       faction qui a le plus de points DDRS à l'issue de la manche
+       Attention : en cas d'égalité, la faction qui a posé la carte qui est la plus en haut à gauche du plateau à l'issue de la manche gagne
+*/
+void test_vainqueur_manche() {
+// Cas de non égalité
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        // On "joue" artificiellement une manche : on se positionne en cas de non égalité
+        set_faction_nombre_points_DDRS(liste_factions[0], 20);
+        set_faction_nombre_points_DDRS(liste_factions[1], 34);
+        // On positionne des cartes fictives sur le plateau : dans le jeu chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
+        poser(plateau, c_FISE, [0, 5]); // Position [0, 5] : à droite de lIIEns
+        poser(plateau, c_FISA, [1, 5]); // Position [1, 5] : en bas de FISE
+        poser(plateau, c_Ecocup, [1, 4]); // Position [1, 4] : à gauche de FISA
+        poser(plateau, c_Christophe_Mouilleron, [2, 4]); // Position [2, 4] : en bas de Ecocup
+
+    // action
+        // On termine la manche : toutes les cartes sont retournées
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+                Case _case = plateau[i][j];
+                set_case_etat(_case, 1); // état : 1 si la carte est face visible
+            }   
+        }
+
+    // test
+        // La faction gagnante (ici la faction 2 car avec le plus de points DDRS) voit sa manche comptabilisée
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[1], 1); // ici une seule manche a été jouée
+        // Le nombre de manches gagnées de l'autre faction ne varie pas
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[0], 0);
+
+// Cas d'égalité
+    // arrange
+        // On initialise un nouveau plateau de jeu
+        plateau plateau_egalite = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions_egalite = liste_faction();
+        // On remet à zero le compteur et on "rejoue" artificiellement la manche : on se positionne  cette fois-ci en cas d'égalité
+        set_faction_nombre_points_DDRS(liste_factions_egalite[0], 20);
+        set_faction_nombre_points_DDRS(liste_factions_egalite[1], 20);
+        // On positionne des cartes fictives sur le nouveau plateau : chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
+        poser(plateau_egalite, c_FISE, [0, 5]); // Position [0, 5] : à droite de lIIEns
+        poser(plateau_egalite, c_FISA, [1, 5]); // Position [1, 5] : en bas de FISE
+        poser(plateau_egalite, c_Ecocup, [1, 4]); // Position [1, 4] : à gauche de FISA
+        poser(plateau_egalite, c_Christophe_Mouilleron, [2, 4]); // Position [2, 4] : en bas de Ecocup
+
+    // action
+        // On termine la manche : toutes les cartes sont retournées
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+                Case _case = plateau_egalite[i][j];
+                set_case_etat(_case, 1); // état : 1 si la carte est face visible
+            }   
+        }
+
+    // test
+        // La faction gagnante voit sa manche comptabilisée
+            // Déterminons la faction gagnante 
+            
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions_egalite[1], 1); // ici une seule manche a été jouée
+        // Le nombre de manches gagnées de l'autre faction ne varie pas
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions_egalite[0], 0);
 }
 
 
@@ -288,3 +424,42 @@ void test_activation_effet_cartes() {
 /* La faction qui remporte deux manches gagne la partie. */
 
 /* Il n'y a pas de limite au nombre de points que peut avoir une faction dans une manche mais elle ne peut en avoir moins de 0. */
+
+
+int main ( void )
+{
+   CU_pSuite pSuite = NULL;
+   /* initialize the CUnit test registry */
+   if ( CUE_SUCCESS != CU_initialize_registry() )
+      return CU_get_error();
+   /* add a suite to the registry */
+   pSuite = CU_add_suite( "initialisation_suite", init_suite, clean_suite );
+   if ( NULL == pSuite ) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   /* add the tests to the suite */
+   if ( (NULL == CU_add_test(pSuite, "test_initialisation_faction", test_initialisation_faction)) ||
+        (NULL == CU_add_test(pSuite, "test_initialisation_plateau", test_initialisation_plateau))
+      )
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   // Run all tests using the basic interface
+     CU_basic_set_mode(CU_BRM_VERBOSE);
+     CU_basic_run_tests();
+     printf("\n");
+     CU_basic_show_failures(CU_get_failure_list());
+     printf("\n\n");
+  /*
+     // Run all tests using the automated interface
+     CU_automated_run_tests();
+     CU_list_tests_to_file();
+     // Run all tests using the console interface
+     CU_console_run_tests();
+  */
+     /* Clean up registry and return */
+     CU_cleanup_registry();
+      return CU_get_error();
+}

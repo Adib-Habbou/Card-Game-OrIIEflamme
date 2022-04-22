@@ -123,43 +123,46 @@ carte carte_choisie(faction _faction){
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
 int* carte_positon(plateau _plateau) {
-    int* position = (int*) malloc(2*sizeof(int));
+    int ligneUser;
+    int colonneUser;
     printf("Où souhaitez-vous poser votre carte ?\n");
     printf("Ligne :  ");
-    scanf("%d",&position[0]);
-    printf("\n");
+    scanf("%d",&ligneUser);
+
     printf("Colonne :  ");
-    scanf("%d",&position[1]);
+    scanf("%d",&colonneUser);
 
-    int ligne = position[0];
-    int colonne = position[1];
-
+    int* position = (int*) malloc(2*sizeof(int));
+    position[0] = ligneUser;
+    position[1] = colonneUser;
+    
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+            if (get_carte_nombre_occurrences(get_case_carte(get_plateau_case(_plateau,i,j))) != -1) {
                 drapeau_plateau_vide=0;  
             }
         }
     }
 
     //si c'est la première carte, on la place au milieu
+    
     if (drapeau_plateau_vide) {
         position[0]=TAILLE_PLATEAU/2;
         position[1]=TAILLE_PLATEAU/2;
         return position;
-    }
+    } 
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    else if ( (get_plateau_case(_plateau,ligne-1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne-1) != NULL) || (get_plateau_case(_plateau,ligne+1,colonne) != NULL) || (get_plateau_case(_plateau,ligne,colonne+1) != NULL)) {
+    else if ( (get_plateau_case(_plateau,ligneUser-1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser-1) != NULL) || (get_plateau_case(_plateau,ligneUser+1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser+1) != NULL)) {
         return position;
     }
     else {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
         exit(0);
     }
-    free(position);
+    
 }
 
 /* 

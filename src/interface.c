@@ -17,12 +17,12 @@ void affiche_plateau(plateau _plateau) {
         for (j=0;j<TAILLE_PLATEAU;j++){
 
             if (i==0) { // on est à la première ligne donc on affiche le quadrillage des colonnes
-                printf("%2d ",j);
+                printf("%3d",j);
             }
             
             else {
                 if (j==0){
-                    printf("%3d ",i); //quadrillage des lignes
+                    printf("%3d",i); //quadrillage des lignes
                 }
                 else {
                     if (get_plateau_case(_plateau,i,j)!=NULL) {

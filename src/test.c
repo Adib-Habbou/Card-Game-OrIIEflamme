@@ -262,7 +262,6 @@ void test_activation_effet_lIIEns() {
         plateau plateau = init_plateau();
         // On initialise les factions à placer sur le plateau
         faction* liste_factions = liste_faction();
-        faction faction = liste_factions[0];
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
 
@@ -275,8 +274,8 @@ void test_activation_effet_lIIEns() {
         set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
 
         // On retient le nom de la carte la plus en haut à gauche avant de la retourner
-        int* position_premier = get_plateau_carte_premier(plateau);
-        char* nom_carte_premier = get_plateau_carte_nom(plateau, position_premier[0], position_premier[1]);
+        int* position_carte_retournee = get_plateau_carte_premier(plateau);
+        char* nom_carte_retournee = get_plateau_carte_nom(plateau, position_carte_retournee[0], position_carte_retournee[1]);
         
 
     // action
@@ -284,23 +283,29 @@ void test_activation_effet_lIIEns() {
 
 
     // test
-        // Parcourons toutes les cartes avant (ici lIIEns) 
+        // Parcourons toutes les cartes avant celle qui vient d'être retournée (ici lIIEns)
+        int* position_premier = get_plateau_carte_premier(plateau); 
         int* position_dernier = get_plateau_carte_dernier(plateau);
         for (int i = position_premier[0]; i < position_dernier[0]; i++) {
             for (int j = position_premier[1]; j < position_dernier[1]; j++) {
-                while (1 == strcmp(get_plateau_carte_nom(plateau, i, j), nom_carte_premier)) {
-                    // Toutes les cartes avant lIIEns sont soit FISE, soit FISA, soit FC    
+                while (1 == strcmp(get_plateau_carte_nom(plateau, i, j), nom_carte_retournee)) {
+                    // Toutes les cartes avant sont soit FISE, soit FISA, soit FC    
                     char* nom_carte = get_plateau_carte_nom(plateau, i, j);
                     CU_ASSERT( (0 == strcmp(nom_carte, "FISE")) || (0 == strcmp(nom_carte, "FISA")) || (0 == strcmp(nom_carte, "FC")) ); 
-                    // Toutes les cartes avant lIIEns, à priori que des cartes FISE/FISA/FC, sont reposées face cachée
+                    // Toutes les cartes avant, à priori que des cartes FISE/FISA/FC, sont reposées face cachée
                     Case case_carte = get_plateau_case(plateau, i, j);
                     CU_ASSERT_EQUAL(get_case_etat(case_carte), 0); // Etat d'une case : 0 si la carte est face cachée    
                 }   
             } 
         }
-
-        // Toutes les cartes FISE/FISA/FC sont reposées sur la gauche de la carte la plus en haut à gauche du plateau
-
+        // Parcourons toutes les cartes après celle qui vient d'être retournée (ici lIIEns)
+        for (int i = position_carte_retournee[0]; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = position_carte_retournee[1]; j < TAILLE_PLATEAU-1; j++) {
+                // Il n'y a pas d'autres cartes FISE/FISA/FC sur le plateau (hormis celles reposées sur la gauche de la carte la plus en haut à gauche du plateau)
+                char* nom_carte = get_plateau_carte_nom(plateau, i, j);
+                CU_ASSERT( (1 == strcmp(nom_carte, "FISE")) && (1 == strcmp(nom_carte, "FISA")) && (1 == strcmp(nom_carte, "FC")) );    
+            } 
+        }
 }
 
 
@@ -316,14 +321,21 @@ void test_activation_effet_soiree_sans_alcool() {
         carte* liste_cartes = get_liste_carte();
 
         // On positionne sur le plateau une carte Soirée sans alcool, qu'on gardera donc tout en haut à gauche
-        set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); // Position (0, 4) pour laisser la place pour positionner les cartes FISE/FISA/FC après remélange
+        set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); 
 
         // On positionne sur le plateau des cartes FISE/FISA/FC retournées
         set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 1); // FISE en position (0, 5) : à droite de lIIEns
         set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
         set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
 
-       
+        // On retient la ligne la plus en haut et celle la plus en bas avant activation de la carte Soirée sans alcool
+        int* position_premier_avant = get_plateau_carte_premier(plateau);
+        int ligne_plus_haute_avant = position_premier_avant[0];
+        int* position_dernier_avant = get_plateau_carte_dernier(plateau);
+        int ligne_plus_basse_avant = position_dernier_avant[0];
+        // On retient le nombre de points DDRS de la faction ayant posé la carte Soirée sans alcool avant son activation
+        int points_DDRS_avant = get_faction_nombre_points_DDRS(faction);
+
 
     // action
         retourner(plateau, liste_factions); // Soirée sans alcool est la carte la plus en haut à gauche qui va donc être retournée
@@ -331,13 +343,30 @@ void test_activation_effet_soiree_sans_alcool() {
 
     // test
         // Si au moins une carte alcool est retournée :
-            // Toutes les cartes FISE/FISA/FC retournées du plateau sont supprimées
-
-
+        set_plateau_case(plateau, 0, 3, liste_cartes[6], 1, 1); // Alcool en position (0, 3) : tout en haut à gauche, juste avant Soirée sans alcool
+            // Il n'y a pas de cartes FISE/FISA/FC face visible sur le plateau : toutes les cartes FISE/FISA/FC retournées du plateau sont supprimées
+            for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+                for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
+                    char* nom_carte = get_plateau_carte_nom(plateau, i, j);
+                    Case case_carte = get_plateau_case(plateau, i, j);
+                    if ( (0 == strcmp(nom_carte, "FISE")) || (0 == strcmp(nom_carte, "FISA")) || (0 == strcmp(nom_carte, "FC")) ) {
+                        CU_ASSERT_EQUAL(get_case_etat(case_carte), 0); 
+                    }
+                } 
+            }
             // La première et la dernière ligne du plateau sont supprimées
+            int* position_premier_apres = get_plateau_carte_premier(plateau);
+            int ligne_plus_haute_apres = position_premier_apres[0];
+            CU_ASSERT_EQUAL(ligne_plus_haute_apres, ligne_plus_haute_avant+1);
+            int* position_dernier_apres = get_plateau_carte_dernier(plateau);
+            int ligne_plus_basse_apres = position_dernier_apres[0];
+            CU_ASSERT_EQUAL(ligne_plus_basse_apres, ligne_plus_basse_avant-1)
 
         // Si aucune carte alcool est retournée :
-            // La faction qui a posé la carte "Soirée sans alcol" gagne 5 points DDRS
+            set_plateau_case(plateau, 0, 3, liste_cartes[6], 1, 0); // Carte Alcool en position (0, 3) mise en face cachée
+            // La faction qui a posé la carte "Soirée sans alcool" gagne 5 points DDRS
+            Case case_carte = get_plateau_case(plateau, position_premier_avant[0], position_premier_avant[1]);
+            CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(get_case_faction(case_carte)), points_DDRS_avant+5);
 }
 
 

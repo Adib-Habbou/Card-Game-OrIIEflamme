@@ -13,7 +13,6 @@
 #include <string.h>
 
 
-
 // INTERFACES DES FONCTIONS
 
 /*  @requires   rien

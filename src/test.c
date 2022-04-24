@@ -142,8 +142,8 @@ void test_presence_troisieme_manche() {
             }   
         }
         // La main de chaque faction est vide
-            CU_ASSERT_TRUE(pile_est_vide(get_faction_main(liste_factions[0])));
-            CU_ASSERT_TRUE(pile_est_vide(get_faction_main(liste_factions[1])));
+        CU_ASSERT_TRUE(pile_est_vide(get_faction_main(liste_factions[0])));
+        CU_ASSERT_TRUE(pile_est_vide(get_faction_main(liste_factions[1])));
         // Au début de chaque manche, les deux factions ont 0 points DDRS
         CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(liste_factions[0]), NOMBRE_POINTS_DDRS_INITIAL);
         CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(liste_factions[1]), NOMBRE_POINTS_DDRS_INITIAL);
@@ -274,14 +274,30 @@ void test_activation_effet_lIIEns() {
         set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
         set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
 
+        // On retient le nom de la carte la plus en haut à gauche avant de la retourner
+        int* position_premier = get_plateau_carte_premier(plateau);
+        char* nom_carte_premier = get_plateau_carte_nom(plateau, position_premier[0], position_premier[1]);
+        
+
     // action
         retourner(plateau, liste_factions); // lIIEns est la carte la plus en haut à gauche qui va donc être retournée
 
 
     // test
-        // Toutes les cartes FISE/FISA/FC retournées sur le plateau sont retirées
-
-        // Toutes les cartes FISE/FISA/FC sont reposées face cachée 
+        // Parcourons toutes les cartes avant (ici lIIEns) 
+        int* position_dernier = get_plateau_carte_dernier(plateau);
+        for (int i = position_premier[0]; i < position_dernier[0]; i++) {
+            for (int j = position_premier[1]; j < position_dernier[1]; j++) {
+                while (1 == strcmp(get_plateau_carte_nom(plateau, i, j), nom_carte_premier)) {
+                    // Toutes les cartes avant lIIEns sont soit FISE, soit FISA, soit FC    
+                    char* nom_carte = get_plateau_carte_nom(plateau, i, j);
+                    CU_ASSERT( (0 == strcmp(nom_carte, "FISE")) || (0 == strcmp(nom_carte, "FISA")) || (0 == strcmp(nom_carte, "FC")) ); 
+                    // Toutes les cartes avant lIIEns, à priori que des cartes FISE/FISA/FC, sont reposées face cachée
+                    Case case_carte = get_plateau_case(plateau, i, j);
+                    CU_ASSERT_EQUAL(get_case_etat(case_carte), 0); // Etat d'une case : 0 si la carte est face cachée    
+                }   
+            } 
+        }
 
         // Toutes les cartes FISE/FISA/FC sont reposées sur la gauche de la carte la plus en haut à gauche du plateau
 

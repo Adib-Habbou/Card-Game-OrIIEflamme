@@ -67,11 +67,12 @@ void test_ordre_deterministe_factions_deuxieme_manche();
 void test_presence_troisieme_manche();
 
 
-/* Vérifie le bon fonctionnement de l'option pour repiocher */
-    // Fonction auxiliaire pour tester l'appartenance d'une carte à la main d'une faction
-        int appartient(carte _carte, pile main_faction);
 
-    void test_option_repiocher();
+// Fonction auxiliaire pour tester l'appartenance d'une carte à la main d'une faction
+int appartient(carte _carte, pile main_faction);
+
+/* Vérifie le bon fonctionnement de l'option pour repiocher */
+void test_option_repiocher();
 
 
 /* Vérifie la bonne pose d'une carte sur le plateau */

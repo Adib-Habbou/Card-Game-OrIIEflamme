@@ -321,7 +321,7 @@ void test_activation_effet_soiree_sans_alcool() {
         carte* liste_cartes = get_liste_carte();
 
         // On positionne sur le plateau une carte Soirée sans alcool, qu'on gardera donc tout en haut à gauche
-        set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); 
+        set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); // id_faction = 0 : c'est faction (=liste_factions[0]) à avoir posé la carte
 
         // On positionne sur le plateau des cartes FISE/FISA/FC retournées
         set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 1); // FISE en position (0, 5) : à droite de lIIEns
@@ -369,6 +369,162 @@ void test_activation_effet_soiree_sans_alcool() {
             CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(get_case_faction(case_carte)), points_DDRS_avant+5);
 }
 
+
+
+// Massinissa Merabet
+void test_activation_effet_Massinissa_Merabet() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        faction faction0 = liste_factions[0];
+        faction faction1 = liste_factions[1];
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+
+        // On positionne sur le plateau une carte Massinissa Merabet, qu'on gardera donc après une carte dèjà retournée
+        set_plateau_case(plateau, 0, 4, liste_cartes[16], 0, 0); // Massinissa Merabet mis en position (0, 4) par la faction d'id 0 pour laisser la place pour positionner une carte retournée avant elle
+
+        // On positionne sur le plateau une carte avant Massinissa Merabet retournée, on choisit arbitrairement FISE
+        set_plateau_case(plateau, 0, 3, liste_cartes[0], 1, 1); // FISE avec face visible en position (0, 3) : à gauche de Massinissa Merabet, c'est la dernière carte à avoir été retournée
+        
+        // On retient le nombre de points DDRS de la faction ayant posé la carte Massinissa Merabet avant son activation
+        int points_DDRS_avant_faction0 = get_faction_nombre_points_DDRS(faction0);
+        // On retient le nombre de points DDRS de la faction ayant posé la carte activée avant Massinissa Merabet
+        int points_DDRS_avant_faction1 = get_faction_nombre_points_DDRS(faction1);
+
+
+    // action
+        retourner(plateau, liste_factions); // Messinisa Merabet est la carte la plus en haut à gauche avec une face cachée : ce sera la prochaine à être retournée
+
+
+    // test
+        // L'effet de la dernière carte retournée avant Massinissa Merabet a été réactivé, comme si la faction ayant posé la carte MM l'avait posée elle-même
+            // ici, la faction ayant posé la carte MM doit activer l'effet de la carte FISE : elle doit gagner 1 points DDRS
+            CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(faction0), points_DDRS_avant_faction0+1);
+            // la faction ayant posé la carte activée avant MM garde le même nombre de points DDRS qu'avant l'activation de MM
+            CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(faction1), points_DDRS_avant_faction1);
+}
+
+
+// Catherine Dubois
+void test_activation_effet_Catherine_Dubois() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+
+        // On positionne sur le plateau une carte Catherine Dubois, tout en haut à gauche, prochaine à être retournée
+        set_plateau_case(plateau, 25, 25, liste_cartes[20], 0, 0); // Catherine Dubois mis en position (25, 25) au centre du plateau, pour laisser la place pour poser des cartes sur la même ligne et colonne 
+
+        // On positionne sur le plateau des cartes sur la même ligne et colonne que Catherine Dubois
+        set_plateau_case(plateau, 25, 24, liste_cartes[0], 1, 1); // FISE en position (25, 24) : à gauche de Catherine Dubois (retournée car avant Catherine Dubois)
+        set_plateau_case(plateau, 25, 26, liste_cartes[1], 0, 0); // FISA en position (25, 26) : à droite de Catherine Dubois
+        set_plateau_case(plateau, 24, 25, liste_cartes[2], 1, 1); // FC en position (24, 25) : en haut de Catherine Dubois (retournée car plus en haut que Catherine Dubois)
+        set_plateau_case(plateau, 26, 25, liste_cartes[3], 0, 0); // EcologIIE en position (26, 25) : en bas de Catherine Dubois
+
+
+    // action
+        retourner(plateau, liste_factions); // Catherine Dubois est la carte la plus en haut à gauche avec une face cachée : ce sera la prochaine à être retournée
+
+
+    // test
+       // La première et la dernière carte de la ligne et de la colonne où est posée Catherine Dubois ont étés supprimées 
+       CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 25, 24)), -1); // état : -1 si la case est vide
+       CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 25, 26)), -1);
+       CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 24, 25)), -1);
+       CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 26, 25)), -1);
+}
+
+// Eric Lejeune
+// Cas 1 : parmi les cartes retournées il y en a au moins une Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel
+void test_activation_effet_Eric_Lejeune_cas1() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+
+        // On positionne sur le plateau une carte Eric Lejeune, tout en haut à gauche, prochaine à être retournée
+        set_plateau_case(plateau, 0, 6, liste_cartes[28], 0, 0); // Eric Lejeune mis en position (0, 6) pour laisser la place pour poser au moins 5 cartes à sa gauche
+
+        // On positionne sur le plateau des cartes dont au moins une Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel
+        set_plateau_case(plateau, 0, 7, liste_cartes[20], 1, 1); // Catherine Dubois en position (0, 7) 
+        set_plateau_case(plateau, 0, 8, liste_cartes[23], 0, 1); // Christophe Mouilleron en position (0, 8) 
+        set_plateau_case(plateau, 0, 9, liste_cartes[15], 1, 1); // Kevin Goilard en position (0, 9) 
+        set_plateau_case(plateau, 0, 10, liste_cartes[26], 0, 1); // Dimitri Watel en position (0, 10) 
+        set_plateau_case(plateau, 0, 11, liste_cartes[3], 1, 0); // EcologIIE en position (0, 11)
+
+
+    // action
+        retourner(plateau, liste_factions); // Eric Lejeune est la carte la plus en haut à gauche avec une face cachée : ce sera la prochaine à être retournée
+
+
+    // test
+        // Cas 1 : parmi les cartes retournées il y en a au moins une Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel
+        /* Il y a moins de cinq cartes retournées sur le plateau : Catherine Dubois, Christophe Mouilleron, Kevin Goilard et Dimitri Watel. Elles sont donc toutes selectionnées par l'activation de la carte Eric Lejeune.
+            Parmi ces cartes, on a Catherine Dubois, Christophe Mouilleron et Dimitri Watel, dans cet ordre d'apparition sur le plateau.
+            Après les avoir melangées, l'activation de Eric Lejeune les place à gauche de la carte la plus en haut à gauche, c'est à dire Eric Lejeun dans ce cas ci. 
+            On veut que ça soit les prochaines cartes à être retournées, donc elles doivent être face cachée. */
+
+            // Les trois cartes à gauche de Eric Lejeune sont Catherine Dubois, Christophe Mouilleron et Dimitri Watel, dans un ordre différent de celui-ci (c'est peu probable de retomber sur cette combination après avoir remelangé).
+            char* nom_carte1 = get_plateau_carte_nom(plateau, 0, 3);
+            char* nom_carte2 = get_plateau_carte_nom(plateau, 0, 4);
+            char* nom_carte3 = get_plateau_carte_nom(plateau, 0, 5);
+            CU_ASSERT( (0 == strcmp(nom_carte1, "Christophe Mouilleron")) || (0 == strcmp(nom_carte1, "Dimitri Watel")) ); // La carte la plus à gauche n'est pas Catherine Dubois 
+            CU_ASSERT( (0 == strcmp(nom_carte2, "Catherine Dubois")) || (0 == strcmp(nom_carte2, "Dimitri Watel")) ); // Celle d'après n'est pas Christophe Mouilleron
+            CU_ASSERT( (0 == strcmp(nom_carte3, "Catherine Dubois")) || (0 == strcmp(nom_carte3, "Christophe Mouilleron")) ); // Celle encore après n'est pas Dimitri Watel
+            // Ces trois cartes sont face cachée
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 3)), 1); // état : 1 si la carte est face cachée
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 4)), 1); 
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 5)), 1);  
+            // Les cases précedamment occupées par ces cartes sont maintenant vides   
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 7)), -1); // état : -1 si la case est vide
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 8)), -1);
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 10)), -1);
+}
+
+// Cas 2 : parmi les cartes retournées il n'y aucune carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel.
+void test_activation_effet_Eric_Lejeune_cas2() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+
+        // On positionne sur le plateau une carte Eric Lejeune, tout en haut à gauche, prochaine à être retournée
+        set_plateau_case(plateau, 0, 6, liste_cartes[28], 0, 0); // Eric Lejeune mis en position (0, 6), tout en haut à gauche par rapport aux autres cartes
+
+        // On positionne sur le plateau des cartes dont au moins une Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel
+            // On retourne face cachée les cartes Catherine Dubois, Christophe Mouilleron et Dimitri Watel.
+        set_plateau_case(plateau, 0, 7, liste_cartes[20], 1, 0); // Catherine Dubois en position (0, 7) 
+        set_plateau_case(plateau, 0, 8, liste_cartes[23], 0, 0); // Christophe Mouilleron en position (0, 8) 
+        set_plateau_case(plateau, 0, 9, liste_cartes[15], 1, 1); // Kevin Goilard en position (0, 9) 
+        set_plateau_case(plateau, 0, 10, liste_cartes[26], 0, 0); // Dimitri Watel en position (0, 10) 
+        set_plateau_case(plateau, 0, 11, liste_cartes[3], 1, 1); // EcologIIE en position (0, 11)
+
+
+    // action
+        retourner(plateau, liste_factions); // Eric Lejeune est la carte la plus en haut à gauche avec une face cachée : ce sera la prochaine à être retournée
+
+
+    // test
+        // Cas 2 : parmi les cartes retournées il n'y aucune carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel.
+            // Il y a deux cartes retournées sur le plateau : Kevin Goilard et EcologIIE. Elle sont supprimées. 
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 9), -1);
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 11), -1);
+}
 
 
 

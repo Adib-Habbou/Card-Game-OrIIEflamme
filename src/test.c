@@ -522,8 +522,8 @@ void test_activation_effet_Eric_Lejeune_cas2() {
     // test
         // Cas 2 : parmi les cartes retournées il n'y aucune carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel.
             // Il y a deux cartes retournées sur le plateau : Kevin Goilard et EcologIIE. Elle sont supprimées. 
-            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 9), -1);
-            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 11), -1);
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 9)), -1);
+            CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 11)), -1);
 }
 
 
@@ -597,24 +597,123 @@ void test_vainqueur_manche_egalite() {
 
     // test
         // La faction gagnante voit sa manche comptabilisée
-            // Déterminons la faction gagnante 
-
-        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions_egalite[1]), 1); // ici une seule manche a été jouée
+            // Déterminons la faction gagnante, c'est à dire celle qui a posé la carte qui est la plus en haut à gauche du plateau à l'issue de la manche
+            int* position_premier = get_plateau_carte_premier(plateau_egalite);
+            Case case_premier = get_plateau_case(plateau_egalite, position_premier[0], position_premier[1]);
+            faction faction_gagnante = get_case_faction(case_premier);
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
         // Le nombre de manches gagnées de l'autre faction ne varie pas
-        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions_egalite[0]), 0);
+            // Déterminons la faction perdante
+            faction faction_perdante;
+            if (0 == strcmp( get_faction_nom(faction_gagnante), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
+                faction_perdante = liste_factions_egalite[1];
+            }
+            else { faction_perdante = liste_factions_egalite[0]; } // Si la faction gagnante est la seconde
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_perdante), 0);
+}
+
+
+/* Vérifie la bonne désignation du vainqueur du jeu :
+    La faction qui remporte deux manches gagne la partie.
+*/
+void test_vainqueur_jeu() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        // On "joue" artificiellement deux manches et on se positionne dans le cas où le jeu est terminé : 
+            // chaque faction a remporté une manche
+            set_faction_manches_gagnees(liste_factions[0], 1);
+            set_faction_manches_gagnees(liste_factions[1], 1);
+            // chacune des deux factions possède un nombre strictement supérieur à zero de points DDRS
+            set_faction_nombre_points_DDRS(liste_factions[0], 20);
+            set_faction_nombre_points_DDRS(liste_factions[1], 34);
+        // On initialise une troisième manche
+        init_manche(plateau, liste_factions);
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+        // On positionne des cartes fictives sur le plateau : dans le jeu chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
+        set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 1); // FISE en position (0, 5) : à droite de lIIEns
+        set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
+        set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
+        set_plateau_case(plateau, 2, 4, liste_cartes[23], 0, 1); // Christophe Mouilleron en position (2, 4) : en bas de Ecocup
+
+
+    // action
+        // On termine la troisième manche : toutes les cartes sont retournées et le jeu s'achève
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+                Case _case = get_plateau_case(plateau, i, j);
+                set_case_etat(_case, 1); // état : 1 si la carte est face visible
+            }   
+        }
+
+
+    // test
+        // Une quatrième manche ne peut pas être demarrée : déjà testé dans la fonction test_presence_troisieme_manche()
+        // Bon gagnant de la manche : déjà testé dans les fonctions test_vainqueur_manche_non_egalite() et test_vainqueur_manche_egalite()
+    // TODO : gagnant() in interface.c est un void qui ne fait que print le nom du gagnant. 
 }
 
 
 
+/* Vérifie le bon démarrage du jeu :
+    - bonne initialisation du plateau ;
+    - bonne initialisation des factions ;
+    - bonne initialisation de la première manche ;
+    - détermination aléatoire du premier joueur ;
+    - TODO : quoi d'autre? toutes ces choses ont déjà été testées...
+*/
+void test_demarrage_jeu() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+
+    // action
+        // On initialise la première manche
+        init_manche(plateau, liste_factions);
+
+    // test
+        // TODO
+}
 
 
+
+/* Vérifie la bonne terminaison du jeu :
+    - présence d'une faction gagnante ;
+    - présence d'une faction perdante ;
+    - TODO : quoi d'autre? ...
+*/
+void test_terminaison_jeu() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        // On "joue" artificiellement trois manches et on se positionne dans le cas où le jeu est terminé : 
+            // chacune des deux factions a remporté une manche
+            set_faction_manches_gagnees(liste_factions[0], 1);
+            set_faction_manches_gagnees(liste_factions[1], 1);
+            // chacune des deux factions possède un nombre strictement supérieur à zero de points DDRS
+            set_faction_nombre_points_DDRS(liste_factions[0], 20);
+            set_faction_nombre_points_DDRS(liste_factions[1], 34);
+
+    // action
+        // On termine le jeu : une faction a remporté 2 manches 
+        set_faction_manches_gagnees(liste_factions[1], 2);
+
+
+    // test
+        // TODO
+}
 
 
 /* À la troisième manche s'il y en a une, la première faction est de nouveau désignée au hasard. */
-
-/* La faction qui remporte deux manches gagne la partie. */
-
 /* Il n'y a pas de limite au nombre de points que peut avoir une faction dans une manche mais elle ne peut en avoir moins de 0. */
+
 
 
 

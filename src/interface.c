@@ -159,7 +159,7 @@ int* carte_positon(plateau _plateau) {
         return position;
     }
     else {
-        printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau");
+        printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
         exit(0);
     }
     

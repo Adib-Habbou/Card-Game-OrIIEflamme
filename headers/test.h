@@ -1,5 +1,6 @@
 #include "CUnit/CUnit.h"
 #include "CUnit/Basic.h"
+#include "CUnit/Console.h"
 
 
 /* importation du module carte */
@@ -25,6 +26,9 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
 
 /* Vérifie la bonne initialisation d'une faction :
     - le nom n'est pas vide ;

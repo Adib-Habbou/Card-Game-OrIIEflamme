@@ -219,17 +219,22 @@ int init_manche(plateau _plateau, faction* _factions){
         }
     }
     if(maxddrs == 0 && winner == 0){
-        set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
-    }
-    if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+        for(int i = 0; i < NOMBRE_JOUEURS; i++){
+            remelanger(_factions[i]);
+        }
         return 1;
+    }else{
+        set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
+        if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+            return 0;
+        }
+        for(int i = 0; i < NOMBRE_JOUEURS; i++){
+            remelanger(_factions[i]);
+        }
+        libere_plateau(_plateau);
+        _plateau = init_plateau();
     }
-    for(int i = 0; i < NOMBRE_JOUEURS; i++){
-        remelanger(_factions[i]);
-    }
-    libere_plateau(_plateau);
-    _plateau = init_plateau();
-    return 0;
+    return 1;
 }
 
 faction* liste_faction(){

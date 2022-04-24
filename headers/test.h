@@ -1,3 +1,31 @@
+#include "CUnit/CUnit.h"
+#include "CUnit/Basic.h"
+
+
+/* importation du module carte */
+#include "carte.h"
+
+/* importation du module faction */
+#include "faction.h"
+
+/* importation du module interface */
+#include "interface.h"
+
+/* importation du main.h */
+#include "main.h"
+
+/* importation du module plateau */
+#include "plateau.h"
+
+/* importation du module structure */
+#include "structure.h"
+
+/* importation du module type */
+#include "type.h"
+
+
+#include <stdlib.h>
+
 /* Vérifie la bonne initialisation d'une faction :
     - le nom n'est pas vide ;
     - le nombre initial de points DDRS est nul ;
@@ -37,7 +65,7 @@ void test_presence_troisieme_manche();
 
 /* Vérifie le bon fonctionnement de l'option pour repiocher */
     // Fonction auxiliaire pour tester l'appartenance d'une carte à la main d'une faction
-        int appartient(carte _carte, faction _faction);
+        int appartient(carte _carte, pile main_faction);
 
     void test_option_repiocher();
 

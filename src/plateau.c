@@ -241,7 +241,7 @@ faction* liste_faction(){
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction _faction = (faction) malloc(sizeof(faction));
-        set_faction_nom(_faction, "Joueur "+i);
+        set_faction_nom(_faction, "Joueur " + i);
         set_faction_nombre_points_DDRS(_faction, 0);
         factions[i] = _faction;
     }

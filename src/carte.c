@@ -512,7 +512,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
 
     int nb_de_paire = 0;
     char** liste_carte= (char**) malloc(NOMBRE_CARTES_POSEES*sizeof(char**));
-    int indice;
+    int indice = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
         for (j=0;j<TAILLE_PLATEAU;j++) {  
@@ -600,7 +600,7 @@ void Parcours_sobriete_numerique(plateau _plateau) {
 */
 void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
     int i,j;
-    int nb_carte_heures_supp;
+    int nb_carte_heures_supp = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 &&  (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) ) {
@@ -660,7 +660,7 @@ void Kahina_Bouchama(plateau _plateau) {
 @ensures Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi->
 */
 void Kevin_Goilard(faction _faction, plateau _plateau) {
-    int ligne_debut,ligne_fin,compteur_carte_supp;
+    int ligne_debut,ligne_fin,compteur_carte_supp = 0;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  

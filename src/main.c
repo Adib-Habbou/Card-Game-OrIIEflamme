@@ -46,7 +46,6 @@ int main(){
             // Retourne la position sur le plateau où la faction décide de poser la carte
             int* _position = carte_positon(_plateau,i%2); 
 
-            printf("poser %d,%d \n",_position[0],_position[1]);
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
 

@@ -96,6 +96,7 @@ carte carte_choisie(faction _faction){
     int choix;
     pile mainF = pile_vide(); //la main qui va refresh la main de la faction
     carte resultat = NULL; //la carte que l'on va retourner
+    int taille_main = taille_pile(get_faction_main(_faction));
 
     debut_demande :
 
@@ -104,9 +105,13 @@ carte carte_choisie(faction _faction){
 
         pile buffer_main = get_faction_main(_faction);
         int indice = 1;
-
         
-        while( !pile_est_vide(pile_suivant(buffer_main)) ) {
+        if ( choix > taille_main || choix < 1) {
+            printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
+            goto debut_demande;
+        }
+        
+        while( !pile_est_vide(buffer_main) ) {
             if (indice == choix) { //on est bien à l'indice
                 resultat = pile_sommet(buffer_main); 
             }
@@ -119,10 +124,7 @@ carte carte_choisie(faction _faction){
         
 
         
-        if (pile_est_vide(buffer_main) && indice != choix ) {
-            printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
-            goto debut_demande;
-        }
+        
     set_faction_main(_faction,mainF); //on a bien enlevé la carte et on refresh la main de la faction
     return resultat;
 }
@@ -159,34 +161,34 @@ int* carte_positon(plateau _plateau,int _factionid) {
         return position;
     } 
     
-
-    printf("Où souhaitez-vous poser votre carte ?\n");
-
-
-    printf("Ligne :  ");
-    scanf("%d" , &position[0]);
-
-    printf("Colonne  :  ");
-    scanf("%d" , &position[1]);
+    demande :
+        printf("Où souhaitez-vous poser votre carte ?\n");
 
 
+        printf("Ligne :  ");
+        scanf("%d" , &position[0]);
 
-    int ligneUser = position[0];
-    int colonneUser = position[1];
-    position[2] = _factionid;
-    
-    //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
-    ( get_case_etat(get_plateau_case(_plateau,ligneUser-1,colonneUser)) != -1 ) ||
-     (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser-1)) != -1) ||
-      (get_case_etat(get_plateau_case(_plateau,ligneUser+1,colonneUser)) != -1) || 
-      (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser+1)) != -1) )) {
-        return position;
-    }
-    else {
-        printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
-        exit(0);
-    } 
+        printf("Colonne  :  ");
+        scanf("%d" , &position[1]);
+
+
+
+        int ligneUser = position[0];
+        int colonneUser = position[1];
+        position[2] = _factionid;
+        
+        //vérification de la validité de la position : y a-t-il une carte adjacente ?
+        if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
+        ( get_case_etat(get_plateau_case(_plateau,ligneUser-1,colonneUser)) != -1 ) ||
+        (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser-1)) != -1) ||
+        (get_case_etat(get_plateau_case(_plateau,ligneUser+1,colonneUser)) != -1) || 
+        (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser+1)) != -1) )) {
+            return position;
+        }
+        else {
+            printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
+            goto demande;
+        } 
 
     return position;
     

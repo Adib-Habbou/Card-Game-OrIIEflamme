@@ -24,7 +24,7 @@ void affiche_plateau(plateau p);
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void affiche_main(faction f);
+void affiche_main(faction f,int factionid);
 
 //NB : j'ai supposé que la main et le plateau sont stocké en tant que variables globales,
 //     à changer l'argument selon l'implémentation

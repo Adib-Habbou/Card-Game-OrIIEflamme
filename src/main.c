@@ -47,7 +47,7 @@ int main(){
             int* _position = carte_positon(_plateau); 
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
-
+            affiche_plateau(_plateau);
             
         }
 

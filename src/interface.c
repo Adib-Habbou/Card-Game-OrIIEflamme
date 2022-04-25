@@ -47,7 +47,7 @@ void affiche_plateau(plateau _plateau) {
 */
 void affiche_main(faction _faction) {
     // on vérifie que la pile n'est pas vide
-    if( get_faction_main(_faction)==NULL ){
+    if( pile_est_vide(get_faction_main(_faction))){
         printf("La main est vide.\n");
         return;
     }
@@ -55,7 +55,7 @@ void affiche_main(faction _faction) {
 
     pile buffer_main = get_faction_main(_faction); 
     int i = 1;
-    while(buffer_main != NULL ) {
+    while(!pile_est_vide(buffer_main) ) {
        
         printf("-> %d [ %s ] ", i, get_carte_nom(pile_sommet(buffer_main)) );
         i++;
@@ -100,22 +100,25 @@ carte carte_choisie(faction _faction){
         printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte :\n");
         scanf("%d",&result);
 
-        pile buffer_main = get_faction_main(_faction); 
-        int indice = 0;
+        pile buffer_main = get_faction_main(_faction);
+        int indice = 1;
 
-
-        while(buffer_main != NULL && indice != result ) {
+        
+        while(!pile_est_vide(pile_suivant(buffer_main)) && indice != result ) {
             buffer_main=pile_suivant(buffer_main);
             indice++;
         }
-        if (buffer_main == NULL && indice != result ) {
+
+        
+        if (pile_est_vide(buffer_main) && indice != result ) {
             printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
             goto debut_demande;
         }
-
-    
+        
+        
     return pile_sommet(buffer_main);
-} 
+}
+
 
 /* 
 @requires plateau valide
@@ -123,18 +126,26 @@ carte carte_choisie(faction _faction){
 @ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
 */
 int* carte_positon(plateau _plateau) {
-    int ligneUser;
-    int colonneUser;
+    int* position;
+
+    position = malloc(2*sizeof(int));
+    
+
     printf("Où souhaitez-vous poser votre carte ?\n");
+
+
     printf("Ligne :  ");
-    scanf("%d",&ligneUser);
+    scanf("%d" , &position[0]);
 
-    printf("Colonne :  ");
-    scanf("%d",&colonneUser);
+    printf("Colonne  :  ");
+    scanf("%d" , &position[1]);
 
-    int* position = (int*) malloc(2*sizeof(int));
-    position[0] = ligneUser;
-    position[1] = colonneUser;
+
+
+    int ligneUser = position[0];
+    int colonneUser = position[1];
+    
+
     
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
@@ -161,7 +172,9 @@ int* carte_positon(plateau _plateau) {
     else {
         printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
         exit(0);
-    }
+    } 
+
+    return position;
     
 }
 

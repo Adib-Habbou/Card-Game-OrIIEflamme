@@ -17,7 +17,7 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case _case) {
+carte get_case_carte(Case _case) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CA NE MARCHE PAS SEG FAULT !!!!!!!!!!!!!!!!!!!!!!!!!!
     return _case->carte;
 }
 

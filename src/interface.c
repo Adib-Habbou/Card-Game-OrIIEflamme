@@ -45,14 +45,14 @@ void affiche_plateau(plateau _plateau) {
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void affiche_main(faction _faction) {
+void affiche_main(faction _faction,int factionid) {
     // on vérifie que la pile n'est pas vide
     if( pile_est_vide(get_faction_main(_faction))){
         printf("La main est vide.\n");
         return;
     }
     // tant que la pile est non vide on affiche le nom de la carte
-
+    printf("Joueur %d\n",factionid);
     pile buffer_main = get_faction_main(_faction); 
     int i = 1;
     while(!pile_est_vide(buffer_main) ) {
@@ -105,7 +105,7 @@ carte carte_choisie(faction _faction){
 
         pile buffer_main = get_faction_main(_faction);
         int indice = 1;
-        
+
         if ( choix > taille_main || choix < 1) {
             printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
             goto debut_demande;

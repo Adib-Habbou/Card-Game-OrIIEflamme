@@ -17,7 +17,7 @@ struct plateau {
 /*  @requires   une case valide
     @assigns    rien
     @ensures    renvoie la carte posé sur la case */
-carte get_case_carte(Case _case) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CA NE MARCHE PAS SEG FAULT !!!!!!!!!!!!!!!!!!!!!!!!!!
+carte get_case_carte(Case _case) {
     return _case->carte;
 }
 
@@ -198,6 +198,12 @@ plateau init_plateau(){
     _plateau->tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
     for(int i = 0; i < TAILLE_PLATEAU; i++){
         _plateau->tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
+        for(int j = 0; j < TAILLE_PLATEAU; j++){
+            _plateau->tab[i][j] = (Case) malloc(sizeof(Case));
+            _plateau->tab[i][j]->carte = NULL;
+            _plateau->tab[i][j]->etat = -1;
+            _plateau->tab[i][j]->id_faction = -1;
+        }
     }
     return _plateau;
 }
@@ -219,6 +225,7 @@ int init_manche(plateau _plateau, faction* _factions){
         }
     }
     if(maxddrs == 0 && winner == 0){
+        srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
@@ -228,6 +235,7 @@ int init_manche(plateau _plateau, faction* _factions){
         if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
             return 0;
         }
+        srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }

@@ -44,10 +44,10 @@ int main(){
             // Retourne la carte choisi par la faction
             carte _carte = carte_choisie(_factions[i%2]);
             // Retourne la position sur le plateau où la faction décide de poser la carte
-            int* _position = carte_positon(_plateau); 
+            int* _position = carte_positon(_plateau,i%2); 
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
-
+            affiche_plateau(_plateau);
             
         }
 
@@ -60,6 +60,7 @@ int main(){
             if(get_carte_nom(_carte) == NULL)
                 break;
             afficher_effet(_carte);
+            affiche_plateau(_plateau);
         }
         manche++;
     }

@@ -38,7 +38,7 @@ int decision(); //à changer selon l'implémentation des factions
 
 /* 
 @requires cartes valides
-@assigns rien
+@assigns la main de la faction
 @ensures retourne la carte qui va être posée
 */
 carte carte_choisie(faction f); //potentiellement une variable contenant la main
@@ -46,9 +46,10 @@ carte carte_choisie(faction f); //potentiellement une variable contenant la main
 /* 
 @requires plateau valide
 @assigns rien
-@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
+@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose et la faction qui a posé la carte
 */
-int* carte_positon(plateau p);
+int* carte_positon(plateau p, int _factionid);
+
 
 /* 
 @requires carte valide

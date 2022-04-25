@@ -60,6 +60,7 @@ int main(){
             if(get_carte_nom(_carte) == NULL)
                 break;
             afficher_effet(_carte);
+            affiche_plateau(_plateau);
         }
         manche++;
     }

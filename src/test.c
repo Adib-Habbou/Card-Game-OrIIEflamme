@@ -225,7 +225,8 @@ void test_pose_carte() {
         // La case choisie est maintenant occupée et la carte est face cachée
         CU_ASSERT_EQUAL(get_case_etat(case_carte_posee), 0); // Etat d'une case : 0 si la carte est face cachée
         // La bonne carte est sur la case
-        CU_ASSERT_EQUAL(strcmp(get_carte_nom(get_case_carte(case_carte_posee)), get_carte_nom(carte_a_poser)), 0);
+        char* nom_carte_posee = get_plateau_carte_nom(plateau,TAILLE_PLATEAU-1, TAILLE_PLATEAU-1);
+        CU_ASSERT_EQUAL(strcmp(nom_carte_posee, get_carte_nom(carte_a_poser)), 0);
         // La pose est attribuée à la bonne faction
         CU_ASSERT_EQUAL(strcmp(get_faction_nom(get_case_faction(case_carte_posee)), get_faction_nom(faction)), 0);
         // La main de la faction compte une carte de moins 

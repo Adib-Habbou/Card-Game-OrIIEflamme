@@ -225,6 +225,7 @@ int init_manche(plateau _plateau, faction* _factions){
         }
     }
     if(maxddrs == 0 && winner == 0){
+        srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
@@ -234,6 +235,7 @@ int init_manche(plateau _plateau, faction* _factions){
         if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
             return 0;
         }
+        srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }

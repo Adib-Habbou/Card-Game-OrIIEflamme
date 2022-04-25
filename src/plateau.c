@@ -198,6 +198,12 @@ plateau init_plateau(){
     _plateau->tab = (Case**) malloc(TAILLE_PLATEAU * sizeof(Case*));
     for(int i = 0; i < TAILLE_PLATEAU; i++){
         _plateau->tab[i] = (Case*) malloc(TAILLE_PLATEAU * sizeof(Case));
+        for(int j = 0; j < TAILLE_PLATEAU; j++){
+            _plateau->tab[i][j] = (Case) malloc(sizeof(Case));
+            _plateau->tab[i][j]->carte = NULL;
+            _plateau->tab[i][j]->etat = -1;
+            _plateau->tab[i][j]->id_faction = -1;
+        }
     }
     return _plateau;
 }

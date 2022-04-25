@@ -25,7 +25,7 @@ void affiche_plateau(plateau _plateau) {
                     printf("%3d",i); //quadrillage des lignes
                 }
                 else {
-                    if (get_plateau_case(_plateau,i,j)!=NULL) {
+                    if (get_case_etat(get_plateau_case(_plateau,i,j)) == -1) {
                         printf("%3s",dot);
                     }
                     else{
@@ -89,64 +89,56 @@ int decision() {
 
 /* 
 @requires cartes valides
-@assigns rien
+@assigns la main de la faction
 @ensures retourne la carte qui va être posée
 */
 carte carte_choisie(faction _faction){
-    int result;
+    int choix;
+    pile mainF = pile_vide(); //la main qui va refresh la main de la faction
+    carte resultat = NULL; //la carte que l'on va retourner
 
     debut_demande :
 
         printf("Quelle carte voulez vous poser ? Entrer le numéro de la carte :\n");
-        scanf("%d",&result);
+        scanf("%d",&choix);
 
         pile buffer_main = get_faction_main(_faction);
         int indice = 1;
 
         
-        while(!pile_est_vide(pile_suivant(buffer_main)) && indice != result ) {
+        while( !pile_est_vide(pile_suivant(buffer_main)) ) {
+            if (indice == choix) { //on est bien à l'indice
+                resultat = pile_sommet(buffer_main); 
+            }
+            else{ // sinon on empile dans la main comme ça on ne rajoute pas la carte à poser
+                empile(&mainF, pile_sommet(buffer_main));
+            }
             buffer_main=pile_suivant(buffer_main);
             indice++;
         }
+        
 
         
-        if (pile_est_vide(buffer_main) && indice != result ) {
+        if (pile_est_vide(buffer_main) && indice != choix ) {
             printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
             goto debut_demande;
         }
-        
-        
-    return pile_sommet(buffer_main);
+    set_faction_main(_faction,mainF); //on a bien enlevé la carte et on refresh la main de la faction
+    return resultat;
 }
 
 
 /* 
 @requires plateau valide
 @assigns rien
-@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose
+@ensures retourne le couple (x,y) les coordonnées de la position de la carte que l'on pose et la faction qui a posé la carte
 */
-int* carte_positon(plateau _plateau) {
+int* carte_positon(plateau _plateau,int _factionid) {
     int* position;
 
-    position = malloc(2*sizeof(int));
-    
-
-    printf("Où souhaitez-vous poser votre carte ?\n");
+    position = malloc(3*sizeof(int));
 
 
-    printf("Ligne :  ");
-    scanf("%d" , &position[0]);
-
-    printf("Colonne  :  ");
-    scanf("%d" , &position[1]);
-
-
-
-    int ligneUser = position[0];
-    int colonneUser = position[1];
-    
-
-    
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
     int i,j;
@@ -166,8 +158,29 @@ int* carte_positon(plateau _plateau) {
         position[1]=TAILLE_PLATEAU/2;
         return position;
     } 
+    
+
+    printf("Où souhaitez-vous poser votre carte ?\n");
+
+
+    printf("Ligne :  ");
+    scanf("%d" , &position[0]);
+
+    printf("Colonne  :  ");
+    scanf("%d" , &position[1]);
+
+
+
+    int ligneUser = position[0];
+    int colonneUser = position[1];
+    position[2] = _factionid;
+    
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    if ( (get_plateau_case(_plateau,ligneUser,colonneUser)==NULL)&&( (get_plateau_case(_plateau,ligneUser-1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser-1) != NULL) || (get_plateau_case(_plateau,ligneUser+1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser+1) != NULL) )) {
+    if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
+    ( get_case_etat(get_plateau_case(_plateau,ligneUser-1,colonneUser)) != -1 ) ||
+     (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser-1)) != -1) ||
+      (get_case_etat(get_plateau_case(_plateau,ligneUser+1,colonneUser)) != -1) || 
+      (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser+1)) != -1) )) {
         return position;
     }
     else {

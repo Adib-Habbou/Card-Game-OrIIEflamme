@@ -60,7 +60,8 @@ int main(){
         // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
             carte _carte = retourner(_plateau, _factions);
-            if(get_carte_nom(_carte) == NULL)
+            printf("retourner fini\n");
+            if(_carte == NULL)
                 break;
             afficher_effet(_carte);
             affiche_plateau(_plateau);

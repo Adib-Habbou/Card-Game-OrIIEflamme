@@ -268,23 +268,37 @@ carte retourner(plateau _plateau, faction* _factions){
     for(ligne = 0; ligne < TAILLE_PLATEAU; ligne++){
         for(colonne = 0; colonne < TAILLE_PLATEAU; colonne++){
             if(ligne != colonne){
-                if(_plateau->tab[ligne][colonne]->etat != 0){
+                if(_plateau->tab[ligne][colonne]->etat == 0){
                     _case = _plateau->tab[ligne][colonne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        printf("carte\n");
+                        goto cartetrouve;
+                    }
                 }
-                if(_plateau->tab[colonne][ligne]->etat != 0){
+                if(_plateau->tab[colonne][ligne]->etat == 0){
                     _case = _plateau->tab[colonne][ligne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        printf("carte\n");
+                        goto cartetrouve;
+                    }
+                        
                 }
             }else{
-                if(_plateau->tab[colonne][colonne]->etat != 0){
+                printf("lig : %i et col : %i\n", ligne, colonne);
+                if(_plateau->tab[colonne][colonne]->etat == 0){
                     _case = _plateau->tab[colonne][colonne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        printf("carte\n");
+                        goto cartetrouve;
+                    }
                 }
             }
         }
     }
-    return _case->carte;
+    return NULL;
 
 cartetrouve:
     if(strcmp(get_carte_nom(_case->carte), "FISE") == 0){

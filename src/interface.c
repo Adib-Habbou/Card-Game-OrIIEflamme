@@ -152,12 +152,13 @@ int* carte_positon(plateau _plateau) {
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_carte_nombre_occurrences(get_case_carte(get_plateau_case(_plateau,i,j))) != -1) {
+            if (get_plateau_case(_plateau,i,j) != NULL ) {
                 drapeau_plateau_vide=0;  
             }
+
         }
     }
-
+    printf("%d",drapeau_plateau_vide);
     //si c'est la première carte, on la place au milieu
     
     if (drapeau_plateau_vide) {
@@ -166,7 +167,7 @@ int* carte_positon(plateau _plateau) {
         return position;
     } 
     //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    else if ( (get_plateau_case(_plateau,ligneUser-1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser-1) != NULL) || (get_plateau_case(_plateau,ligneUser+1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser+1) != NULL)) {
+    if ( (get_plateau_case(_plateau,ligneUser,colonneUser)==NULL)&&( (get_plateau_case(_plateau,ligneUser-1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser-1) != NULL) || (get_plateau_case(_plateau,ligneUser+1,colonneUser) != NULL) || (get_plateau_case(_plateau,ligneUser,colonneUser+1) != NULL) )) {
         return position;
     }
     else {

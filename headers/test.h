@@ -5,6 +5,9 @@
 /* importation du module interface */
 #include "interface.h"
 
+/* Pour le null */
+#include <stddef.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>

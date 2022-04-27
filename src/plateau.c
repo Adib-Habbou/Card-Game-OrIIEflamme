@@ -216,6 +216,7 @@ void libere_plateau(plateau _plateau){
 }
 
 int init_manche(plateau _plateau, faction* _factions){
+    printf("init manche : %i\n", get_faction_manches_gagnees(_factions[0]));
     int winner = 0;
     int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
     for(int i = 1; i < NOMBRE_JOUEURS; i++){
@@ -235,7 +236,8 @@ int init_manche(plateau _plateau, faction* _factions){
         return 1;
     }else{
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
-        if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
+        if(get_faction_manches_gagnees(_factions[winner]) > NOMBRE_MANCHES_GAGNANTES){
+            printf("----------------------FIN---------------------------- : %i\n", get_faction_manches_gagnees(_factions[winner]));
             return 0;
         }
         srand(time(NULL));
@@ -250,12 +252,16 @@ int init_manche(plateau _plateau, faction* _factions){
 
 faction* liste_faction(){
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
+    for(int i = 0; i < NOMBRE_JOUEURS; i++){
+        factions[i] = (faction) malloc(sizeof(faction));
+    }
     char* noms[2] = {"Joueur 0", "Joueur 1"};
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
-        faction _faction = (faction) malloc(sizeof(faction));
-        set_faction_nom(_faction, noms[i]);
-        set_faction_nombre_points_DDRS(_faction, 0);
-        factions[i] = _faction;
+        factions[i] = (faction) malloc(sizeof(faction));
+        set_faction_nom(factions[i], noms[i]);
+        set_faction_nombre_points_DDRS(factions[i], 0);
+        set_faction_manches_gagnees(factions[i], 0);
+        set_faction_option_remelanger(factions[i], 0);
     }
     return factions;
 }

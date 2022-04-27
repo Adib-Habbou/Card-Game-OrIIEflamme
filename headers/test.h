@@ -2,28 +2,8 @@
 #include "CUnit/Basic.h"
 #include "CUnit/Console.h"
 
-
-/* importation du module carte */
-#include "carte.h"
-
-/* importation du module faction */
-#include "faction.h"
-
 /* importation du module interface */
 #include "interface.h"
-
-/* importation du main.h */
-#include "main.h"
-
-/* importation du module plateau */
-#include "plateau.h"
-
-/* importation du module structure */
-#include "structure.h"
-
-/* importation du module type */
-#include "type.h"
-
 
 #include <stdlib.h>
 #include <stdio.h>

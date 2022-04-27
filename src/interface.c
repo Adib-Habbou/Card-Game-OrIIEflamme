@@ -210,8 +210,7 @@ void afficher_effet(carte _carte) {
 @ensures retourne la faction gagnante selon les règles
 */
 void gagnant(faction* factions,plateau _plateau) {
-    printf("Points DDRS du Joueur 0 : %d\n",get_faction_nombre_points_DDRS(factions[0]));
-    printf("Points DDRS du Joueur 1 : %d\n",get_faction_nombre_points_DDRS(factions[1]));
+ 
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
@@ -221,12 +220,11 @@ void gagnant(faction* factions,plateau _plateau) {
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
-        int ligne = get_plateau_carte_premier(_plateau)[0];
-        int colonne = get_plateau_carte_premier(_plateau)[1];
+        int *liste =  get_plateau_carte_premier(_plateau);
+        int ligne = liste[0];
+        int colonne = liste[1];
 
-        printf("test : id :%d, ligne : %d, colonne : %d\n", get_case_id_faction(get_plateau_case(_plateau,ligne,colonne)),ligne,colonne) ;
-
-        char* nom_gagnant = get_faction_nom(factions[get_case_id_faction(get_plateau_case(_plateau,ligne,colonne))]);
+        char* nom_gagnant = get_faction_nom(factions[get_case_id_faction(get_plateau_case(_plateau,ligne,colonne))]); //on recupère la faction qui a poser la carte la plus en haut à gauche
         printf("Egalité : Félicitation %s ! Vous avez gagné la partie car vous avez placé la carte la plus en haut à gauche ! \n",nom_gagnant);
     }
 }

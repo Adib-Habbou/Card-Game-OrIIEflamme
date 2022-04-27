@@ -227,7 +227,10 @@ int init_manche(plateau _plateau, faction* _factions){
     if(maxddrs == 0 && winner == 0){
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
-            remelanger(_factions[i]);
+            //remelanger(_factions[i]);
+            pile main = pile_vide();
+            empile(&main, get_liste_carte()[0]);
+            set_faction_main(_factions[i], main);
         }
         return 1;
     }else{
@@ -247,9 +250,10 @@ int init_manche(plateau _plateau, faction* _factions){
 
 faction* liste_faction(){
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
+    char* noms[2] = {"Joueur 0", "Joueur 1"};
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction _faction = (faction) malloc(sizeof(faction));
-        set_faction_nom(_faction, "Joueur "+i);
+        set_faction_nom(_faction, noms[i]);
         set_faction_nombre_points_DDRS(_faction, 0);
         factions[i] = _faction;
     }
@@ -272,7 +276,7 @@ carte retourner(plateau _plateau, faction* _factions){
                     _case = _plateau->tab[ligne][colonne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        printf("carte\n");
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }
@@ -280,18 +284,18 @@ carte retourner(plateau _plateau, faction* _factions){
                     _case = _plateau->tab[colonne][ligne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        printf("carte\n");
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                         
                 }
             }else{
-                printf("lig : %i et col : %i\n", ligne, colonne);
+                //printf("lig : %i et col : %i\n", ligne, colonne);
                 if(_plateau->tab[colonne][colonne]->etat == 0){
                     _case = _plateau->tab[colonne][colonne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        printf("carte\n");
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }

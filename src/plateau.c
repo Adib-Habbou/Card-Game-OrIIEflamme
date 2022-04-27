@@ -228,9 +228,9 @@ int init_manche(plateau _plateau, faction* _factions){
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             //remelanger(_factions[i]);
-            pile main = pile_vide();
-            empile(&main, get_liste_carte()[0]);
-            set_faction_main(_factions[i], main);
+            pile _main = pile_vide();
+            empile(&_main, get_liste_carte()[0]);
+            set_faction_main(_factions[i], _main);
         }
         return 1;
     }else{

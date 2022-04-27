@@ -219,7 +219,9 @@ void gagnant(faction* factions,plateau _plateau) {
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
-        char* nom_gagnant = get_faction_nom(get_case_faction(get_plateau_carte_premier(_plateau)));
+        int ligne = get_plateau_carte_premier(_plateau)[0];
+        int colonne = get_plateau_carte_premier(_plateau)[1];
+        char* nom_gagnant = get_faction_nom(get_case_faction(get_plateau_case(_plateau,ligne,colonne)));
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
 }

@@ -53,7 +53,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) { 
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) { 
         if (colonne < TAILLE_PLATEAU) {
              colonne += 1;
         }
@@ -74,7 +74,7 @@ int* get_plateau_carte_premier(plateau plateau) {
 int* get_plateau_carte_dernier(plateau plateau) {
     int ligne = TAILLE_PLATEAU;
     int colonne = TAILLE_PLATEAU;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne > 0) {
              colonne -= 1;
         }
@@ -94,7 +94,7 @@ int* get_plateau_carte_dernier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == 0) {
             //affiche("Pas de carte à gauche");
             exit(1);
@@ -112,7 +112,7 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == TAILLE_PLATEAU) {
             //affiche("Pas de carte à droite");
             exit(1);
@@ -131,7 +131,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == 0) {
             //affiche("Pas de carte en haut");
             exit(1);
@@ -149,7 +149,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == TAILLE_PLATEAU) {
             //affiche("Pas de carte en bas");
             exit(1);

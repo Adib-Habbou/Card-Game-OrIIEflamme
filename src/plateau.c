@@ -53,8 +53,8 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne]->carte) != -1) {
-        if (colonne < TAILLE_PLATEAU) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
+        if (colonne < TAILLE_PLATEAU - 1) {
              colonne += 1;
         }
         else {
@@ -74,7 +74,7 @@ int* get_plateau_carte_premier(plateau plateau) {
 int* get_plateau_carte_dernier(plateau plateau) {
     int ligne = TAILLE_PLATEAU;
     int colonne = TAILLE_PLATEAU;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne]->carte) != -1) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne > 0) {
              colonne -= 1;
         }
@@ -94,7 +94,7 @@ int* get_plateau_carte_dernier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne_bis][colonne]->carte) != -1) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == 0) {
             //affiche("Pas de carte à gauche");
             exit(1);
@@ -112,7 +112,7 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     int ligne_bis = ligne;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne_bis][colonne]->carte) != -1) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == TAILLE_PLATEAU) {
             //affiche("Pas de carte à droite");
             exit(1);
@@ -131,7 +131,7 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne_bis]->carte) != -1) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == 0) {
             //affiche("Pas de carte en haut");
             exit(1);
@@ -149,7 +149,7 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     int colonne_bis = colonne;
-    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne_bis]->carte) != -1) {
+    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == TAILLE_PLATEAU) {
             //affiche("Pas de carte en bas");
             exit(1);
@@ -227,7 +227,10 @@ int init_manche(plateau _plateau, faction* _factions){
     if(maxddrs == 0 && winner == 0){
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
-            remelanger(_factions[i]);
+            //remelanger(_factions[i]);
+            pile _main = pile_vide();
+            empile(&_main, get_liste_carte()[0]);
+            set_faction_main(_factions[i], _main);
         }
         return 1;
     }else{
@@ -247,9 +250,10 @@ int init_manche(plateau _plateau, faction* _factions){
 
 faction* liste_faction(){
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
+    char* noms[2] = {"Joueur 0", "Joueur 1"};
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         faction _faction = (faction) malloc(sizeof(faction));
-        set_faction_nom(_faction, "Joueur " + i);
+        set_faction_nom(_faction, noms[i]);
         set_faction_nombre_points_DDRS(_faction, 0);
         factions[i] = _faction;
     }
@@ -268,23 +272,37 @@ carte retourner(plateau _plateau, faction* _factions){
     for(ligne = 0; ligne < TAILLE_PLATEAU; ligne++){
         for(colonne = 0; colonne < TAILLE_PLATEAU; colonne++){
             if(ligne != colonne){
-                if(_plateau->tab[ligne][colonne]->etat != 0){
+                if(_plateau->tab[ligne][colonne]->etat == 0){
                     _case = _plateau->tab[ligne][colonne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
+                        goto cartetrouve;
+                    }
                 }
-                if(_plateau->tab[colonne][ligne]->etat != 0){
+                if(_plateau->tab[colonne][ligne]->etat == 0){
                     _case = _plateau->tab[colonne][ligne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
+                        goto cartetrouve;
+                    }
+                        
                 }
             }else{
-                if(_plateau->tab[colonne][colonne]->etat != 0){
+                //printf("lig : %i et col : %i\n", ligne, colonne);
+                if(_plateau->tab[colonne][colonne]->etat == 0){
                     _case = _plateau->tab[colonne][colonne];
-                    goto cartetrouve;
+                    set_case_etat(_case, 1);
+                    if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
+                        goto cartetrouve;
+                    }
                 }
             }
         }
     }
-    return _case->carte;
+    return NULL;
 
 cartetrouve:
     if(strcmp(get_carte_nom(_case->carte), "FISE") == 0){

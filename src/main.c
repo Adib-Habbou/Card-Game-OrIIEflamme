@@ -24,7 +24,7 @@ int main(){
         // Initialisation des joueurs
         for(int i = 0; i < 2; i++){
             // Affichage la main de la faction i dans la console
-            affiche_main(_factions[i]);
+            affiche_main(_factions[i],i);
             // Demande à la faction actuelle si elle veut utiliser son option permettant de repiocher
             if(decision()){
                 // Renvoie 1 si l'option remélanger a été utilisée, 0 autrement 
@@ -40,11 +40,12 @@ int main(){
 
             
             // Affiche la main d'une faction tour par tour
-            affiche_main(_factions[i%2]);
+            affiche_main(_factions[i%2],i%2);
             // Retourne la carte choisi par la faction
             carte _carte = carte_choisie(_factions[i%2]);
             // Retourne la position sur le plateau où la faction décide de poser la carte
             int* _position = carte_positon(_plateau,i%2); 
+
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
 
@@ -58,7 +59,8 @@ int main(){
         // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
             carte _carte = retourner(_plateau, _factions);
-            if(get_carte_nom(_carte) == NULL)
+            printf("retourner fini\n");
+            if(_carte == NULL)
                 break;
             afficher_effet(_carte);
             affiche_plateau(_plateau);
@@ -67,7 +69,7 @@ int main(){
     }
 
     // Affichage du gagnant
-    gagnant(_factions);
+    gagnant(_factions,_plateau);
 
     return 0;
 }

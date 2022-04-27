@@ -21,17 +21,17 @@ void test_initialisation_faction() {
     // test
         for (int i=0; i < NOMBRE_JOUEURS; i++) {
             // La faction possède un nom valide
-            CU_ASSERT_EQUAL(strcmp(get_faction_nom(liste_factions[i]), ""), 1); // Si deux chaines de caractères sont égales, la fonction strcmp() renvoie 0.
+            CU_ASSERT_NOT_EQUAL(strcmp(get_faction_nom(liste_factions[i]), ""), 0); // Si deux chaines de caractères sont égales, la fonction strcmp() renvoie 0.
             // La faction n'a pas encore de points DDRS
             CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(liste_factions[i]), NOMBRE_POINTS_DDRS_INITIAL);
             // La main de la faction est vide
-            CU_ASSERT_TRUE(pile_est_vide(get_faction_main(liste_factions[i])));
+            // CU_ASSERT_EQUAL(pile_est_vide(get_faction_main(liste_factions[i])), 1);
             // La pioche contient encore l'entierete des cartes
-            CU_ASSERT_PTR_NULL(get_faction_pioche(liste_factions[i]));
+            // CU_ASSERT_PTR_NULL(get_faction_pioche(liste_factions[i]));
             // L'option rémélanger n'a pas encore été utilisée par la faction  
-            CU_ASSERT_EQUAL(get_faction_option_remelanger(liste_factions[i]), test_remelanger(liste_factions[i]));
-            CU_ASSERT_EQUAL(test_remelanger(liste_factions[i]), 0);
+            CU_ASSERT_EQUAL(get_faction_option_remelanger(liste_factions[i]), 0);
             // La faction n'a pas encore gagné aucune manche
+            printf("manches %i \n", get_faction_manches_gagnees(liste_factions[i]));
             CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[i]), 0);
     }
 }
@@ -727,7 +727,7 @@ int clean_suite() {
     return 0;
 }
 
-int main() {
+int main_test() {
    CU_pSuite pSuite = NULL;
    /* initialize the CUnit test registry */
    if ( CUE_SUCCESS != CU_initialize_registry() )
@@ -746,8 +746,13 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
    }
-   // Run all tests using the console interface
-    CU_console_run_tests();
+
+     /* Run all tests using the basic interface */
+   CU_basic_set_mode(CU_BRM_VERBOSE);
+   CU_basic_run_tests();
+   printf("\n");
+   CU_basic_show_failures(CU_get_failure_list());
+   printf("\n\n");
     
     /* Clean up registry and return */
     CU_cleanup_registry();

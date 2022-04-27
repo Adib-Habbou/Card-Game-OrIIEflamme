@@ -1,7 +1,7 @@
 #include "../headers/main.h"
 
 int main(){
-
+/*
     // Initialisation du plateau
     plateau _plateau = init_plateau();
 
@@ -70,6 +70,7 @@ int main(){
 
     // Affichage du gagnant
     gagnant(_factions,_plateau);
-
+*/
+    main_test();
     return 0;
 }

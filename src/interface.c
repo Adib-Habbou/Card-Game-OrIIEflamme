@@ -139,7 +139,7 @@ int* carte_positon(plateau _plateau,int _factionid) {
     int* position;
 
     position = malloc(3*sizeof(int));
-
+    position[2] = _factionid; //on set l'id de la faction qui pose la carte
 
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
@@ -175,7 +175,7 @@ int* carte_positon(plateau _plateau,int _factionid) {
 
         int ligneUser = position[0];
         int colonneUser = position[1];
-        position[2] = _factionid;
+        
         
         //vérification de la validité de la position : y a-t-il une carte adjacente ?
         if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
@@ -210,6 +210,8 @@ void afficher_effet(carte _carte) {
 @ensures retourne la faction gagnante selon les règles
 */
 void gagnant(faction* factions,plateau _plateau) {
+    printf("Joueur 0 : %d\n",get_faction_nombre_points_DDRS(factions[0]));
+    printf("Joueur 1 : %d\n",get_faction_nombre_points_DDRS(factions[1]));
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
@@ -222,7 +224,7 @@ void gagnant(faction* factions,plateau _plateau) {
         int ligne = get_plateau_carte_premier(_plateau)[0];
         int colonne = get_plateau_carte_premier(_plateau)[1];
         char* nom_gagnant = get_faction_nom(get_case_faction(get_plateau_case(_plateau,ligne,colonne)));
-        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
+        printf("Egalité : Félicitation %s ! Vous avez gagné la partie car vous avez placé la carte la plus en haut à gauche ! \n",nom_gagnant);
     }
 }
 

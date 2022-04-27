@@ -69,7 +69,7 @@ int main(){
     }
 
     // Affichage du gagnant
-    gagnant(_factions);
+    gagnant(_factions,_plateau);
 
     return 0;
 }

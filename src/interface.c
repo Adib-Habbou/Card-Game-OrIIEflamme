@@ -45,14 +45,14 @@ void affiche_plateau(plateau _plateau) {
 @assigns rien
 @ensures Affiche la main actuel de la faction
 */
-void affiche_main(faction _faction) {
+void affiche_main(faction _faction,int factionid) {
     // on vérifie que la pile n'est pas vide
     if( pile_est_vide(get_faction_main(_faction))){
         printf("La main est vide.\n");
         return;
     }
     // tant que la pile est non vide on affiche le nom de la carte
-
+    printf("Joueur %d\n",factionid);
     pile buffer_main = get_faction_main(_faction); 
     int i = 1;
     while(!pile_est_vide(buffer_main) ) {
@@ -96,6 +96,7 @@ carte carte_choisie(faction _faction){
     int choix;
     pile mainF = pile_vide(); //la main qui va refresh la main de la faction
     carte resultat = NULL; //la carte que l'on va retourner
+    int taille_main = taille_pile(get_faction_main(_faction));
 
     debut_demande :
 
@@ -105,8 +106,12 @@ carte carte_choisie(faction _faction){
         pile buffer_main = get_faction_main(_faction);
         int indice = 1;
 
+        if ( choix > taille_main || choix < 1) {
+            printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
+            goto debut_demande;
+        }
         
-        while( !pile_est_vide(pile_suivant(buffer_main)) ) {
+        while( !pile_est_vide(buffer_main) ) {
             if (indice == choix) { //on est bien à l'indice
                 resultat = pile_sommet(buffer_main); 
             }
@@ -119,10 +124,7 @@ carte carte_choisie(faction _faction){
         
 
         
-        if (pile_est_vide(buffer_main) && indice != choix ) {
-            printf("Erreur : vous avez entré une carte qui n'est pas dans la main, veuillez réessayer :\n");
-            goto debut_demande;
-        }
+        
     set_faction_main(_faction,mainF); //on a bien enlevé la carte et on refresh la main de la faction
     return resultat;
 }
@@ -137,7 +139,7 @@ int* carte_positon(plateau _plateau,int _factionid) {
     int* position;
 
     position = malloc(3*sizeof(int));
-
+    position[2] = _factionid; //on set l'id de la faction qui pose la carte
 
     //vérification si plateau est vide
     int drapeau_plateau_vide=1;
@@ -159,34 +161,34 @@ int* carte_positon(plateau _plateau,int _factionid) {
         return position;
     } 
     
-
-    printf("Où souhaitez-vous poser votre carte ?\n");
-
-
-    printf("Ligne :  ");
-    scanf("%d" , &position[0]);
-
-    printf("Colonne  :  ");
-    scanf("%d" , &position[1]);
+    demande :
+        printf("Où souhaitez-vous poser votre carte ?\n");
 
 
+        printf("Ligne :  ");
+        scanf("%d" , &position[0]);
 
-    int ligneUser = position[0];
-    int colonneUser = position[1];
-    position[2] = _factionid;
-    
-    //vérification de la validité de la position : y a-t-il une carte adjacente ?
-    if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
-    ( get_case_etat(get_plateau_case(_plateau,ligneUser-1,colonneUser)) != -1 ) ||
-     (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser-1)) != -1) ||
-      (get_case_etat(get_plateau_case(_plateau,ligneUser+1,colonneUser)) != -1) || 
-      (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser+1)) != -1) )) {
-        return position;
-    }
-    else {
-        printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
-        exit(0);
-    } 
+        printf("Colonne  :  ");
+        scanf("%d" , &position[1]);
+
+
+
+        int ligneUser = position[0];
+        int colonneUser = position[1];
+        
+        
+        //vérification de la validité de la position : y a-t-il une carte adjacente ?
+        if ( (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser)) == -1)&&(
+        ( get_case_etat(get_plateau_case(_plateau,ligneUser-1,colonneUser)) != -1 ) ||
+        (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser-1)) != -1) ||
+        (get_case_etat(get_plateau_case(_plateau,ligneUser+1,colonneUser)) != -1) || 
+        (get_case_etat(get_plateau_case(_plateau,ligneUser,colonneUser+1)) != -1) )) {
+            return position;
+        }
+        else {
+            printf("Position invalide, veuillez placer la carte à côté d'une carte présente sur le plateau\n");
+            goto demande;
+        } 
 
     return position;
     
@@ -199,7 +201,7 @@ int* carte_positon(plateau _plateau,int _factionid) {
 */
 void afficher_effet(carte _carte) {
     char* effet = get_carte_description(_carte);
-    printf("Cette carte a pour effet : %s", effet);
+    printf("Cette carte a pour effet : %s\n", effet);
 }
 
 /* 
@@ -207,14 +209,23 @@ void afficher_effet(carte _carte) {
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction* factions) {
+void gagnant(faction* factions,plateau _plateau) {
+ 
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
-    else {
+    else if (get_faction_nombre_points_DDRS(factions[0]) < get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[1]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
+    }
+    else {
+        int *liste =  get_plateau_carte_premier(_plateau);
+        int ligne = liste[0];
+        int colonne = liste[1];
+
+        char* nom_gagnant = get_faction_nom(factions[get_case_id_faction(get_plateau_case(_plateau,ligne,colonne))]); //on recupère la faction qui a poser la carte la plus en haut à gauche
+        printf("Egalité : Félicitation %s ! Vous avez gagné la partie car vous avez placé la carte la plus en haut à gauche ! \n",nom_gagnant);
     }
 }
 

@@ -253,12 +253,6 @@ int init_manche(plateau _plateau, faction* _factions){
 faction* liste_faction(){
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
-<<<<<<< HEAD
-        faction _faction = (faction) malloc(sizeof(faction));
-        set_faction_nom(_faction, "Joueur " + i);
-        set_faction_nombre_points_DDRS(_faction, 0);
-        factions[i] = _faction;
-=======
         factions[i] = (faction) malloc(sizeof(faction));
     }
     char* noms[2] = {"Joueur 0", "Joueur 1"};
@@ -268,7 +262,6 @@ faction* liste_faction(){
         set_faction_nombre_points_DDRS(factions[i], 0);
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
->>>>>>> lot_b
     }
     return factions;
 }

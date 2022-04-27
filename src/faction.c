@@ -60,7 +60,7 @@ void set_faction_nom(faction faction, char* nom) {
     faction->nom = nom;
 }
 
-/*  @requires   une faction valide et un entier
+/*  @requires   une faction valide et un entier positif ou nul
     @assigns    faction
     @ensures    modifie le nombre de points DDRS de la faction */
 void set_faction_nombre_points_DDRS(faction faction, int nombre_points_DDRS) {
@@ -81,14 +81,14 @@ void set_faction_pioche(faction faction, carte* pioche) {
     faction->pioche = pioche;
 }
 
-/*  @requires   une faction valide et un entier
+/*  @requires   une faction valide et un entier valant 0 ou 1
     @assigns    faction
     @ensures    modifie l'option remelanger de la faction */
 void set_faction_option_remelanger(faction faction, int option_remelanger) {
     faction->option_remelanger = option_remelanger;
 }
 
-/*  @requires   une faction valide et un entier
+/*  @requires   une faction valide et un entier valant 0, 1 ou 2
     @assigns    faction
     @ensures    modifie le nombre de manches gagnées de la faction */
 void set_faction_manches_gagnees(faction faction, int manches_gagnees) {

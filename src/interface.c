@@ -209,13 +209,17 @@ void afficher_effet(carte _carte) {
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction* factions) {
+void gagnant(faction* factions,plateau _plateau) {
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[0]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
-    else {
+    else if (get_faction_nombre_points_DDRS(factions[0]) < get_faction_nombre_points_DDRS(factions[1])) {
         char* nom_gagnant = get_faction_nom(factions[1]);
+        printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
+    }
+    else {
+        char* nom_gagnant = get_faction_nom(get_case_faction(get_plateau_carte_premier(_plateau)));
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
 }

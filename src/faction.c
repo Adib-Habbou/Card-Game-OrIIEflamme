@@ -5,10 +5,10 @@
 struct faction {
     char* nom;
     int nombre_points_DDRS;
-    pile main; /* type liste défini dans structure.h et structure.c */
-    carte* pioche; /* type pile défini dans structure.h et structure.c */
     int option_remelanger; /* 0 si la faction n'a pas encore remélanger et 1 si la fonction a déjà remélanger */
     int manches_gagnees; /* nombre de manches gagnées par la faction : 0, 1 ou 2 */
+    pile main; /* type liste défini dans structure.h et structure.c */
+    carte* pioche; /* type pile défini dans structure.h et structure.c */
 };
 
 /*  @requires   une faction valide

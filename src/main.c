@@ -36,7 +36,7 @@ int main(){
 
         // Phase 1 :
         
-        for(int i = JoueurCommence; i < 16+JoueurCommence; i++){
+        for(int i = JoueurCommence; i < NOMBRE_CARTES_MAIN_INITIAL*NOMBRE_JOUEURS+JoueurCommence; i++){
 
             
             // Affiche la main d'une faction tour par tour
@@ -44,9 +44,10 @@ int main(){
             // Retourne la carte choisi par la faction
             carte _carte = carte_choisie(_factions[i%2]);
             // Retourne la position sur le plateau où la faction décide de poser la carte
-            int* _position = carte_positon(_plateau); 
+            int* _position = carte_positon(_plateau,i%2); 
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
+
             affiche_plateau(_plateau);
             
         }

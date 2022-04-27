@@ -53,7 +53,7 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
 int* get_plateau_carte_premier(plateau plateau) {
     int ligne = 0;
     int colonne = 0;
-    while(get_case_carte(get_plateau_case(plateau,ligne,colonne)) == NULL) { 
+    while(get_plateau_case(plateau,ligne,colonne) == NULL) { 
         if (colonne < TAILLE_PLATEAU) {
              colonne += 1;
         }

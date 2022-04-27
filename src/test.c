@@ -57,8 +57,8 @@ void test_initialisation_plateau() {
         // Nombre correct de joueurs sur le plateau
         CU_ASSERT_PTR_NULL(liste_factions[NOMBRE_JOUEURS]); // comme les indices des listes démarrent à zéro, on s'attend à que liste_faction[NOMBRE_JOUEURS] renvoie NULL
         // Plateau vide : aucune case du plateau n'est occupée
-        for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
                 CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1); // état : -1 si la case est vide
             }   
         }
@@ -136,8 +136,8 @@ void test_presence_troisieme_manche() {
         // Une quatrième manche ne peut pas être demarrée
         CU_ASSERT_EQUAL(init_manche(plateau, liste_factions), 0);
         // Le plateau a été vidé : aucune case du plateau n'est occupée
-        for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
                 CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1); // état : -1 si la case est vide
             }   
         }
@@ -555,8 +555,8 @@ void test_vainqueur_manche_non_egalite() {
 
     // action
         // On termine la manche : toutes les cartes sont retournées
-        for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
                 Case _case = get_plateau_case(plateau, i, j);
                 set_case_etat(_case, 1); // état : 1 si la carte est face visible
             }   
@@ -589,8 +589,8 @@ void test_vainqueur_manche_egalite() {
 
     // action
         // On termine la manche : toutes les cartes sont retournées
-        for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
                 Case _case = get_plateau_case(plateau_egalite, i, j);
                 set_case_etat(_case, 1); // état : 1 si la carte est face visible
             }   
@@ -643,8 +643,8 @@ void test_vainqueur_jeu() {
 
     // action
         // On termine la troisième manche : toutes les cartes sont retournées et le jeu s'achève
-        for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
                 Case _case = get_plateau_case(plateau, i, j);
                 set_case_etat(_case, 1); // état : 1 si la carte est face visible
             }   

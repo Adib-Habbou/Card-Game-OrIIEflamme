@@ -215,16 +215,18 @@ void set_carte_nombre_occurrences(carte carte, int nombre_occurrences) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1
 */
-void FISE(faction _faction) {
+void FISE(faction _faction, int ligne, int colonne, plateau _plateau) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+1); 
 }
 
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
-@ensures augmente le nombre de DDRS de 2
+@ensures augmente le nombre de DDRS de 2 si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.
 */
-void FISA(faction _faction, plateau _plateau) {
+void FISA(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_pair=0;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -242,16 +244,20 @@ void FISA(faction _faction, plateau _plateau) {
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
-@ensures augmente le nombre de DDRS de 4
+@ensures augmente le nombre de DDRS de 4 si au moins une autre carte FC est retournée sur le plateau et 0 sinon
 */
-void FC(faction _faction, plateau _plateau) {
+void FC(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int drapeau_FC=0;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 ) && get_case_etat(get_plateau_case(_plateau,i,j))==1) {
-                drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
+           
+            if ( (get_case_etat(get_plateau_case(_plateau,i,j))==1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 ) ) {
+            drapeau_FC=1;//si 1 indique que une carte FC est présente et retournée
             }
+            
+           
         }
     }
     if (drapeau_FC) { //au moins une carte FC était retournée
@@ -264,7 +270,8 @@ void FC(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1 pour chaque carte FISE, FISA ou FC retournées
 */
-void EcologIIE(faction _faction, plateau _plateau) {
+void EcologIIE(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int total = 0;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -288,7 +295,8 @@ void EcologIIE(faction _faction, plateau _plateau) {
 les mélange et les repose face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, 
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
-void lIIEns(plateau _plateau) {
+void lIIEns(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
 
     carte* liste_carte = (carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte));
@@ -311,7 +319,9 @@ void lIIEns(plateau _plateau) {
     int tempInt;
     int random;
     int newrandom;
-    for (i=0;i<50;i++) {//on mélange la liste 50 fois
+
+    if (indice != 0){ //si il y a au moins une carte
+        for (i=0;i<50;i++) {//on mélange la liste 50 fois
         random=rand() % indice;
         newrandom=rand() % indice;
 
@@ -338,6 +348,11 @@ void lIIEns(plateau _plateau) {
     //libération de la mémoire
     free(liste_carte);
     free(liste_faction);
+    }
+    else {
+        return;
+    }
+
 }
 
 /*
@@ -348,16 +363,19 @@ supprime toutes les cartes FISE/FISA/FC retournées du plateau->
 Supprime ensuite la première et la dernière ligne du plateau-> 
 Sinon la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Soiree_sans_alcool(faction _faction, plateau _plateau) {
+void Soiree_sans_alcool(faction _faction, plateau _plateau, int lignec, int colonnec) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,lignec,colonnec));
     int i,j;
     int drapeau_alcool = 0;
  
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0 && (get_case_etat(get_plateau_case(_plateau, i, j))==1)) {
+            
+            if ( (get_case_etat(get_plateau_case(_plateau, i, j))==1) && strcmp( get_plateau_carte_nom(_plateau,i,j), "Alcool") == 0) {
                 drapeau_alcool=1;
                 break;
             }
+            
         }
     }
 
@@ -401,20 +419,21 @@ void Soiree_sans_alcool(faction _faction, plateau _plateau) {
 @ensures Supprimez du plateau toutes les cartes qui touchent cette carte Alcool
 */
 void Alcool(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
 
-    if (get_plateau_case(_plateau,ligne+1,colonne) != NULL) {
+    if (get_case_etat(get_plateau_case(_plateau,ligne+1,colonne)) != -1) {
         set_case_etat(get_plateau_case(_plateau,ligne+1,colonne),-1);
     }
 
-    if (get_plateau_case(_plateau,ligne,colonne+1) != NULL) {
+    if (get_case_etat(get_plateau_case(_plateau,ligne,colonne+1)) != -1) {
         set_case_etat(get_plateau_case(_plateau,ligne,colonne+1),-1);
     }
 
-    if (get_plateau_case(_plateau,ligne-1,colonne) != NULL) {
+    if (get_case_etat(get_plateau_case(_plateau,ligne-1,colonne)) != -1) {
         set_case_etat(get_plateau_case(_plateau,ligne-1,colonne),-1);
     }
 
-    if (get_plateau_case(_plateau,ligne,colonne-1) != NULL) {
+    if (get_case_etat(get_plateau_case(_plateau,ligne,colonne-1)) != -1) {
         set_case_etat(get_plateau_case(_plateau,ligne,colonne-1),-1);
     }
     
@@ -426,7 +445,8 @@ void Alcool(plateau _plateau, int ligne, int colonne) {
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(faction _faction, plateau _plateau) {
+void Cafe(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int drapeau_Ecocup = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -463,7 +483,8 @@ void Cafe(faction _faction, plateau _plateau) {
 @ensures Supprimez toutes les cartes Café et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void The(faction _faction, plateau _plateau) {
+void The(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
         int drapeau_Ecocup = 0;
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -495,8 +516,8 @@ void The(faction _faction, plateau _plateau) {
 @assigns rien
 @ensures sans effet
 */
-void Ecocup() {
- 
+void Ecocup(int ligne, int colonne, plateau _plateau) {
+ derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
 }
 
 /*
@@ -504,19 +525,21 @@ void Ecocup() {
 @assigns l'attribut DDRS de la faction adverse
 @ensures La faction adverse de celle qui a posé cette carte perd 1 points DDRS pour chaque paire de cartes retournées et identiques sur le plateau
 */
-void Reprographie(faction _faction_oppose, plateau _plateau) {
+void Reprographie(faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j; //parcours le plateau
 
     int k=0; //parcours la liste stockant les cartes retournées
 
     int nb_de_paire = 0;
     char** liste_carte= (char**) malloc(NOMBRE_CARTES_POSEES*sizeof(char**));
-    int indice;
+    int indice=0;
 
-    for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes non retournées
+    for (i=0;i<TAILLE_PLATEAU;i++) {  //on stocke les cartes retournées
         for (j=0;j<TAILLE_PLATEAU;j++) {  
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
-
+                liste_carte[indice] = get_plateau_carte_nom(_plateau,i,j); //ajoute la carte à la liste
+                indice++; 
                 while (k<indice) {
                     if ( strcmp(liste_carte[k], get_plateau_carte_nom(_plateau,i,j)) ==0 ) { //si la carte a déjà été retournée
                         nb_de_paire++;
@@ -525,8 +548,7 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
                     k++;
                 }
 
-                liste_carte[indice] = get_plateau_carte_nom(_plateau,i,j); //ajoute la carte à la liste
-                indice++; 
+                
             }
             
         }
@@ -544,19 +566,23 @@ void Reprographie(faction _faction_oppose, plateau _plateau) {
 @assigns l'attribut DDRS des factions
 @ensures Chaque faction gagne 1 point DDRS par carte non retournée et non supprimée du plateau qu'elle a posée sur le plateau
 */
-void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _plateau) {
+void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_faction_1 = 0;
     int nb_faction_2 = 0;
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) ==get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0  ) {
+            
+            if ( (get_case_etat(get_plateau_case(_plateau,i,j)) == 0 )&& (get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) ==get_faction_nom(_faction)) ) {
                 nb_faction_1++;
             }
             
-            if ( (get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) == get_faction_nom(_faction)) && get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
+            if (  (get_case_etat(get_plateau_case(_plateau,i,j)) == 0) &&(get_faction_nom(get_case_faction(get_plateau_case(_plateau,i,j))) == get_faction_nom(_faction)) ) {
                 nb_faction_2++;
             }
+            
+            
         }
     }
     
@@ -576,7 +602,8 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
 @assigns le plateau
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
-void Parcours_sobriete_numerique(plateau _plateau) {
+void Parcours_sobriete_numerique(plateau _plateau, int lignec, int colonnec) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,lignec,colonnec));
     int ligne;
     for (ligne = 0;ligne <TAILLE_PLATEAU; ligne++) {
         int ligne1 = get_plateau_carte_gauche(_plateau,ligne,1)[0];
@@ -597,7 +624,8 @@ void Parcours_sobriete_numerique(plateau _plateau) {
 @assigns l'attribut DDRS de la faction adverse
 @ensures La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau
 */
-void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
+void Heures_supplementaires(faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int nb_carte_heures_supp;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
@@ -624,7 +652,8 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau) {
 @assigns le plateau
 @ensures Supprimez une carte non retournée du plateau choisie au hasard
 */
-void Kahina_Bouchama(plateau _plateau) {
+void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int* liste_ligne_carte_verso = (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
     int* liste_colonne_carte_verso= (int*) malloc(NOMBRE_CARTES_POSEES*sizeof(int));
@@ -658,7 +687,8 @@ void Kahina_Bouchama(plateau _plateau) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi->
 */
-void Kevin_Goilard(faction _faction, plateau _plateau) {
+void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,lignec,colonnec));
     int ligne_debut,ligne_fin,compteur_carte_supp;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
@@ -692,53 +722,56 @@ void Kevin_Goilard(faction _faction, plateau _plateau) {
 @ensures La faction qui a posé cette carte réactive l'effet de la dernière carte retournée avant Massinissa Merabet, en faisant comme elle l'avait posée elle-même, même si ce n'est pas le cas
 */
 void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+
+
+    
     if(strcmp(get_carte_nom(derniere_carte_retournee), "FISE") == 0){
-        FISE(_faction);
+        FISE(_faction, ligne, colonne, _plateau);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "FISA") == 0){
-        FISA(_faction, _plateau);
+        FISA(_faction, _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "FC") == 0){
-        FC(_faction, _plateau);
+        FC(_faction, _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "EcologIIE") == 0){
-        EcologIIE(_faction, _plateau);
+        EcologIIE(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "lIIEns") == 0){
-        lIIEns(_plateau);
+        lIIEns(_plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Soirée sans alcool") == 0){
-        Soiree_sans_alcool(_faction, _plateau);
+        Soiree_sans_alcool(_faction, _plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Alcool") == 0){
         Alcool(_plateau, ligne, colonne);
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Café") == 0){
-        Cafe(_faction, _plateau);
+        Cafe(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Thé") == 0){
-        The(_faction, _plateau);
+        The(_faction, _plateau, ligne, colonne);
+
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Ecocup") == 0){
-        Ecocup();
+        Ecocup(ligne, colonne,_plateau);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Reprographie") == 0){
-        Reprographie(_faction_oppose, _plateau);
+        Reprographie(_faction_oppose, _plateau, ligne, colonne);
+
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Isolation du bâtiment") == 0){
-        Isolation_du_batiment(_faction,_faction_oppose,  _plateau);
+        Isolation_du_batiment(_faction,_faction_oppose,  _plateau, ligne, colonne);
+
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Parcours sobriété numérique") == 0){
-        Parcours_sobriete_numerique(_plateau);
+        Parcours_sobriete_numerique(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Heures supplémentaires") == 0){
-        Heures_supplementaires(_faction, _plateau);
+        Heures_supplementaires(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Kahina Bouchama") == 0){
-        Kahina_Bouchama(_plateau);
+        Kahina_Bouchama(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Kevin Goilard") == 0){
-        Kevin_Goilard(_faction, _plateau);
-
-    }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Massinissa Merabet") == 0){
-        Massinissa_Merabet(_faction,_faction_oppose,_plateau,ligne,colonne);
+        Kevin_Goilard(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Vitéra Y") == 0){
-        Vitera_Y(_faction,_faction_oppose);
+        Vitera_Y(_faction,_faction_oppose, ligne, colonne, _plateau);
         
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Jonas Senizergues") == 0){
-        Jonas_Senizergues(_plateau);
+        Jonas_Senizergues(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Fetia Bannour") == 0){
         Fetia_Bannour(_faction, _plateau, ligne, colonne);
@@ -747,28 +780,28 @@ void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plate
         Catherine_Dubois(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Anne-Laure Ligozat") == 0){
-        Anne_Laure_Ligozat(_faction, _plateau);
+        Anne_Laure_Ligozat(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Guillaume Burel") == 0){
-        Guillaume_Burel(_faction,_faction_oppose);
+        Guillaume_Burel(_faction,_faction_oppose, ligne, colonne, _plateau);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Christophe Mouilleron") == 0){
-        Christophe_Mouilleron(_plateau);
+        Christophe_Mouilleron(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Thomas Lim") == 0){
-        Thomas_Lim(_faction,_faction_oppose,  _plateau);
+        Thomas_Lim(_faction,_faction_oppose,  _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Julien Forest") == 0){
-        Julien_Forest(_faction, _plateau);
+        Julien_Forest(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Dimitri Watel") == 0){
-        Dimitri_Watel(_faction, _plateau);
+        Dimitri_Watel(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Djibril-Aurélien Dembele-Cabot") == 0){
-        Djibril_Aurelien_Dembele_Cabot(_faction, _plateau, ligne);
+        Djibril_Aurelien_Dembele_Cabot(_faction, _plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Eric Lejeune") == 0){
-        Eric_Lejeune(_plateau);
+        Eric_Lejeune(_plateau, ligne, colonne);
 
     }else if(strcmp(get_carte_nom(derniere_carte_retournee), "Lucienne Pacavé") == 0){
         Lucienne_Pacave(_faction, _plateau, ligne, colonne);
@@ -786,7 +819,8 @@ void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plate
 @assigns l'attribut DDRS d'une faction
 @ensures La faction qui a le moins de points DDRS gagne 3 points DDRS
 */
-void Vitera_Y(faction _faction, faction _faction_oppose) {
+void Vitera_Y(faction _faction, faction _faction_oppose, int ligne, int colonne, plateau _plateau) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     if (get_faction_nombre_points_DDRS(_faction) > get_faction_nombre_points_DDRS(_faction_oppose)) {
         set_faction_nombre_points_DDRS(_faction_oppose,get_faction_nombre_points_DDRS(_faction_oppose)+3);
     }
@@ -807,13 +841,17 @@ void Vitera_Y(faction _faction, faction _faction_oppose) {
 @assigns le plateau
 @ensures Supprimez toutes les cartes Heures supplémentaires retournées du plateau
 */
-void Jonas_Senizergues(plateau _plateau) {
+void Jonas_Senizergues(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) {
-                set_case_etat(get_plateau_case(_plateau,i,j), -1);
+            if ( get_case_etat(get_plateau_case(_plateau,i,j)) != -1 ){ 
+                if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) {
+                    set_case_etat(get_plateau_case(_plateau,i,j), -1);
+                }
             }
+            
         }
     }
     
@@ -828,30 +866,32 @@ Sinon la faction qui a posé cette carte gagne 1 point DDRS par carte Catherine 
 Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest et Dimitri Watel retournée sur le plateau
 */
 void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int drapeau_heures_supp = 0;
     int total_carte_spe = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ((strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
+            if ( (get_case_etat(get_plateau_case(_plateau, i, j))==1) && (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) ) {
                 drapeau_heures_supp=1;
             }
             if ( get_case_etat(get_plateau_case(_plateau, i, j))==1 && ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Catherine Dubois") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Dimitri Watel") == 0)  || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Thomas Lim") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Anne-Laure Ligozat") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Guillaume Burel") == 0 ) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") == 0 ) ) ) {
                 total_carte_spe++;
             }
+            
         }
     }
 
     if (drapeau_heures_supp) {
         for (j=0;j<TAILLE_PLATEAU;j++) { //suppression de la ligne
-            if (get_plateau_case(_plateau,ligne,j)!= NULL){
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) != -1){
                 set_case_etat( get_plateau_case(_plateau,ligne,j) , -1 );
             }
         }
 
         for (i=0;i<TAILLE_PLATEAU;i++) { //suppression de la ligne
-            if (get_plateau_case(_plateau,i,colonne)!= NULL){
+            if (get_case_etat(get_plateau_case(_plateau,i,j)) != -1){
                 set_case_etat( get_plateau_case(_plateau,i,colonne) , -1 );
             }
         }
@@ -874,6 +914,7 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
 void Catherine_Dubois(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     
 //carte la plus à gauche
     int ligneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[0];
@@ -904,12 +945,14 @@ void Catherine_Dubois(plateau _plateau, int ligne, int colonne) {
 @ensures Pour chaque carte EcologIIE, Ecocup, Isolation du bâtiment et parcours Sobriété numérique retournée, 
 la faction qui a posé cette carte gagne 3 points DDRS et la dernière carte non retournée du plateau est supprimée
 */
-void Anne_Laure_Ligozat(faction _faction, plateau _plateau) {
+void Anne_Laure_Ligozat(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_carte_retournee = 0;
     int i,j;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
+            printf("%d\n",i);
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "EcologIIE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0 ) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0) ) ) {
                 nb_carte_retournee+=1; 
             }
@@ -917,8 +960,10 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) {
     }
     set_faction_nombre_points_DDRS(_faction, get_faction_nombre_points_DDRS(_faction) + 3*nb_carte_retournee);
 
-    for (i=TAILLE_PLATEAU;i>0;i--) {  //on décrémente car on part de la fin du plateau
-        for (j=TAILLE_PLATEAU;j>0;j--) {  
+    
+    
+    for (i=TAILLE_PLATEAU-1;i>0;i--) {  //on décrémente car on part de la fin du plateau
+        for (j=TAILLE_PLATEAU-1;j>0;j--) {  
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 0 ) {
 
                 set_case_etat(get_plateau_case(_plateau,i,j),-1);
@@ -940,7 +985,8 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) {
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel(faction _faction, faction _faction_oppose) {
+void Guillaume_Burel(faction _faction, faction _faction_oppose, int ligne, int colonne, plateau _plateau) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
 
     if (get_faction_nombre_points_DDRS(_faction_oppose) > get_faction_nombre_points_DDRS(_faction) ) {
 
@@ -964,22 +1010,26 @@ void Guillaume_Burel(faction _faction, faction _faction_oppose) {
 @assigns le plateau
 @ensures Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires
 */
-void Christophe_Mouilleron(plateau _plateau) {
+void Christophe_Mouilleron(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int drapeau_heures_supp = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if(( strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1))  {
+           
+            if((  (get_case_etat(get_plateau_case(_plateau, i, j))==1) && strcmp(get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires" ) == 0 ))  {
                     drapeau_heures_supp=1;
             }
+
+            
         }
     }
     if (drapeau_heures_supp) {
         
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (get_plateau_case(_plateau,i,j) != NULL) && (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") != 0) && (strcmp(get_plateau_carte_nom(_plateau,i,j),"Heures supplémentaires")!=0) ) {
+            if ((get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Christophe Mouilleron") != 0) && (strcmp(get_plateau_carte_nom(_plateau,i,j),"Heures supplémentaires")!=0) ) {
                 set_case_etat(get_plateau_case(_plateau,i,j),-1);
              }
         }
@@ -1001,15 +1051,19 @@ void Christophe_Mouilleron(plateau _plateau) {
 la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée sur le plateau-> 
 Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau
 */
-void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
+void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int Julien_Forest_present = 0;
     int i,j;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //recherche de Julien
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1 )) {
+            
+            if ((get_case_etat(get_plateau_case(_plateau, i, j))==1 ) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "Julien Forest") == 0 ) ) {
                 Julien_Forest_present = 1;
             }
+            
+            
         }
     }
 
@@ -1018,9 +1072,11 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
         
     for (i=0;i<TAILLE_PLATEAU;i++) {  //compte le nb de FISE
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 ) && (get_case_etat(get_plateau_case(_plateau, i, j))==1) ) {
+            
+            if ( (get_case_etat(get_plateau_case(_plateau, i, j))==1) && (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISE") == 0 )  ) {
                 nb_FISE+=1;
             }
+            
         }
     }
 
@@ -1043,15 +1099,18 @@ void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) {
 @assigns l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau
 */
-void Julien_Forest(faction _faction, plateau _plateau) {
+void Julien_Forest(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_FISE = 0;
     int i,j;
     int drapeau_cafe = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Café") == 0) {
-                drapeau_cafe=1;
+            if ( get_case_etat(get_plateau_case(_plateau,i,j)) == 1 ){
+                if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Café") == 0) {
+                    drapeau_cafe=1;
+                }
             }
         }
     }
@@ -1059,8 +1118,10 @@ void Julien_Forest(faction _faction, plateau _plateau) {
     if (drapeau_cafe) { 
         for (i=0;i<TAILLE_PLATEAU;i++) { 
             for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) {
-                    nb_FISE+=1;
+                if ( get_case_etat(get_plateau_case(_plateau,i,j)) == 1 ){
+                    if (strcmp( get_plateau_carte_nom(_plateau,i,j), "FISE") == 0) {
+                        nb_FISE+=1;
+                    }
                 }
             }
         }
@@ -1073,24 +1134,29 @@ void Julien_Forest(faction _faction, plateau _plateau) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau
 */
-void Dimitri_Watel(faction _faction, plateau _plateau) {
+void Dimitri_Watel(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_FISA_FC = 0;
     int i,j;
     int drapeau_the = 0;
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) {
-                drapeau_the=1;
+            if ( get_case_etat(get_plateau_case(_plateau,i,j)) == 1 ){
+                if (strcmp( get_plateau_carte_nom(_plateau,i,j), "Thé") == 0) {
+                    drapeau_the=1;
+                }
             }
         }
     }
 
     if (drapeau_the) { 
         for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
-            for (j=0;j<TAILLE_PLATEAU;j++) {  
-                if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 )) {
-                    nb_FISA_FC+=1;
+            for (j=0;j<TAILLE_PLATEAU;j++) { 
+                if ( get_case_etat(get_plateau_case(_plateau,i,j)) == 1 ){ 
+                    if ( (strcmp(get_plateau_carte_nom(_plateau,i,j), "FISA") == 0) || ( strcmp(get_plateau_carte_nom(_plateau,i,j), "FC") == 0 )) {
+                        nb_FISA_FC+=1;
+                    }
                 }
             }
         }
@@ -1104,7 +1170,8 @@ void Dimitri_Watel(faction _faction, plateau _plateau) {
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne) {
+void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int nb_retournee =0;
     int j;
     for (j=0;j<TAILLE_PLATEAU;j++) { //optimisation possible avec getter border du "plateau" effectif
@@ -1127,7 +1194,8 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(plateau _plateau) {
+void Eric_Lejeune(plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     
     int i,j;
     carte* liste_carte=(carte*) malloc(NOMBRE_CARTES_POSEES*sizeof(carte)); //liste total
@@ -1242,6 +1310,7 @@ void Eric_Lejeune(plateau _plateau) {
 @ensures S'il y a une carte FISA retournée dans la même ligne ou la même colonne que cette carte, la faction qui a posé cette carte gagne 5 points DDRS
 */
 void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int drapeau_FISA = 0;
     int i;
 
@@ -1250,14 +1319,18 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
 
 //parcours de la ligne
     for (i=0;i<TAILLE_PLATEAU;i++) {
-        if ( strcmp(get_plateau_carte_nom(_plateau,i,colonne), "FISA") == 0 ){
-            drapeau_FISA = 1;
+        if ( get_case_etat(get_plateau_case(_plateau,i,colonne)) == 1){
+            if ( strcmp(get_plateau_carte_nom(_plateau,i,colonne), "FISA") == 0 ){
+                drapeau_FISA = 1;
+            }
         }
     }
 //parcours de la colonne
     for (i=0;i<TAILLE_PLATEAU;i++) {
-        if (strcmp(get_plateau_carte_nom(_plateau,ligne,i), "FISA") == 0) {
-            drapeau_FISA = 1;
+        if ( get_case_etat(get_plateau_case(_plateau,ligne,i)) == 1 ){
+            if (strcmp(get_plateau_carte_nom(_plateau,ligne,i), "FISA") == 0) {
+                drapeau_FISA = 1;
+            }
         }
     }
     }
@@ -1277,6 +1350,7 @@ la faction qui a posé cette carte gagne 10 points DDRS->
  Sinon, retournez toutes les cartes dans la même ligne de cette carte sans appliquer leurs effets
 */
 void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
     int drapeau_Djibril = 0;
     int drapeau_Eric = 0;
@@ -1284,15 +1358,16 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
 
     for(i=0;i<TAILLE_PLATEAU;i++){
         for(j=0;j<TAILLE_PLATEAU;j++){
-
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembele-Cabeau") == 0 ) {
-            drapeau_Djibril = 1;
-            }
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") == 0 ) {
-            drapeau_Eric = 1;
-            }
-            if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") == 0 ) {
-            drapeau_Lucienne = 1;
+            if ( get_case_etat(get_plateau_case(_plateau,i,j)) != -1 ){
+                if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Djibril-Aurélien Djembele-Cabeau") == 0 ) {
+                drapeau_Djibril = 1;
+                }
+                if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Eric Lejeune") == 0 ) {
+                drapeau_Eric = 1;
+                }
+                if ( strcmp(get_plateau_carte_nom(_plateau,i,j), "Lucienne Pacavé") == 0 ) {
+                drapeau_Lucienne = 1;
+                }
             }
         }
         }
@@ -1305,7 +1380,7 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
     else {
         //retourne les cartes sur la meme ligne
         for(j=0;j<TAILLE_PLATEAU;j++) {
-            if (get_plateau_case(_plateau,ligne,j) != NULL) {
+            if (get_case_etat(get_plateau_case(_plateau,ligne,j)) != -1) {
                 set_case_etat( get_plateau_case(_plateau,ligne,j) , 1 );
                 derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,j));
             }
@@ -1313,7 +1388,7 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
         }
         //pareil sur la colonne
         for(j=0;j<TAILLE_PLATEAU;j++) {
-            if (get_plateau_case(_plateau,j,colonne) != NULL) {
+            if (get_case_etat(get_plateau_case(_plateau,j,colonne)) != -1) {
                 set_case_etat(get_plateau_case(_plateau,j,colonne),1);
                 derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,j,colonne));
             }
@@ -1328,6 +1403,7 @@ void Katrin_Salhab(faction _faction, plateau _plateau, int ligne, int colonne) {
 @ensures Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions
 */
 void Laurent_Prevel(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
+    derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
 
     if ( (ligne == get_plateau_carte_premier(_plateau)[0]) && (colonne == get_plateau_carte_premier(_plateau)[1] )) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! dernier
 

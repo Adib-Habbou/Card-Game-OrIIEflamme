@@ -58,27 +58,27 @@ void set_carte_nombre_occurrences(carte carte, int nombre_occurrences);
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1
 */
-void FISE(faction _faction) ;
+void FISE(faction _faction, int ligne, int colonne, plateau _plateau) ;
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 2
 */
-void FISA(faction _faction, plateau _plateau) ;
+void FISA(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 4
 */
-void FC(faction _faction, plateau _plateau) ;
+void FC(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
 @ensures augmente le nombre de DDRS de 1 pour chaque carte FISE, FISA ou FC retournées
 */
-void EcologIIE(faction _faction, plateau _plateau) ;
+void EcologIIE(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ void EcologIIE(faction _faction, plateau _plateau) ;
 les mélange et les repose face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, 
 dans cet ordre et les prochaines cartes à être retournées sont ces cartes là
 */
-void lIIEns(plateau _plateau);
+void lIIEns(plateau _plateau, int ligne, int colonne);
 
 /*
 @requires faction valide
@@ -100,7 +100,7 @@ supprime toutes les cartes FISE/FISA/FC retournées du plateau->
 Supprime ensuite la première et la dernière ligne du plateau-> 
 Sinon la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Soiree_sans_alcool(faction _faction, plateau _plateau) ;
+void Soiree_sans_alcool(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
@@ -115,7 +115,7 @@ void Alcool(plateau _plateau, int ligne, int colonne) ;
 @ensures Supprime toutes les cartes Thé et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void Cafe(faction _faction, plateau _plateau);
+void Cafe(faction _faction, plateau _plateau, int ligne, int colonne);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -126,28 +126,28 @@ void Cafe(faction _faction, plateau _plateau);
 @ensures Supprimez toutes les cartes Café et Alcool retournées sur le plateau-> 
 Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS-> Sinon elle perd 1 point DDRS
 */
-void The(faction _faction, plateau _plateau) ;
+void The(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires rien
 @assigns rien
 @ensures sans effet
 */
-void Ecocup() ;
+void Ecocup(int ligne, int colonne, plateau _plateau) ;
 
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction adverse
 @ensures La faction adverse de celle qui a posé cette carte perd 1 points DDRS pour chaque paire de cartes retournées et identiques sur le plateau
 */
-void Reprographie(faction _faction_oppose, plateau _plateau) ;
+void Reprographie(faction _faction_oppose, plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide
 @assigns l'attribut DDRS des factions
 @ensures Chaque faction gagne 1 point DDRS par carte non retournée et non supprimée du plateau qu'elle a posée sur le plateau
 */
-void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _plateau) ;
+void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) ;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -158,13 +158,13 @@ void Isolation_du_batiment(faction _faction, faction _faction_oppose, plateau _p
 @assigns le plateau
 @ensures Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet
 */
-void Parcours_sobriete_numerique(plateau _plateau) ;
+void Parcours_sobriete_numerique(plateau _plateau, int ligne, int colonne) ;
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction adverse
 @ensures La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau
 */
-void Heures_supplementaires(faction _faction_oppose, plateau _plateau);
+void Heures_supplementaires(faction _faction_oppose, plateau _plateau, int ligne, int colonne);
 
 
 
@@ -173,13 +173,13 @@ void Heures_supplementaires(faction _faction_oppose, plateau _plateau);
 @assigns le plateau
 @ensures Supprimez une carte non retournée du plateau choisie au hasard
 */
-void Kahina_Bouchama(plateau _plateau);
+void Kahina_Bouchama(plateau _plateau, int ligne, int colonne);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi->
 */
-void Kevin_Goilard(faction _faction, plateau _plateau) ;
+void Kevin_Goilard(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ void Massinissa_Merabet(faction _faction,faction _faction_oppose, plateau _plate
 @assigns l'attribut DDRS d'une faction
 @ensures La faction qui a le moins de points DDRS gagne 3 points DDRS
 */
-void Vitera_Y(faction _faction, faction _faction_oppose);
+void Vitera_Y(faction _faction, faction _faction_oppose, int ligne, int colonne, plateau _plateau);
 
 
 
@@ -208,7 +208,7 @@ void Vitera_Y(faction _faction, faction _faction_oppose);
 @assigns le plateau
 @ensures Supprimez toutes les cartes Heures supplémentaires retournées du plateau
 */
-void Jonas_Senizergues(plateau _plateau);
+void Jonas_Senizergues(plateau _plateau, int ligne, int colonne);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
@@ -235,7 +235,7 @@ void Catherine_Dubois(plateau _plateau, int ligne, int colonne);
 @ensures Pour chaque carte EcologIIE, Ecocup, Isolation du bâtiment et parcours Sobriété numérique retournée, 
 la faction qui a posé cette carte gagne 3 points DDRS et la dernière carte non retournée du plateau est supprimée
 */
-void Anne_Laure_Ligozat(faction _faction, plateau _plateau) ;
+void Anne_Laure_Ligozat(faction _faction, plateau _plateau, int ligne, int colonne) ;
 
 
 
@@ -245,14 +245,14 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau) ;
 @assigns l'attribut DDRS de la faction
 @ensures Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS->
 */
-void Guillaume_Burel(faction _faction, faction _faction_oppose) ;
+void Guillaume_Burel(faction _faction, faction _faction_oppose, int ligne, int colonne, plateau _plateau) ;
 
 /*
 @requires faction valide
 @assigns le plateau
 @ensures Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires
 */
-void Christophe_Mouilleron(plateau _plateau) ;
+void Christophe_Mouilleron(plateau _plateau, int ligne, int colonne) ;
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -266,25 +266,25 @@ void Christophe_Mouilleron(plateau _plateau) ;
 la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée sur le plateau-> 
 Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau
 */
-void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau) ;
+void Thomas_Lim(faction _faction, faction _faction_oppose, plateau _plateau, int ligne, int colonne) ;
 /*
 @requires faction valide
 @assigns l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau
 */
-void Julien_Forest(faction _faction, plateau _plateau) ;
+void Julien_Forest(faction _faction, plateau _plateau, int ligne, int colonne) ;
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau
 */
-void Dimitri_Watel(faction _faction, plateau _plateau);
+void Dimitri_Watel(faction _faction, plateau _plateau, int ligne, int colonne);
 /*
 @requires faction valide
 @assigns le plateau et l'attribut DDRS de la faction
 @ensures S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS
 */
-void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne);
+void Djibril_Aurelien_Dembele_Cabot(faction _faction, plateau _plateau, int ligne, int colonne);
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -296,7 +296,7 @@ Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillau
 Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne-> 
 Les prochaines cartes à être retournées sont ces cartes là-> Sinon, supprimez ces cartes du plateau
 */
-void Eric_Lejeune(plateau _plateau) ;
+void Eric_Lejeune(plateau _plateau, int ligne, int colonne) ;
 
 /*
 @requires faction valide

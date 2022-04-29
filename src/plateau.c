@@ -245,9 +245,10 @@ int init_manche(faction* _factions){
         }
     }
     if(maxddrs == 0 && winner == 0){
-        srand(time(NULL));
+        srand(time(NULL)); 
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
+            printf("rem \n");
         }
         return 1;
     }else{

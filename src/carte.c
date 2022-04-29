@@ -954,10 +954,6 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau, int ligne, int colon
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-<<<<<<< HEAD
-=======
-            //printf("%d\n",i);
->>>>>>> 0de245da6e5884ef233d6f4dd0e44bf2c88aba9f
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "EcologIIE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0 ) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0) ) ) {
                 nb_carte_retournee+=1; 
             }

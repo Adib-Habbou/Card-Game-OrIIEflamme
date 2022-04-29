@@ -65,7 +65,9 @@ int main(){
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-        manche++;
+
+        manche++; // passage à la manche suivante
+
     }
 
     // Affichage du gagnant

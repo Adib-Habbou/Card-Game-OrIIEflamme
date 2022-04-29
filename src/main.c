@@ -13,12 +13,6 @@ int main(){
     srand(time(NULL));
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-<<<<<<< HEAD
-    while(init_manche(_plateau, _factions) != 0){
-        affiche_plateau(_plateau);
-        printf("plateau de la manche\n");
-        if(manche%2 == 0){
-=======
     while(init_manche(_factions) != 0){
 
         _plateau = init_plateau();
@@ -26,7 +20,6 @@ int main(){
         affiche_plateau(_plateau);
 
         if(manche%2 == 1){
->>>>>>> 0de245da6e5884ef233d6f4dd0e44bf2c88aba9f
             JoueurCommence = rand()%2;
         }else{
             JoueurCommence++;
@@ -72,14 +65,9 @@ int main(){
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-<<<<<<< HEAD
-        manche++;
-    
-=======
 
         manche++; // passage à la manche suivante
         libere_plateau(_plateau);
->>>>>>> 0de245da6e5884ef233d6f4dd0e44bf2c88aba9f
     }
 
     // Affichage du gagnant

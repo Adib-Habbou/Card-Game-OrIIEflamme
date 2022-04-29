@@ -28,15 +28,18 @@ int get_case_etat(Case _case) {
     return _case->etat;
 }
 
-/*  @requires   une case valide et un entier
+/*  @requires   une case valide et un entier positif ou -1
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
+    // si on essaye de set l'état de la case à -1 on considère que l'on souhaite initalisé le nombre d'occurences, l'id de la faction et l'état
+    // je sais que ça ne devrait pas se faire dans un setter je suis fondamentalement contre mais Clark et Willy préfèrent faire comme ça :/
     if (etat == -1) {
         set_carte_nombre_occurrences(_case->carte, -1);
         _case->id_faction = -1;
         _case->etat = -1;
     }
+    // si l'état est un entier positif on ne fait que modifier l'état de la case
     _case->etat = etat;
 }
 

@@ -3,20 +3,21 @@
 int main(){
 /*
     // Initialisation du plateau
-    plateau _plateau = init_plateau();
+    plateau _plateau;
 
     // Initialisation de la liste des factions
     faction* _factions = liste_faction();
 
-    // Affichage du plateau sur la console
-    affiche_plateau(_plateau);
-
     int manche = 1;
     int JoueurCommence = 0;
     srand(time(NULL));
-    
+
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(&_plateau, _factions) != 0){
+    while(init_manche(_factions) != 0){
+
+        _plateau = init_plateau();
+
+        affiche_plateau(_plateau);
 
         if(manche%2 == 1){
             JoueurCommence = rand()%2;
@@ -24,7 +25,7 @@ int main(){
             JoueurCommence++;
         }
         // Initialisation des joueurs
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < NOMBRE_JOUEURS; i++){
             // Affichage la main de la faction i dans la console
             affiche_main(_factions[i],i);
             // Demande à la faction actuelle si elle veut utiliser son option permettant de repiocher
@@ -39,6 +40,7 @@ int main(){
         // Phase 1 :
         
         for(int i = JoueurCommence; i < NOMBRE_CARTES_MAIN_INITIAL*NOMBRE_JOUEURS+JoueurCommence; i++){
+            printf("oklm\n");
             // Affiche la main d'une faction tour par tour
             affiche_main(_factions[i%2],i%2);
             // Retourne la carte choisi par la faction
@@ -65,7 +67,7 @@ int main(){
         }
 
         manche++; // passage à la manche suivante
-
+        libere_plateau(_plateau);
     }
 
     // Affichage du gagnant

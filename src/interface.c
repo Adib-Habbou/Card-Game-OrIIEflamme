@@ -2,7 +2,6 @@
 #include "../headers/interface.h"
 
 
-
 /* 
 @requires rien
 @assigns rien

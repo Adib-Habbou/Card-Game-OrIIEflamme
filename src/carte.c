@@ -1205,7 +1205,7 @@ void Eric_Lejeune(plateau _plateau, int ligne, int colonne) {
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //création de la liste des cartes retournées
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) {
+            if ( (get_case_etat(get_plateau_case(_plateau,i,j)) == 1) && (strcmp(get_plateau_carte_nom(_plateau,i,colonne), "Eric Lejeune") == 0) && (strcmp(get_plateau_carte_nom(_plateau,i,colonne), "Massinissa Merabet") == 0) ) { //pour éviter les boucles infinies
                 
                 liste_carte[indice]= get_case_carte(get_plateau_case(_plateau,i,j));
                 liste_faction[indice]=get_case_id_faction(get_plateau_case(_plateau,i,j));

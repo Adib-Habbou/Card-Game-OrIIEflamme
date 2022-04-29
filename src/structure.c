@@ -45,7 +45,7 @@ void empile(pile *_pile, carte carte) {
     if (res == NULL) {
         exit(1); // si la mémoire n'a pas été allouée correctement on sort du programme
     }
-    // on empile la carte
+    // on empile la carte en ajoutant notre pile à la suite de la pile res qui contient la carte
     res->sommet = carte;
     res->suivant = *_pile;
     *_pile = res;
@@ -59,7 +59,7 @@ void depile(pile *pile) {
     if (pile_est_vide(*pile)) {
         exit(1); // si la pile est vide on sort du programme
     }
-    // on supprime le sommet de la pile
+    // on supprime le sommet de la pile en passant au maillon suivant
     *pile = pile_suivant(*pile);
 }
 

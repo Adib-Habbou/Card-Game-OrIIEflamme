@@ -159,7 +159,7 @@ void test_presence_troisieme_manche() {
     @ensures    renvoie 1 si _carte appartient à la main, 0 sinon
 */
         int appartient(carte _carte, pile main_faction) {
-            pile buffer_main = main_faction; // buffer pour parcourir la main sans la modifier 
+            pile buffer_main = main_faction; // buffer pour parcourir la main sans la modifier
             for (int i=0; i < NOMBRE_CARTES_MAIN_INITIAL; i++) {
                 carte top = pile_sommet(buffer_main);
                 /* strcmp() compaire deux chaines de caractères, caractère par caractère. 

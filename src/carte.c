@@ -689,8 +689,9 @@ void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
 */
 void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec) {
     derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,lignec,colonnec));
-    int ligne_debut,ligne_fin,compteur_carte_supp;
-    compteur_carte_supp = 0;
+    int ligne_debut = 0;
+    int ligne_fin = 0;
+    int compteur_carte_supp = 0;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  

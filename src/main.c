@@ -13,10 +13,12 @@ int main(){
 
     int manche = 1;
     int JoueurCommence = 0;
-
+    srand(time(NULL));
+    
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_plateau, _factions) != 0){
-        if(manche%2 == 0){
+    while(init_manche(&_plateau, _factions) != 0){
+
+        if(manche%2 == 1){
             JoueurCommence = rand()%2;
         }else{
             JoueurCommence++;
@@ -37,8 +39,6 @@ int main(){
         // Phase 1 :
         
         for(int i = JoueurCommence; i < NOMBRE_CARTES_MAIN_INITIAL*NOMBRE_JOUEURS+JoueurCommence; i++){
-
-            
             // Affiche la main d'une faction tour par tour
             affiche_main(_factions[i%2],i%2);
             // Retourne la carte choisi par la faction
@@ -50,7 +50,6 @@ int main(){
             poser(_plateau, _carte, _position);
 
             affiche_plateau(_plateau);
-            
         }
 
         // Phase 2 :
@@ -59,13 +58,14 @@ int main(){
         // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
             carte _carte = retourner(_plateau, _factions);
-            printf("retourner fini\n");
             if(_carte == NULL)
                 break;
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-        manche++;
+
+        manche++; // passage à la manche suivante
+
     }
 
     // Affichage du gagnant

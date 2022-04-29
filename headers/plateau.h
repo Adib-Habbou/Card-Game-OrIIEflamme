@@ -29,7 +29,7 @@ void libere_plateau(plateau plateau);
     @assigns    rien
     @ensures    renvoie 1 si il initialise une nouvelle manche de jeu
                 renvoie 0 si le jeu est terminé */
-int init_manche(plateau plateau, faction* factions);
+int init_manche(plateau* plateau, faction* factions);
 
 /*  @requires   rien
     @assigns    rien
@@ -83,7 +83,7 @@ int get_case_etat(Case _case);
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case);
 
-/*  @requires   une case valide et un entier
+/*  @requires   une case valide et un entier positif ou -1
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat);

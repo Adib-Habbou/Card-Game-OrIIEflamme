@@ -11,7 +11,7 @@ int main(){
     // Affichage du plateau sur la console
     affiche_plateau(_plateau);
 
-    int manche = 1;
+    int manche = 0;
     int JoueurCommence = 0;
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
@@ -66,7 +66,9 @@ int main(){
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-        manche++;
+
+        manche++; // passage à la manche suivante
+
     }
 
     // Affichage du gagnant

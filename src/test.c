@@ -62,7 +62,7 @@ void test_initialisation_plateau() {
             }   
         }
         // Le jeu n'est pas terminé
-        CU_ASSERT_EQUAL(init_manche(plateau, liste_factions), 1) // init_manche renvoie 1 s'il est possible de commencer une manche de jeu
+        CU_ASSERT_EQUAL(init_manche(liste_factions), 1) // init_manche renvoie 1 s'il est possible de commencer une manche de jeu
 }
 
 
@@ -86,7 +86,7 @@ void test_initialisation_plateau() {
 
         // action
             // On initialise la première manche
-            init_manche(plateau, liste_factions);
+            init_manche(liste_factions);
 
         if (0 == JoueurCommence) {
             compteur_faction0++;
@@ -110,11 +110,11 @@ void test_initialisation_plateau() {
         // On initialise les factions à placer sur le plateau
     faction* liste_factions = liste_faction();
         // On initialise la première manche
-    init_manche(plateau, liste_factions);
+    init_manche(liste_factions);
 
     // action
         // On initialise la deuxième manche
-    init_manche(plateau, liste_factions);
+    init_manche(liste_factions);
   
     // test
        // TODO
@@ -142,14 +142,16 @@ void test_presence_troisieme_manche() {
 
     // action
         // On initialise une troisième manche
-        init_manche(plateau, liste_factions);
+        init_manche(liste_factions);
+        printf("initialisation manche ok \n");
 
     // test
         // Une quatrième manche ne peut pas être demarrée
-        CU_ASSERT_EQUAL(init_manche(plateau, liste_factions), 0);
+        CU_ASSERT_EQUAL(init_manche(liste_factions), 0);
         // Le plateau a été vidé : aucune case du plateau n'est occupée
-        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+                printf("i : %i , j : %i , etat : %i \n", i, j, get_case_etat(get_plateau_case(plateau, i, j)));
                 CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1); // état : -1 si la case est vide
             }   
         }
@@ -644,7 +646,7 @@ void test_vainqueur_jeu() {
             set_faction_nombre_points_DDRS(liste_factions[0], 20);
             set_faction_nombre_points_DDRS(liste_factions[1], 34);
         // On initialise une troisième manche
-        init_manche(plateau, liste_factions);
+        init_manche(liste_factions);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
         // On positionne des cartes fictives sur le plateau : dans le jeu chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
@@ -688,7 +690,7 @@ void test_demarrage_jeu() {
 
     // action
         // On initialise la première manche
-        init_manche(plateau, liste_factions);
+        init_manche(liste_factions);
 
     // test
         // TODO
@@ -786,7 +788,7 @@ int main_test() {
    }
 
    /* add the tests to the suite */
-   if ((NULL == CU_add_test(pSuite, "test_presence_troisieme_manche", test_presence_troisieme_manche)) ||
+    if ((NULL == CU_add_test(pSuite, "test_presence_troisieme_manche", test_presence_troisieme_manche)) ||
        (NULL == CU_add_test(pSuite, "test_vainqueur_manche_non_egalite", test_vainqueur_manche_non_egalite)) ||
        (NULL == CU_add_test(pSuite, "test_vainqueur_manche_egalite", test_vainqueur_manche_egalite))
       )
@@ -797,36 +799,36 @@ int main_test() {
 
 
     /* add a suite to the registry */
-   pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
+ /*  pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
 
    /* add the tests to the suite */
-   if ( (NULL == CU_add_test(pSuite, "test_pose_carte", test_pose_carte)) ||
+/*   if ( (NULL == CU_add_test(pSuite, "test_pose_carte", test_pose_carte)) ||
         (NULL == CU_add_test(pSuite, "test_placement_cartes_espace2D", test_placement_cartes_espace2D))
       )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
+*/
 
    /* add a suite to the registry */
-   pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
+/*   pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
+*/
    /* add the tests to the suite */
-   if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) )
+ /*  if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
+*/
     /* add a suite to the registry */
    pSuite = CU_add_suite("effets_suite", init_suite, clean_suite);
    if (NULL == pSuite) {

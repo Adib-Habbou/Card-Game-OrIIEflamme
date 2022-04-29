@@ -337,17 +337,17 @@ void lIIEns(plateau _plateau, int ligne, int colonne) {
 
         liste_carte[newrandom]=tempCarte;
         liste_faction[newrandom]=tempInt;
-    }
+        }
    
-    int ligne_debut = get_plateau_carte_premier(_plateau)[0];
-    int colonne_debut = get_plateau_carte_premier(_plateau)[1];
+        int ligne_debut = get_plateau_carte_premier(_plateau)[0];
+        int colonne_debut = get_plateau_carte_premier(_plateau)[1];
 
-    for (i=0; i<indice; i++) {
-        set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
-    }
-    //libération de la mémoire
-    free(liste_carte);
-    free(liste_faction);
+        for (i=0; i<indice; i++) {
+            set_plateau_case(_plateau,ligne_debut,colonne_debut,liste_carte[i],liste_faction[i],0);
+        }
+        //libération de la mémoire
+        free(liste_carte);
+        free(liste_faction);
     }
     else {
         return;
@@ -669,9 +669,12 @@ void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
             
         }
     }
-
-    int random = rand() % indice; //génère l'indice pour trouver la carte au hasard
-
+    if (indice != 0){
+        int random = rand() % indice; //génère l'indice pour trouver la carte au hasard
+    }
+    else { //aucune carte est face verso
+        return;
+    }
     int ligne_supp = liste_ligne_carte_verso[random];
     int colonne_supp = liste_colonne_carte_verso[random];
 
@@ -1257,7 +1260,7 @@ void Eric_Lejeune(plateau _plateau, int ligne, int colonne) {
         int tempInt;
     
         for (i=0;i<50;i++) {//on mélange la liste 50 fois
-            random=rand() % indice;
+            random=rand() % indice; //indice ne peut pas être nulle 
             newrandom=rand() % indice;
 
             if (random==newrandom) { //on mélange forcément

@@ -259,15 +259,9 @@ int init_manche(faction* _factions){
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
-<<<<<<< HEAD
-        //plateau tmp = _plateau;
-        _plateau = init_plateau();
-        //libere_plateau(tmp);
-=======
         /*libere_plateau(_plateau);
         plateau newplateau  = init_plateau();
         _plateau = newplateau;*/
->>>>>>> 0de245da6e5884ef233d6f4dd0e44bf2c88aba9f
     }
     return 1;
 }

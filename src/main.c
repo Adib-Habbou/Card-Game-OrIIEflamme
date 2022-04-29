@@ -11,7 +11,7 @@ int main(){
     // Affichage du plateau sur la console
     affiche_plateau(_plateau);
 
-    int manche = 0;
+    int manche = 1;
     int JoueurCommence = 0;
 
     // Initialisation d'une manche si le jeu n'est pas terminé 

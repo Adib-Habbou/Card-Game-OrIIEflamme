@@ -671,18 +671,19 @@ void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
     }
     if (indice != 0){
         int random = rand() % indice; //génère l'indice pour trouver la carte au hasard
+        int ligne_supp = liste_ligne_carte_verso[random];
+        int colonne_supp = liste_colonne_carte_verso[random];
+
+        set_case_etat(get_plateau_case(_plateau,ligne_supp,colonne_supp), -1);
+        
+        //libère la mémoire
+        free(liste_colonne_carte_verso);
+        free(liste_ligne_carte_verso);
     }
     else { //aucune carte est face verso
         return;
     }
-    int ligne_supp = liste_ligne_carte_verso[random];
-    int colonne_supp = liste_colonne_carte_verso[random];
-
-    set_case_etat(get_plateau_case(_plateau,ligne_supp,colonne_supp), -1);
     
-    //libère la mémoire
-    free(liste_colonne_carte_verso);
-    free(liste_ligne_carte_verso);
 }
 
 /*

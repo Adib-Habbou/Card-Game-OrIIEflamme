@@ -258,11 +258,13 @@ faction* liste_faction(){
         factions[i] = (faction) malloc(sizeof(faction));
         set_faction_nom(factions[i], noms[i]);
         set_faction_nombre_points_DDRS(factions[i], 0);
-        set_faction_main(factions[i], pile_vide());
+        //set_faction_main(factions[i], NULL);
         set_faction_pioche(factions[i], get_liste_carte());
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
     }
+    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[0]), get_faction_option_remelanger(factions[0]));
+    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[1]), get_faction_option_remelanger(factions[1]));
     return factions;
 }
 

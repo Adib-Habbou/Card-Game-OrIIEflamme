@@ -54,8 +54,10 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
 int* get_plateau_carte_premier(plateau plateau) {
+    // on initialise nos deux coordonnées à 0
     int ligne = 0;
     int colonne = 0;
+    // tant qu'on trouve une carte sur la case on continue de parcourir le tableau
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne < TAILLE_PLATEAU - 1) {
              colonne += 1;
@@ -65,6 +67,7 @@ int* get_plateau_carte_premier(plateau plateau) {
             ligne += 1;
         }
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne;
@@ -75,8 +78,10 @@ int* get_plateau_carte_premier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
 int* get_plateau_carte_dernier(plateau plateau) {
+    // on initialise nos deux coordonnées à 0
     int ligne = TAILLE_PLATEAU;
     int colonne = TAILLE_PLATEAU;
+    // tant qu'on trouve une carte sur la case on continue de parcourir le tableau
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne > 0) {
              colonne -= 1;
@@ -86,6 +91,7 @@ int* get_plateau_carte_dernier(plateau plateau) {
             ligne -= 1;
         }
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne;
@@ -96,14 +102,17 @@ int* get_plateau_carte_dernier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
+    // on initialise notre coordonnée de ligne avec celle passé en argument
+    // on initialise pas notre coordonnée de colonne parce qu'elle ne va pas bouger puisqu'on regarder uniquement à gauche de notre case
     int ligne_bis = ligne;
+    // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == 0) {
-            //affiche("Pas de carte à gauche");
-            exit(1);
+            exit(1); // si on ne trouve pas de carte à gauche de notre case on sort du programme
         }
         ligne_bis -= 1;
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne_bis;
     position[1] = colonne;
@@ -114,14 +123,17 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
+    // on initialise notre coordonnée de ligne avec celle passé en argument
+    // on initialise pas notre coordonnée de colonne parce qu'elle ne va pas bouger puisqu'on regarder uniquement à droite de notre case
     int ligne_bis = ligne;
+    // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == TAILLE_PLATEAU) {
-            //affiche("Pas de carte à droite");
-            exit(1);
+            exit(1); // si on ne trouve pas de carte à droite de notre case on sort du programme
         }
         ligne_bis += 1;
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne_bis;
     position[1] = colonne;
@@ -133,14 +145,17 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
+    // on initialise notre coordonnée de colonne avec celle passé en argument
+    // on initialise pas notre coordonnée de ligne parce qu'elle ne va pas bouger puisqu'on regarder uniquement en haut de notre case
     int colonne_bis = colonne;
+    // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == 0) {
-            //affiche("Pas de carte en haut");
-            exit(1);
+            exit(1); // si on ne trouve pas de carte en haut de notre case on sort du programme
         }
         colonne_bis -= 1;
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne_bis;
@@ -151,14 +166,17 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
+    // on initialise notre coordonnée de colonne avec celle passé en argument
+    // on initialise pas notre coordonnée de ligne parce qu'elle ne va pas bouger puisqu'on regarder uniquement en bas de notre case
     int colonne_bis = colonne;
+    // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == TAILLE_PLATEAU) {
-            //affiche("Pas de carte en bas");
-            exit(1);
+            exit(1); // si on ne trouve pas de carte en bas de notre case on sort du programme
         }
         colonne_bis += 1;
     }
+    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
     int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne_bis;

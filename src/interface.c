@@ -29,7 +29,7 @@ void affiche_plateau(plateau _plateau) {
                         printf("%3s",dot);
                     }
                     else{
-                        printf("%3d",card);
+                        printf("%3s",card);
                     }
                 }
             }

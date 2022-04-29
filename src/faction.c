@@ -112,9 +112,10 @@ void remelanger(faction _faction){
 
 
 void vider_main(faction _faction){
-    while(!pile_est_vide(_faction->main)){
+    /*while(!pile_est_vide(_faction->main)){
         depile(&_faction->main);
-    }
+    }*/
+    _faction->main = NULL;
 }
 
 

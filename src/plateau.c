@@ -257,8 +257,10 @@ int init_manche(faction* _factions){
         }
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
+            set_faction_nombre_points_DDRS(_factions[i], 0);
             remelanger(_factions[i]);
         }
+        
         /*libere_plateau(_plateau);
         plateau newplateau  = init_plateau();
         _plateau = newplateau;*/

@@ -16,6 +16,8 @@ int main(){
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
     while(init_manche(_plateau, _factions) != 0){
+        affiche_plateau(_plateau);
+        printf("plateau de la manche\n");
         if(manche%2 == 0){
             JoueurCommence = rand()%2;
         }else{

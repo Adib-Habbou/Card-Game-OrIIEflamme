@@ -241,9 +241,9 @@ int init_manche(plateau _plateau, faction* _factions){
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
-        plateau tmp = _plateau;
+        //plateau tmp = _plateau;
         _plateau = init_plateau();
-        libere_plateau(tmp);
+        //libere_plateau(tmp);
     }
     return 1;
 }

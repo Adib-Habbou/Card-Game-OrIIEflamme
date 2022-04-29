@@ -230,15 +230,12 @@ plateau init_plateau(){
 }
 
 void libere_plateau(plateau _plateau){
-    for(int i = 0; i < TAILLE_PLATEAU-1; i++){
-        for(int j = 0; j < TAILLE_PLATEAU-1; j++){
-            free(_plateau->tab[i][j]);
-        }
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau->tab[i]);
     }
 }
 
-int init_manche(plateau* _plateau, faction* _factions){
+int init_manche(faction* _factions){
     int winner = 0;
     int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
     for(int i = 1; i < NOMBRE_JOUEURS; i++){
@@ -250,10 +247,7 @@ int init_manche(plateau* _plateau, faction* _factions){
     if(maxddrs == 0 && winner == 0){
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
-            //remelanger(_factions[i]);
-            pile _main = pile_vide();
-            empile(&_main, get_liste_carte()[0]); //16, 21 et 28 probleme : massinissa résolu en enlevant le cas où massinissa merabet est la derniere carte retourné, attention aussi à l'ordre des conditions dans les if car sans vérifie rl'état de la case, on a des seg fault
-            set_faction_main(_factions[i], _main);
+            remelanger(_factions[i]);
         }
         return 1;
     }else{
@@ -265,8 +259,9 @@ int init_manche(plateau* _plateau, faction* _factions){
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
-        libere_plateau(*_plateau);
-        *_plateau = init_plateau();
+        /*libere_plateau(_plateau);
+        plateau newplateau  = init_plateau();
+        _plateau = newplateau;*/
     }
     return 1;
 }
@@ -279,11 +274,13 @@ faction* liste_faction(){
     char* noms[2] = {"Joueur 0", "Joueur 1"};
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         factions[i] = (faction) malloc(sizeof(faction));
+        pile main = (pile) malloc(sizeof(pile));
         set_faction_nom(factions[i], noms[i]);
         set_faction_nombre_points_DDRS(factions[i], 0);
-        set_faction_pioche(factions[i], get_liste_carte());
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
+        set_faction_main(factions[i], main);
+        set_faction_pioche(factions[i], get_liste_carte());
     }
     return factions;
 }

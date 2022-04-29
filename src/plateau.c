@@ -177,9 +177,9 @@ faction get_case_faction(Case _case) {
     @assigns    plateau
     @ensures    modifie la case du plateau */
 void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat) {
-    plateau->tab[ligne][colonne]->carte = carte;
-    plateau->tab[ligne][colonne]->id_faction = id_faction;
-    plateau->tab[ligne][colonne]->etat = etat;
+    plateau->tab[ligne][colonne]->carte = carte; // modification de la carte posé sur la case
+    plateau->tab[ligne][colonne]->id_faction = id_faction; // modification de l'id de la faction qui a posé la carte sur la case
+    plateau->tab[ligne][colonne]->etat = etat; // modification de l'état de la case
 }
 
 /*  @requires   une case valide

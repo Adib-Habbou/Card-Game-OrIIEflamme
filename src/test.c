@@ -159,14 +159,15 @@ void test_presence_troisieme_manche() {
     @ensures    renvoie 1 si _carte appartient à la main, 0 sinon
 */
         int appartient(carte _carte, pile main_faction) {
+            pile buffer_main = main_faction; // buffer pour parcourir la main sans la modifier 
             for (int i=0; i < NOMBRE_CARTES_MAIN_INITIAL; i++) {
-                carte top = pile_sommet(main_faction);
+                carte top = pile_sommet(buffer_main);
                 /* strcmp() compaire deux chaines de caractères, caractère par caractère. 
                     Si les deux chaines sont égales, la fonction renvoie 0. */
                 if ( (strcmp(get_carte_nom(top), get_carte_nom(_carte))) == 0 ) { 
                     return 1;
                 } 
-                main_faction = pile_suivant(main_faction); // pile_suivant renvoie le reste de la pile, sans le sommet 
+                buffer_main = pile_suivant(buffer_main); // pile_suivant renvoie le reste de la pile, sans le sommet 
             }
             return 0;
         }

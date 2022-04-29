@@ -31,8 +31,7 @@ void test_initialisation_faction() {
             // L'option rémélanger n'a pas encore été utilisée par la faction  
             CU_ASSERT_EQUAL(get_faction_option_remelanger(liste_factions[i]), 0);
             // La faction n'a pas encore gagné aucune manche
-            printf("manches %i \n", get_faction_manches_gagnees(liste_factions[i])); // TODO
-            // MANCHES CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[i]), 0);
+            CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[i]), 0);
     }
 }
 
@@ -565,9 +564,9 @@ void test_vainqueur_manche_non_egalite() {
 
     // test
         // La faction gagnante (ici la faction 2 car avec le plus de points DDRS) voit sa manche comptabilisée
-        // MANCHES CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[1]), 1); // ici une seule manche a été jouée
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[1]), 1); // ici une seule manche a été jouée
         // Le nombre de manches gagnées de l'autre faction ne varie pas
-        // MANCHES CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[0]), 0);
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(liste_factions[0]), 0);
 }
 
 void test_vainqueur_manche_egalite() {
@@ -603,7 +602,7 @@ void test_vainqueur_manche_egalite() {
             int* position_premier = get_plateau_carte_premier(plateau_egalite);
             Case case_premier = get_plateau_case(plateau_egalite, position_premier[0], position_premier[1]);
             faction faction_gagnante = get_case_faction(case_premier);
-        // MANCHES CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
         // Le nombre de manches gagnées de l'autre faction ne varie pas
             // Déterminons la faction perdante
             faction faction_perdante;
@@ -611,7 +610,7 @@ void test_vainqueur_manche_egalite() {
                 faction_perdante = liste_factions_egalite[1];
             }
             else { faction_perdante = liste_factions_egalite[0]; } // Si la faction gagnante est la seconde
-        // MANCHES CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_perdante), 0);
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_perdante), 0);
 }
 
 

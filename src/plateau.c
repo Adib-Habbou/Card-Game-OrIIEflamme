@@ -212,7 +212,6 @@ void libere_plateau(plateau _plateau){
     for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau->tab[i]);
     }
-    free(_plateau->tab);
 }
 
 int init_manche(plateau _plateau, faction* _factions){

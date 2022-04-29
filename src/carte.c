@@ -954,7 +954,6 @@ void Anne_Laure_Ligozat(faction _faction, plateau _plateau, int ligne, int colon
 
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
-            printf("%d\n",i);
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 && ( (strcmp( get_plateau_carte_nom(_plateau,i,j), "EcologIIE") == 0) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Ecocup") == 0) || (strcmp(get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0 ) || (strcmp( get_plateau_carte_nom(_plateau,i,j), "Isolation du bâtiment") == 0) ) ) {
                 nb_carte_retournee+=1; 
             }
@@ -1225,16 +1224,22 @@ void Eric_Lejeune(plateau _plateau, int ligne, int colonne) {
     int newrandom;
 
     for (i=0;i<5;i++) {//on prend 5 cartes au hasard
-        random=rand() % indice;
-        while (liste_carte[random]->nom==NULL) {
-            random = rand() % indice;
+        if (indice == 0 ) {
+            return;
         }
-        liste_carte_5[i]=liste_carte[random];
-        liste_faction_5[i]=liste_faction[random];
-        memo_indice[i]=random;
+        else {
+            random=rand() % indice;
+            while (liste_carte[random]->nom==NULL) {
+                random = rand() % indice;
+            }
+            liste_carte_5[i]=liste_carte[random];
+            liste_faction_5[i]=liste_faction[random];
+            memo_indice[i]=random;
 
-        liste_carte[random]->nombre_occurrences = -1;
-        liste_faction[random] = -1;
+            liste_carte[random]->nombre_occurrences = -1;
+            liste_faction[random] = -1;
+        }
+        
     }
 
     int drapeau_spe = 0 ; //on va vérifier si une des cartes mentionnées est présente

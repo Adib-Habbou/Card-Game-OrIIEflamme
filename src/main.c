@@ -15,7 +15,8 @@ int main(){
     int JoueurCommence = 0;
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_plateau, _factions) != 0){
+    while(init_manche(&_plateau, _factions) != 0){
+        
         if(manche%2 == 0){
             JoueurCommence = rand()%2;
         }else{

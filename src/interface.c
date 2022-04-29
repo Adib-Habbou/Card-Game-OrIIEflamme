@@ -29,7 +29,7 @@ void affiche_plateau(plateau _plateau) {
                         printf("%3s",dot);
                     }
                     else{
-                        printf("%3s",card);
+                        printf("%3d",get_case_etat(get_plateau_case(_plateau,i,j)));
                     }
                 }
             }

@@ -209,12 +209,16 @@ plateau init_plateau(){
 }
 
 void libere_plateau(plateau _plateau){
-    for(int i = 0; i < TAILLE_PLATEAU; i++){
+    for(int i = 0; i < TAILLE_PLATEAU-1; i++){
+        //free(_plateau->tab[i]);
+        for(int j = 0; j < TAILLE_PLATEAU-1; j++){
+            free(_plateau->tab[i][j]);
+        }
         free(_plateau->tab[i]);
     }
 }
 
-int init_manche(plateau _plateau, faction* _factions){
+int init_manche(plateau* _plateau, faction* _factions){
     int winner = 0;
     int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
     for(int i = 1; i < NOMBRE_JOUEURS; i++){
@@ -241,9 +245,8 @@ int init_manche(plateau _plateau, faction* _factions){
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
             remelanger(_factions[i]);
         }
-        plateau tmp = _plateau;
-        _plateau = init_plateau();
-        libere_plateau(tmp);
+        libere_plateau(*_plateau);
+        *_plateau = init_plateau();
     }
     return 1;
 }

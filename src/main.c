@@ -16,7 +16,7 @@ int main(){
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
     while(init_manche(&_plateau, _factions) != 0){
-        
+
         if(manche%2 == 0){
             JoueurCommence = rand()%2;
         }else{
@@ -60,7 +60,6 @@ int main(){
         // Retourne la carte la plus haute à gauche si elle existe et affiche son effet
         while(1){
             carte _carte = retourner(_plateau, _factions);
-            printf("retourner fini\n");
             if(_carte == NULL)
                 break;
             afficher_effet(_carte);

@@ -231,7 +231,6 @@ plateau init_plateau(){
 
 void libere_plateau(plateau _plateau){
     for(int i = 0; i < TAILLE_PLATEAU-1; i++){
-        //free(_plateau->tab[i]);
         for(int j = 0; j < TAILLE_PLATEAU-1; j++){
             free(_plateau->tab[i][j]);
         }
@@ -282,13 +281,10 @@ faction* liste_faction(){
         factions[i] = (faction) malloc(sizeof(faction));
         set_faction_nom(factions[i], noms[i]);
         set_faction_nombre_points_DDRS(factions[i], 0);
-        //set_faction_main(factions[i], NULL);
         set_faction_pioche(factions[i], get_liste_carte());
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
     }
-    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[0]), get_faction_option_remelanger(factions[0]));
-    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[1]), get_faction_option_remelanger(factions[1]));
     return factions;
 }
 
@@ -308,7 +304,6 @@ carte retourner(plateau _plateau, faction* _factions){
                     _case = _plateau->tab[ligne][colonne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }
@@ -316,13 +311,11 @@ carte retourner(plateau _plateau, faction* _factions){
                     _case = _plateau->tab[colonne][ligne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        //printf("carte\n");
                         goto cartetrouve;
                     }
                         
                 }
             }else{
-                //printf("lig : %i et col : %i\n", ligne, colonne);
                 if(_plateau->tab[colonne][colonne]->etat == 0){
                     _case = _plateau->tab[colonne][colonne];
                     set_case_etat(_case, 1);

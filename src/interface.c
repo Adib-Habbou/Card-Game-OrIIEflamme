@@ -146,6 +146,7 @@ int* carte_positon(plateau _plateau,int _factionid) {
     int i,j;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
+         
             if (get_case_carte(get_plateau_case(_plateau,i,j)) != NULL ) {
                 drapeau_plateau_vide=0;  
             }

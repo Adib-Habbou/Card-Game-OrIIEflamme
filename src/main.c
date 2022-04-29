@@ -43,12 +43,13 @@ int main(){
             affiche_main(_factions[i%2],i%2);
             // Retourne la carte choisi par la faction
             carte _carte = carte_choisie(_factions[i%2]);
+           
             // Retourne la position sur le plateau où la faction décide de poser la carte
             int* _position = carte_positon(_plateau,i%2); 
 
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
-
+            printf("Où somme nous?\n");
             affiche_plateau(_plateau);
             
         }

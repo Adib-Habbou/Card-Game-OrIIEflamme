@@ -72,26 +72,38 @@ void test_initialisation_plateau() {
 /* Vérifie l'ordre aléatoire des factions à la première manche :
         une faction au hasard est désignée "Première faction"
 */
-void test_ordre_aleatoire_factions_premiere_manche() {
-    // arrange
-        // On initialise le plateau de jeu
-    plateau plateau = init_plateau();
-        // On initialise les factions à placer sur le plateau
-    faction* liste_factions = liste_faction();
+/* void test_ordre_aleatoire_factions_premiere_manche() {
+    // Nous allons simuler 100 premières manches et compter le nombre d'apparitions des factions en tant que premier joueur
+    int compteur_faction0 = 0;
+    int compteur_faction1 = 0;
 
-    // action
-        // On initialise la première manche
-        init_manche(plateau, liste_factions);
+    for (int i=0; i<100; i++) {
+        // arrange
+            // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+            // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+
+        // action
+            // On initialise la première manche
+            init_manche(plateau, liste_factions);
+
+        if (0 == JoueurCommence) {
+            compteur_faction0++;
+        }
+        else {compteur_faction1++}
+
+    }
   
     // test
        // TODO
-}
-
+} 
+*/
 
 /* Vérifie l'ordre déterministe des factions à la deuxième manche :
     - la "Deuxième faction" lors de la première manche est désignée "Première faction"
 */
-void test_ordre_deterministe_factions_deuxieme_manche() {
+/* void test_ordre_deterministe_factions_deuxieme_manche() {
     // arrange
         // On initialise le plateau de jeu
     plateau plateau = init_plateau();
@@ -108,6 +120,7 @@ void test_ordre_deterministe_factions_deuxieme_manche() {
        // TODO
 }
 
+*/
 
 
 /* Vérifie la présence ou non d'une troisième manche :
@@ -749,22 +762,22 @@ int main_test() {
       return CU_get_error();
    }
 
-  /* add a suite to the registry */
-   pSuite = CU_add_suite("ordre_factions_suite", init_suite, clean_suite);
+   /* add a suite to the registry */
+/*  pSuite = CU_add_suite("ordre_factions_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
+*/
    /* add the tests to the suite */
-   if ((NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
+/*   if ((NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
        (NULL == CU_add_test(pSuite, "test_ordre_deterministe_factions_deuxieme_manche", test_ordre_deterministe_factions_deuxieme_manche))
       )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
+*/
     /* add a suite to the registry */
    pSuite = CU_add_suite("manches_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
@@ -866,7 +879,7 @@ int main_test() {
       return CU_get_error();
    }
 
-     /* Run all tests using the basic interface */
+    /* Run all tests using the basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
    printf("\n");

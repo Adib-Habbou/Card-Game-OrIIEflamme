@@ -263,8 +263,6 @@ faction* liste_faction(){
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
     }
-    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[0]), get_faction_option_remelanger(factions[0]));
-    printf("manche %i et option %i\n", get_faction_manches_gagnees(factions[1]), get_faction_option_remelanger(factions[1]));
     return factions;
 }
 

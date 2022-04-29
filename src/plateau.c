@@ -263,6 +263,7 @@ faction* liste_faction(){
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
     }
+    printf("manches %i \n", get_faction_manches_gagnees(factions[0]));
     return factions;
 }
 

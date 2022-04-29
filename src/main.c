@@ -40,7 +40,6 @@ int main(){
         // Phase 1 :
         
         for(int i = JoueurCommence; i < NOMBRE_CARTES_MAIN_INITIAL*NOMBRE_JOUEURS+JoueurCommence; i++){
-            printf("oklm\n");
             // Affiche la main d'une faction tour par tour
             affiche_main(_factions[i%2],i%2);
             // Retourne la carte choisi par la faction

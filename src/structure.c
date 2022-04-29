@@ -43,7 +43,7 @@ void empile(pile *_pile, carte carte) {
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
     if (res == NULL) {
-        exit(1);
+        exit(1); // si la mémoire n'a pas été allouée correctement on sort du programme
     }
     // on empile la carte
     res->sommet = carte;
@@ -57,7 +57,7 @@ void empile(pile *_pile, carte carte) {
 void depile(pile *pile) {
     // on vérifie que la pile n'est pas vide
     if (pile_est_vide(*pile)) {
-        exit(1);
+        exit(1); // si la pile est vide on sort du programme
     }
     // on supprime le sommet de la pile
     *pile = pile_suivant(*pile);
@@ -69,10 +69,10 @@ void depile(pile *pile) {
 int taille_pile(pile pile) {
     // on initialise la variable taille à 0 (taille si la pile est vide)
     int taille = 0;
-    // tant que la pile n'est pas vide on incrémente la taille
+    // tant que la pile n'est pas vide
     while(!pile_est_vide(pile)) {
-        taille += 1;
-        pile = pile_suivant(pile);
+        taille += 1; // on incrémente la taille de 1
+        pile = pile_suivant(pile); // on passe au maillon suivant de la pile
     }
     // on renvoie la taille
     return taille;

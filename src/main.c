@@ -11,7 +11,7 @@ int main(){
     // Affichage du plateau sur la console
     affiche_plateau(_plateau);
 
-    int manche = 0;
+    int manche = 1;
     int JoueurCommence = 0;
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
@@ -49,7 +49,7 @@ int main(){
 
             //Pose la carte sur le plateau
             poser(_plateau, _carte, _position);
-            printf("Où somme nous?\n");
+
             affiche_plateau(_plateau);
             
         }
@@ -66,9 +66,8 @@ int main(){
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-
-        manche++; // passage à la manche suivante
-
+        manche++;
+    
     }
 
     // Affichage du gagnant

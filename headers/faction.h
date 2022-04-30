@@ -58,7 +58,7 @@ void repiocher(faction fact);
 // CONSTANTES ET VARIABLES GLOBALES
 
 /* nombre de cartes dans la main d'une faction au début d'une manche */
-#define NOMBRE_CARTES_MAIN_INITIAL 1
+#define NOMBRE_CARTES_MAIN_INITIAL 2
 
 /* nombre de cartes pour une pioche */
 #define NOMBRE_CARTES_BOITE_A_IDEES_INITIAL 47

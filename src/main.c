@@ -73,14 +73,9 @@ int main(){
         libere_plateau(_plateau);
     }
 
-<<<<<<< HEAD
     // Affichage du gagnant
     gagnant(_factions,_plateau);
 */
     main_test();
-=======
-
-
->>>>>>> lot_b
     return 0;
 }

@@ -76,7 +76,7 @@ int taille_pile(pile pile) {
     // tant que la pile n'est pas vide
     while(!pile_est_vide(tmp)) {
         taille += 1; // on incrémente la taille de 1
-        tmp = pile_suivant(tmp); // on passe au maillon suivant de la pile
+        tmp = tmp->suivant; // on passe au maillon suivant de la pile
     }
     // on renvoie la taille
     return taille;

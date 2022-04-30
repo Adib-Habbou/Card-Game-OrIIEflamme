@@ -13,7 +13,7 @@ int main(){
     srand(time(NULL));
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_factions) != 0){
+    while(init_manche(_plateau, _factions) != 0){
 
         _plateau = init_plateau();
 
@@ -65,13 +65,15 @@ int main(){
             afficher_effet(_carte);
             affiche_plateau(_plateau);
         }
-
+        
+        // Affichage du gagnant
+        gagnant(_factions,_plateau);
         manche++; // passage à la manche suivante
+        
         libere_plateau(_plateau);
     }
 
-    // Affichage du gagnant
-    gagnant(_factions,_plateau);
+
 
     return 0;
 }

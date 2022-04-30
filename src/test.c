@@ -201,7 +201,7 @@ void test_option_repiocher() {
     
     // test
         // La faction a bien repioché 8 cartes
-        // CU_ASSERT_EQUAL(taille_pile(get_faction_main(faction)), NOMBRE_CARTES_MAIN_INITIAL); 
+        CU_ASSERT_EQUAL(taille_pile(get_faction_main(faction)), NOMBRE_CARTES_MAIN_INITIAL); 
         // La nouvelle main est différente de l'ancienne
         pile nouvelle_main = get_faction_main(faction);
         int nombre_cartes_egales = 0; // compteur du nombre de cartes de l'ancienne main présentes dans la nouvelle
@@ -231,7 +231,7 @@ void test_pose_carte() {
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
         // On retient le nombre initial de cartes dans la main
-        // int nombre_cartes_main_initial = taille_pile(*get_faction_main(faction));
+        int nombre_cartes_main_initial = taille_pile(get_faction_main(faction));
 
     // action
         // On choisit, arbitrairement, de poser la carte FISE
@@ -251,8 +251,10 @@ void test_pose_carte() {
         int id_faction_posant = get_case_id_faction(case_carte_posee);
         CU_ASSERT_EQUAL(id_faction_posant, id_faction_posant_attendu);
         // La main de la faction compte une carte de moins 
-        // int nombre_cartes_main_actuel = taille_pile(get_faction_main(faction));
-        // CU_ASSERT_EQUAL(nombre_cartes_main_actuel, nombre_cartes_main_initial-1);
+        printf("taglia prima\n");
+        int nombre_cartes_main_actuel = taille_pile(get_faction_main(faction));
+        CU_ASSERT_EQUAL(nombre_cartes_main_actuel, nombre_cartes_main_initial-1);
+        printf("taglia\n");
         // La carte n'appartient plus à la main de la faction 
         affiche_main(get_faction_main(faction), 0);
         printf("mano ok \n");

@@ -69,15 +69,12 @@ void depile(pile *pile) {
 int taille_pile(pile pile) {
     // on initialise la variable taille à 0 (taille si la pile est vide)
     int taille = 0;
-    // on initialise une varaible tmp qui va parcourir la pile
-    struct maillon *tmp;
-    // on fixe tmp au premier maillon de la pile
-    tmp = pile;
     // tant que la pile n'est pas vide
-    while(!pile_est_vide(tmp)) {
+    while(!pile_est_vide(pile)) {
         taille += 1; // on incrémente la taille de 1
-        tmp = tmp->suivant; // on passe au maillon suivant de la pile
+        pile = pile_suivant(pile); // on passe au maillon suivant de la pile
     }
     // on renvoie la taille
     return taille;
 }
+

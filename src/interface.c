@@ -219,6 +219,7 @@ void gagnant(faction* factions,plateau _plateau) {
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
     }
     else {
+        
         int *liste =  get_plateau_carte_premier(_plateau);
         int ligne = liste[0];
         int colonne = liste[1];

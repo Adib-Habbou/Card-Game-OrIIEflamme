@@ -68,8 +68,8 @@ void depile(pile *pile) {
     @ensures renvoie la taille de la pile */
 int taille_pile(pile *pile) {
     // on initialise la variable taille à 0 (taille si la pile est vide)
-    /*
     int taille = 0;
+    /*
     buf = malloc(8*sizeof(carte));
     buf = *pile;
     while (!pile_est_vide(buf)) {

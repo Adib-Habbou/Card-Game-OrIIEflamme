@@ -226,21 +226,26 @@ void test_pose_carte() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions = liste_faction();
         faction faction = liste_factions[0];
-        int nombre_cartes_main_initial = taille_pile(get_faction_main(faction));
+    printf("arrange fac");
 
+        int nombre_cartes_main_initial = taille_pile(*get_faction_main(faction));
+    printf("arrange");
     // action
         carte carte_a_poser = carte_choisie(faction);
+        printf("choix");
         // On se positionne tout en bas à droite du plateau, case très probablement vide
         set_plateau_case(plateau, TAILLE_PLATEAU-1, TAILLE_PLATEAU-1, carte_a_poser, 0, 0); // état : 0 si la carte est face cachée
-
+        printf("setting");
         Case case_carte_posee = get_plateau_case(plateau, TAILLE_PLATEAU-1, TAILLE_PLATEAU-1);
 
     // test
         // La case choisie est maintenant occupée et la carte est face cachée
         CU_ASSERT_EQUAL(get_case_etat(case_carte_posee), 0); // Etat d'une case : 0 si la carte est face cachée
+        printf("etat %i", get_case_etat(case_carte_posee));
         // La bonne carte est sur la case
         char* nom_carte_posee = get_plateau_carte_nom(plateau,TAILLE_PLATEAU-1, TAILLE_PLATEAU-1);
         CU_ASSERT_EQUAL(strcmp(nom_carte_posee, get_carte_nom(carte_a_poser)), 0);
+        printf("nom carte posee %s", nom_carte_posee);
         // La pose est attribuée à la bonne faction
         CU_ASSERT_EQUAL(strcmp(get_faction_nom(get_case_faction(case_carte_posee)), get_faction_nom(faction)), 0);
         // La main de la faction compte une carte de moins 
@@ -604,8 +609,8 @@ void test_vainqueur_manche_egalite() {
         set_plateau_case(plateau_egalite, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
         set_plateau_case(plateau_egalite, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
         set_plateau_case(plateau_egalite, 2, 4, liste_cartes[23], 0, 1); // Christophe Mouilleron en position (2, 4) : en bas de Ecocup
-    // Retenons la position de la carte qui est la plus en haut à gauche du plateau
-            int* position_premier = get_plateau_carte_premier(plateau_egalite);
+        // Retenons la position de la carte qui est la plus en haut à gauche du plateau
+        int* position_premier = get_plateau_carte_premier(plateau_egalite);
 
     // action
         // On termine la manche : toutes les cartes sont retournées
@@ -629,12 +634,12 @@ void test_vainqueur_manche_egalite() {
             printf("manche gagnees fac %p : %i \n", liste_factions_egalite[0], get_faction_manches_gagnees(liste_factions_egalite[0]));
             printf("manche gagnees fac %p : %i \n", liste_factions_egalite[1], get_faction_manches_gagnees(liste_factions_egalite[1]));
 
-        CU_ASSERT_EQUAL(get_faction_manches_gagnees(id_faction_gagnante), 1); // ici une seule manche a été jouée
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
         printf("equal manches gagnees\n");
         // Le nombre de manches gagnées de l'autre faction ne varie pas
             // Déterminons la faction perdante
             faction faction_perdante;
-            if (0 == strcmp( get_faction_nom(liste_factions_egalite[id_faction_gagnante]), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
+            if (0 == strcmp( get_faction_nom(faction_gagnante), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
                 faction_perdante = liste_factions_egalite[1];
                 printf("if");
             }
@@ -815,36 +820,36 @@ int main_test() {
 
 
     /* add a suite to the registry */
- /*  pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
+   pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
 
    /* add the tests to the suite */
-/*   if ( (NULL == CU_add_test(pSuite, "test_pose_carte", test_pose_carte)) ||
+   if ( (NULL == CU_add_test(pSuite, "test_pose_carte", test_pose_carte)) ||
         (NULL == CU_add_test(pSuite, "test_placement_cartes_espace2D", test_placement_cartes_espace2D))
       )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-*/
+
 
    /* add a suite to the registry */
-/*   pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
+   pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
-*/
+
    /* add the tests to the suite */
- /*  if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) )
+   if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-*/
+
     /* add a suite to the registry */
    pSuite = CU_add_suite("effets_suite", init_suite, clean_suite);
    if (NULL == pSuite) {

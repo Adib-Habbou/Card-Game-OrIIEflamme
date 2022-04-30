@@ -13,7 +13,7 @@ int main(){
     srand(time(NULL));
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_plateau, _factions) != 0){
+    while(init_manche(_factions) != 0){
 
         _plateau = init_plateau();
 

@@ -43,6 +43,6 @@ void depile(pile *pile);
 /*  @requires une pile valide
     @assigns rien
     @ensures renvoie la taille de la pile */
-int taille_pile(pile pile);
+int taille_pile(pile *pile);
 
 #endif

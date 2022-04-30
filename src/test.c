@@ -143,13 +143,8 @@ void test_presence_troisieme_manche() {
     // action
         // On initialise une troisième manche
         init_manche(liste_factions);
-        printf("initialisation manche ok \n");
 
     // test
-        // Une quatrième manche ne peut pas être demarrée
-        printf("%i\n", get_faction_nombre_points_DDRS(liste_factions[0]));
-        CU_ASSERT_EQUAL(init_manche(liste_factions), 0);
-        printf("%i\n", get_faction_nombre_points_DDRS(liste_factions[0]));
         // Le plateau a été vidé : aucune case du plateau n'est occupée
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
@@ -160,6 +155,11 @@ void test_presence_troisieme_manche() {
         // Au début de chaque manche, les deux factions ont 0 points DDRS
         CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(liste_factions[0]), NOMBRE_POINTS_DDRS_INITIAL);
         CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(liste_factions[1]), NOMBRE_POINTS_DDRS_INITIAL);
+        // Une quatrième manche ne peut pas être demarrée
+            // On joue virtuellement la troisième manche : chacune des deux factions possède un nombre strictement supérieur à zero de points DDRS
+            set_faction_nombre_points_DDRS(liste_factions[0], 20);
+            set_faction_nombre_points_DDRS(liste_factions[1], 34);
+        CU_ASSERT_EQUAL(init_manche(liste_factions), 0);
 }
 
 
@@ -557,6 +557,7 @@ void test_vainqueur_manche_non_egalite() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions = liste_faction();
         // On "joue" artificiellement une manche : on se positionne en cas de non égalité
+        init_manche(liste_factions);
         set_faction_nombre_points_DDRS(liste_factions[0], 20);
         set_faction_nombre_points_DDRS(liste_factions[1], 34);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
@@ -569,12 +570,14 @@ void test_vainqueur_manche_non_egalite() {
 
     // action
         // On termine la manche : toutes les cartes sont retournées
-        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
                 Case _case = get_plateau_case(plateau, i, j);
                 set_case_etat(_case, 1); // état : 1 si la carte est face visible
             }   
         }
+
+        init_manche(liste_factions);
 
     // test
         // La faction gagnante (ici la faction 2 car avec le plus de points DDRS) voit sa manche comptabilisée
@@ -591,6 +594,7 @@ void test_vainqueur_manche_egalite() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions_egalite = liste_faction();
         // On "joue" artificiellement la manche : on se positionne  cette fois-ci en cas d'égalité
+        init_manche(liste_factions_egalite);
         set_faction_nombre_points_DDRS(liste_factions_egalite[0], 20);
         set_faction_nombre_points_DDRS(liste_factions_egalite[1], 20);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
@@ -600,30 +604,43 @@ void test_vainqueur_manche_egalite() {
         set_plateau_case(plateau_egalite, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
         set_plateau_case(plateau_egalite, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
         set_plateau_case(plateau_egalite, 2, 4, liste_cartes[23], 0, 1); // Christophe Mouilleron en position (2, 4) : en bas de Ecocup
+    // Retenons la position de la carte qui est la plus en haut à gauche du plateau
+            int* position_premier = get_plateau_carte_premier(plateau_egalite);
 
     // action
         // On termine la manche : toutes les cartes sont retournées
-        for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
-            for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
                 Case _case = get_plateau_case(plateau_egalite, i, j);
                 set_case_etat(_case, 1); // état : 1 si la carte est face visible
             }   
         }
 
+        init_manche(liste_factions_egalite);
+
     // test
         // La faction gagnante voit sa manche comptabilisée
             // Déterminons la faction gagnante, c'est à dire celle qui a posé la carte qui est la plus en haut à gauche du plateau à l'issue de la manche
-            int* position_premier = get_plateau_carte_premier(plateau_egalite);
             Case case_premier = get_plateau_case(plateau_egalite, position_premier[0], position_premier[1]);
-            faction faction_gagnante = get_case_faction(case_premier);
-        CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
+            int id_faction_gagnante = get_case_id_faction(case_premier);
+            faction faction_gagnante = liste_factions_egalite[id_faction_gagnante];
+            printf("fac_gagn : %p \n", faction_gagnante); 
+        
+            printf("manche gagnees fac %p : %i \n", liste_factions_egalite[0], get_faction_manches_gagnees(liste_factions_egalite[0]));
+            printf("manche gagnees fac %p : %i \n", liste_factions_egalite[1], get_faction_manches_gagnees(liste_factions_egalite[1]));
+
+        CU_ASSERT_EQUAL(get_faction_manches_gagnees(id_faction_gagnante), 1); // ici une seule manche a été jouée
+        printf("equal manches gagnees\n");
         // Le nombre de manches gagnées de l'autre faction ne varie pas
             // Déterminons la faction perdante
             faction faction_perdante;
-            if (0 == strcmp( get_faction_nom(faction_gagnante), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
+            if (0 == strcmp( get_faction_nom(liste_factions_egalite[id_faction_gagnante]), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
                 faction_perdante = liste_factions_egalite[1];
+                printf("if");
             }
-            else { faction_perdante = liste_factions_egalite[0]; } // Si la faction gagnante est la seconde
+            else { faction_perdante = liste_factions_egalite[0]; 
+                printf("else");
+            } // Si la faction gagnante est la seconde
         CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_perdante), 0);
 }
 

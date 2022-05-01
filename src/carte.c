@@ -714,7 +714,7 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
     }
     else { // si il n'y a qu'une seule ligne
         for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-        if (get_plateau_case(_plateau,ligne_debut,colonne) != NULL){
+        if (get_case_etat(get_plateau_case(_plateau,ligne_debut,colonne)) != -1){
             set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
             compteur_carte_supp++;
         }

@@ -82,15 +82,19 @@ void affiche_main(faction _faction,int factionid) {
 */
 int decision() {
     int decision;
-    printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
-    scanf("%d",&decision);
 
-    //vérification de la cohérence de la réponse de l'utilisateur
-    while ((decision!=1) && (decision!=0)) {
-        printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
+    debut_demande :
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         scanf("%d",&decision);
-    }
+
+        //vérification de la cohérence de la réponse de l'utilisateur    
+        if (decision != 1 || decision != 0){
+        printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
+
+        goto debut_demande;
+        }
+
+        
     return decision;
   
 } 

@@ -349,9 +349,6 @@ void lIIEns(plateau _plateau, int ligne, int colonne) {
         free(liste_carte);
         free(liste_faction);
     }
-    else {
-        return;
-    }
 
 }
 
@@ -700,13 +697,14 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  
+
     int modulo = abs(ligne_fin-ligne_debut);
 
     if (modulo != 0) {
         int random_ligne = ligne_debut + rand() % modulo;
         
         for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-            if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
+            if (get_case_etat(get_plateau_case(_plateau,random_ligne,colonne)) != -1){
                 set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
                 compteur_carte_supp++;
             }
@@ -714,18 +712,13 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
     }
     else { // si il n'y a qu'une seule ligne
         for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-        if (get_plateau_case(_plateau,ligne_debut,colonne) != NULL){
-            set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
-            compteur_carte_supp++;
+            if (get_case_etat(get_plateau_case(_plateau,ligne_debut,colonne)) != -1){
+                set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
+                compteur_carte_supp++;
+            }
         }
     }
-    }
     
-
-    
-
-
-
     set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+2*compteur_carte_supp);
     
 }
@@ -1339,7 +1332,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
     int i;
 
    
-    while (drapeau_FISA == 0) {
+
 
 //parcours de la ligne
     for (i=0;i<TAILLE_PLATEAU;i++) {
@@ -1349,6 +1342,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
             }
         }
     }
+
 //parcours de la colonne
     for (i=0;i<TAILLE_PLATEAU;i++) {
         if ( get_case_etat(get_plateau_case(_plateau,ligne,i)) == 1 ){
@@ -1357,7 +1351,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
             }
         }
     }
-    }
+
 
     if (drapeau_FISA) {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+5);

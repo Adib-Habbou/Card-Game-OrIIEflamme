@@ -97,6 +97,7 @@ void set_faction_manches_gagnees(faction _faction, int manches_gagnees) {
 
 int test_remelanger(faction _faction){
     if(_faction->option_remelanger == 0){
+        // modifie la valeur de option remelanger pour ne plus pouvoir remelanger
         _faction->option_remelanger = 1;
         return 1;
     }else{
@@ -112,9 +113,6 @@ void remelanger(faction _faction){
 
 
 void vider_main(faction _faction){
-    /*while(!pile_est_vide(_faction->main)){
-        depile(&_faction->main);
-    }*/
     _faction->main = NULL;
 }
 
@@ -125,23 +123,31 @@ void melanger_pioche(faction _faction){
 
 
 void repiocher(faction _faction){
+    // on crée une liste qui contient tous les indices possible de la pioche (avec un nombre d'occurence non null)
     int* liste_index = (int*) malloc(NOMBRE_TYPES_CARTES*sizeof(int));
     int size_liste_index = NOMBRE_TYPES_CARTES;
+    // au début tous les indices sont possible 
     for(int i = 0; i < NOMBRE_TYPES_CARTES; i++){
         liste_index[i] = i;
     }
+    // boucle pour chaque carte
     for(int i = 0; i < NOMBRE_CARTES_MAIN_INITIAL; i++){
+        // choisi un indice aléatoire dans la liste 
         int index = liste_index[rand()%size_liste_index];
+        // par sécurité si le nombre d'occurence est égale à zéro on recommence (normalement cas impossible)
         if(get_carte_nombre_occurrences(_faction->pioche[index]) <= 0){
             i--;
         }else{
+            // retire l'indice de la liste si le nombre d'occurence est égale à un
             if(get_carte_nombre_occurrences(_faction->pioche[index]) == 1){
                 liste_index[index] = liste_index[size_liste_index-1];
                 size_liste_index--;
                 if(size_liste_index < 0)
                     break;
             }
+            // ajoute la carte à la main
             empile(&_faction->main, _faction->pioche[index]);
+            // retire un nombre d'occurence à la pioche pour cette carte
             set_carte_nombre_occurrences(_faction->pioche[index], get_carte_nombre_occurrences(_faction->pioche[index])-1);
         }
     }

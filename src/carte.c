@@ -925,26 +925,34 @@ void Fetia_Bannour(faction _faction, plateau _plateau, int ligne, int colonne) {
 @ensures Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte
 */
 void Catherine_Dubois(plateau _plateau, int ligne, int colonne) {
+
     derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     
 //carte la plus à gauche
     int ligneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[0];
     int colonneg = get_plateau_carte_gauche(_plateau,ligne,colonne)[1];
-    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
 //carte la plus à droite
     int ligned = get_plateau_carte_droite(_plateau,ligne,colonne)[0];
     int colonned = get_plateau_carte_droite(_plateau,ligne,colonne)[1];
-    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
 //carte la plus en haut
     int ligneh = get_plateau_carte_haut(_plateau,ligne,colonne)[0];
     int colonneh = get_plateau_carte_haut(_plateau,ligne,colonne)[1];
-    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
 //carte la plus en bas
     int ligneb = get_plateau_carte_bas(_plateau,ligne,colonne)[0];
     int colonneb = get_plateau_carte_bas(_plateau,ligne,colonne)[1];
+
+    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+
+
+    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+
+
+    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+
+
     set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
     set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
     

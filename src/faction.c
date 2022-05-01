@@ -132,7 +132,7 @@ void repiocher(faction _faction){
     }
     for(int i = 0; i < NOMBRE_CARTES_MAIN_INITIAL; i++){
         int index = liste_index[rand()%size_liste_index];
-        if(get_carte_nombre_occurrences(_faction->pioche[index]) == 0){
+        if(get_carte_nombre_occurrences(_faction->pioche[index]) <= 0){
             i--;
         }else{
             if(get_carte_nombre_occurrences(_faction->pioche[index]) == 1){

@@ -941,21 +941,25 @@ void Catherine_Dubois(plateau _plateau, int ligne, int colonne) {
     int ligneb = get_plateau_carte_bas(_plateau,ligne,colonne)[0];
     int colonneb = get_plateau_carte_bas(_plateau,ligne,colonne)[1];
 
-    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+    if (ligneg != -1 && colonneg!=1){// car les getters renvoient -1 si ils ne trouvent rien
+        set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+        set_case_etat( get_plateau_case(_plateau,ligneg,colonneg) , -1 );
+    } 
 
+    if (ligned != -1 && colonned!=1){    
+        set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+        set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+    }
 
-    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligned,colonned) , -1 );
+    if (ligneh != -1 && colonneh!=1){
+        set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+        set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
+    }
 
-
-    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligneh,colonneh) , -1 );
-
-
-    set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
-    set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
-    
+    if (ligneb != -1 && colonneb!=1){
+        set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
+        set_case_etat( get_plateau_case(_plateau,ligneb,colonneb) , -1 );
+    }
 }
 
 /*

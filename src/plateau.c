@@ -108,7 +108,10 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == 0) {
-            exit(1); // si on ne trouve pas de carte à gauche de notre case on sort du programme
+            int* position = (int*) malloc(2*sizeof(int));
+            position[0] = -1;
+            position[1] = -1;
+            return position; // si on ne trouve pas de carte à gauche de notre case on sort du programme
         }
         ligne_bis -= 1;
     }
@@ -129,7 +132,10 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (ligne_bis == TAILLE_PLATEAU) {
-            exit(1); // si on ne trouve pas de carte à droite de notre case on sort du programme
+            int* position = (int*) malloc(2*sizeof(int));
+            position[0] = -1;
+            position[1] = -1;
+            return position;// si on ne trouve pas de carte à droite de notre case on sort du programme
         }
         ligne_bis += 1;
     }
@@ -151,7 +157,10 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == 0) {
-            exit(1); // si on ne trouve pas de carte en haut de notre case on sort du programme
+            int* position = (int*) malloc(2*sizeof(int));
+            position[0] = -1;
+            position[1] = -1;
+            return position; // si on ne trouve pas de carte en haut de notre case on sort du programme
         }
         colonne_bis -= 1;
     }
@@ -172,7 +181,10 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne_bis == TAILLE_PLATEAU) {
-            exit(1); // si on ne trouve pas de carte en bas de notre case on sort du programme
+            int* position = (int*) malloc(2*sizeof(int));
+            position[0] = -1;
+            position[1] = -1;
+            return position; // si on ne trouve pas de carte en bas de notre case on sort du programme
         }
         colonne_bis += 1;
     }

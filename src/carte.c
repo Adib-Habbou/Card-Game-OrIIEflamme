@@ -627,7 +627,7 @@ void Parcours_sobriete_numerique(plateau _plateau, int lignec, int colonnec) {
 void Heures_supplementaires(faction _faction_oppose, plateau _plateau, int ligne, int colonne) {
     derniere_carte_retournee=get_case_carte(get_plateau_case(_plateau,ligne,colonne));
     int i,j;
-    int nb_carte_heures_supp;
+    int nb_carte_heures_supp = 0;
     for (i=0;i<TAILLE_PLATEAU;i++) {  //plateau de taille TAILLE_PLATEAU
         for (j=0;j<TAILLE_PLATEAU;j++) {  
             if (get_case_etat(get_plateau_case(_plateau,i,j)) == 1 &&  (strcmp( get_plateau_carte_nom(_plateau,i,j), "Heures supplémentaires") == 0) ) {

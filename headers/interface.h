@@ -22,6 +22,12 @@ void affiche_plateau(plateau p);
 /* 
 @requires rien
 @assigns rien
+@ensures Affiche le numéro de la manche
+*/
+void affiche_manche(int manche);
+/* 
+@requires rien
+@assigns rien
 @ensures Affiche la main actuel de la faction
 */
 void affiche_main(faction f,int factionid);

@@ -42,6 +42,15 @@ void affiche_plateau(plateau _plateau) {
 /* 
 @requires rien
 @assigns rien
+@ensures Affiche le numéro de la manche
+*/
+void affiche_manche(int manche) {
+    printf("Manche %d\n", manche);
+}
+
+/* 
+@requires rien
+@assigns rien
 @ensures Affiche la main actuel de la faction
 */
 void affiche_main(faction _faction,int factionid) {

@@ -162,6 +162,7 @@ carte* get_liste_carte() {
     liste_carte[29] = new_carte("Lucienne Pacavé", "S'il y a une carte FISA retournée dans la même ligne ou la même colonne que cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", 1);
     liste_carte[30] = new_carte("Katrin Salhab", "Si les cartes Djibril-Aurélien Djembele-Cabeau, Eric Lejeune et Lucienne Pacavé sont retournées, la faction qui a posé cette carte gagne 10 points DDRS. Sinon, retournez toutes les cartes dans la même ligne de cette carte sans appliquer leurs effets.", 1);
     liste_carte[31] = new_carte("Laurent Prével", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", 1);
+    printf("get liste carte [%s, %i]\n", liste_carte[0]->nom, liste_carte[0]->nombre_occurrences);
     return liste_carte;
 }
 

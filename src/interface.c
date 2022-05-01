@@ -56,7 +56,7 @@ void affiche_main(faction _faction,int factionid) {
     int i = 1;
     while(!pile_est_vide(buffer_main) ) {
        
-        printf("-> %d [ %s ] ", i, get_carte_nom(pile_sommet(buffer_main)) );
+        printf("-> %d [ %s, %i ] ", i, get_carte_nom(pile_sommet(buffer_main)), get_carte_nombre_occurrences(pile_sommet(buffer_main)));
         i++;
         buffer_main=pile_suivant(buffer_main);
     }

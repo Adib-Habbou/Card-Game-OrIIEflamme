@@ -200,7 +200,8 @@ int* carte_positon(plateau _plateau,int _factionid) {
 */
 void afficher_effet(carte _carte) {
     char* effet = get_carte_description(_carte);
-    printf("Cette carte a pour effet : %s\n", effet);
+    char* nom = get_carte_nom(_carte);
+    printf("La carte %s a pour effet : %s\n", nom, effet);
 }
 
 /* 

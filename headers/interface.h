@@ -63,7 +63,7 @@ void afficher_effet(carte c);
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction* factions,plateau _plateau);
+void gagnant(faction* factions);
 
 /* 
 @requires rien

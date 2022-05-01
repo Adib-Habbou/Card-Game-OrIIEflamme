@@ -349,6 +349,10 @@ void lIIEns(plateau _plateau, int ligne, int colonne) {
         free(liste_carte);
         free(liste_faction);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38f43da50acfb3c99dc7167da4f9bb72e5b50a53
 }
 
 /*
@@ -711,18 +715,13 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
     }
     else { // si il n'y a qu'une seule ligne
         for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-        if (get_case_etat(get_plateau_case(_plateau,ligne_debut,colonne)) != -1){
-            set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
-            compteur_carte_supp++;
+            if (get_case_etat(get_plateau_case(_plateau,ligne_debut,colonne)) != -1){
+                set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
+                compteur_carte_supp++;
+            }
         }
     }
-    }
     
-
-    
-
-
-
     set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+2*compteur_carte_supp);
     
 }

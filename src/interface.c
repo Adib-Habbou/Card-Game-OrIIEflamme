@@ -74,6 +74,19 @@ void affiche_main(faction _faction,int factionid) {
     printf("\n");
 }
 
+/* 
+@requires rien
+@assigns buffer clavier
+@ensures vide le buffer clavier
+*/
+void clean_stdin(void) 
+{ 
+    int c; 
+  
+    do { 
+        c = getchar(); 
+    } while (c != '\n' && c != EOF); 
+}
 
 /* 
 @requires rien
@@ -87,7 +100,7 @@ int decision() {
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         int verification = scanf("%d",&decision);
         if (verification == 0){//on a pas un entier
-            fflush(stdin);
+            clean_stdin();
         }
         //vérification de la cohérence de la réponse de l'utilisateur    
         if (decision != 1 && decision != 0){

@@ -3,7 +3,7 @@
 int main(){
 
     // Initialisation du plateau
-    plateau _plateau;
+    plateau _plateau = NULL;
 
     // Initialisation de la liste des factions
     faction* _factions = liste_faction();
@@ -14,7 +14,7 @@ int main(){
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
     while(init_manche(_factions, _plateau) != 0){
-        libere_plateau(_plateau);
+        //libere_plateau(_plateau);
         _plateau = init_plateau();
 
         affiche_plateau(_plateau);

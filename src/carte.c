@@ -349,7 +349,6 @@ void lIIEns(plateau _plateau, int ligne, int colonne) {
         free(liste_carte);
         free(liste_faction);
     }
-
 }
 
 /*

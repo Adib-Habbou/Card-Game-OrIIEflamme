@@ -79,8 +79,8 @@ int* get_plateau_carte_premier(plateau plateau) {
     @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
 int* get_plateau_carte_dernier(plateau plateau) {
     // on initialise nos deux coordonnées à 0
-    int ligne = TAILLE_PLATEAU;
-    int colonne = TAILLE_PLATEAU;
+    int ligne = TAILLE_PLATEAU - 1;
+    int colonne = TAILLE_PLATEAU - 1;
     // tant qu'on trouve une carte sur la case on continue de parcourir le tableau
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
         if (colonne > 0) {

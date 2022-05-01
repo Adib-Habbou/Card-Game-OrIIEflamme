@@ -256,7 +256,7 @@ int init_manche(faction* _factions, plateau _plateau){
             winner = get_case_id_faction(get_plateau_case(_plateau, positions[0], positions[1]));
         }
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
-        if(get_faction_manches_gagnees(_factions[winner]) > NOMBRE_MANCHES_GAGNANTES){
+        if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
             return 0;
         }
         srand(time(NULL));

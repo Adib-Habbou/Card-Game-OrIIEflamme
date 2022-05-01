@@ -1339,7 +1339,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
     int i;
 
    
-    while (drapeau_FISA == 0) {
+
 
 //parcours de la ligne
     for (i=0;i<TAILLE_PLATEAU;i++) {
@@ -1349,6 +1349,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
             }
         }
     }
+
 //parcours de la colonne
     for (i=0;i<TAILLE_PLATEAU;i++) {
         if ( get_case_etat(get_plateau_case(_plateau,ligne,i)) == 1 ){
@@ -1357,7 +1358,7 @@ void Lucienne_Pacave(faction _faction, plateau _plateau, int ligne, int colonne)
             }
         }
     }
-    }
+
 
     if (drapeau_FISA) {
         set_faction_nombre_points_DDRS(_faction,get_faction_nombre_points_DDRS(_faction)+5);

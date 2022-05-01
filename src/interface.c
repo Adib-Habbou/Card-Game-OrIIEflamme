@@ -88,7 +88,7 @@ int decision() {
         scanf("%d",&decision);
 
         //vérification de la cohérence de la réponse de l'utilisateur    
-        if (decision != 1 || decision != 0){
+        if (decision != 1 && decision != 0){
         printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
 
         goto debut_demande;

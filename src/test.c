@@ -311,7 +311,7 @@ void test_activation_effet_lIIEns() {
 
     // action
     printf("avant retourne\n");
-        retourner(plateau, liste_factions); // lIIEns est la carte la plus en haut à gauche qui va donc être retournée
+        retourner(plateau, liste_factions); // lIIEns est la carte la plus en haut à gauche qui va donc être retournée et dont l'effet va être activé
     printf("retourne\n");
 
     // test

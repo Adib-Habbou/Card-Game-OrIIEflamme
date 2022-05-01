@@ -696,20 +696,33 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
     int ligne_debut = 0;
     int ligne_fin = 0;
     int compteur_carte_supp = 0;
+    int colonne;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  
     int modulo = abs(ligne_fin-ligne_debut);
 
-    int random_ligne = ligne_debut + rand() % modulo;
-    int colonne;
-    
-    for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-        if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
-            set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
+    if (modulo != 0) {
+        int random_ligne = ligne_debut + rand() % modulo;
+        
+        for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
+            if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
+                set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
+                compteur_carte_supp++;
+            }
+        }
+    }
+    else { // si il n'y a qu'une seule ligne
+        for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
+        if (get_plateau_case(_plateau,ligne_debut,colonne) != NULL){
+            set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
             compteur_carte_supp++;
         }
     }
+    }
+    
+
+    
 
 
 

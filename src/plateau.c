@@ -87,7 +87,7 @@ int* get_plateau_carte_dernier(plateau plateau) {
              colonne -= 1;
         }
         else {
-            colonne = 0;
+            colonne = TAILLE_PLATEAU - 1;
             ligne -= 1;
         }
     }

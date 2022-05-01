@@ -700,6 +700,7 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  
+
     int modulo = abs(ligne_fin-ligne_debut);
 
     if (modulo != 0) {

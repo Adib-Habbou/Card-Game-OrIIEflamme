@@ -83,10 +83,12 @@ void affiche_main(faction _faction,int factionid) {
 int decision() {
     int decision;
     debut_demande :
-        fflush(stdin);
+        
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
-        scanf("%d",&decision);
-
+        int verification = scanf("%d",&decision);
+        if (verification == 0){//on a pas un entier
+            fflush(stdin);
+        }
         //vérification de la cohérence de la réponse de l'utilisateur    
         if (decision != 1 && decision != 0){
         printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");

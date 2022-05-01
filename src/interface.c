@@ -208,9 +208,9 @@ void afficher_effet(carte _carte) {
 @assigns rien
 @ensures retourne la faction gagnante selon les règles
 */
-void gagnant(faction* factions,plateau _plateau) {
+void gagnant(faction* factions) {
 
-    if (get_faction_manches_gagnees(factions[0]) == 2) { // si on a un vainqueur de la partie, on s'arrête
+    if (get_faction_manches_gagnees(factions[0]) == 2) { 
         char* nom_gagnant = get_faction_nom(factions[0]);
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
         return;
@@ -220,7 +220,11 @@ void gagnant(faction* factions,plateau _plateau) {
         printf(" Félicitation %s ! Vous avez gagné la partie ! \n",nom_gagnant);
         return;
     }
+    else {
+        printf("Il n'y a pas encore de factions avec 2 manches gagnées. \n");
+    }
 
+    /*init_manche s'occupe de comptabiliser les manches gagnées APPAREMMENT
 
     if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) { // sinon on comptabilise le gagnant de la manche
         char* nom_gagnant = get_faction_nom(factions[0]);
@@ -238,7 +242,7 @@ void gagnant(faction* factions,plateau _plateau) {
 
         char* nom_gagnant = get_faction_nom(factions[get_case_id_faction(get_plateau_case(_plateau,ligne,colonne))]); //on recupère la faction qui a poser la carte la plus en haut à gauche
         printf("Egalité : Félicitation %s ! Vous avez gagné la manche car vous avez placé la carte la plus en haut à gauche ! \n",nom_gagnant);
-    }
+    } */
 }
 
 /* 

@@ -66,13 +66,13 @@ int main(){
             affiche_plateau(_plateau);
         }
         
-        // Affichage du gagnant
-        gagnant(_factions,_plateau);
+        
         manche++; // passage à la manche suivante
         
         libere_plateau(_plateau);
     }
-
+    // Affichage du gagnant
+    gagnant(_factions);
 
 
     return 0;

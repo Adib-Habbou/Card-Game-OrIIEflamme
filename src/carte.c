@@ -705,7 +705,7 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
         int random_ligne = ligne_debut + rand() % modulo;
         
         for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-            if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
+            if (get_case_etat(get_plateau_case(_plateau,random_ligne,colonne)) != -1){
                 set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
                 compteur_carte_supp++;
             }

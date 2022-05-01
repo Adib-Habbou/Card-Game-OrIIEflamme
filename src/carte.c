@@ -115,8 +115,6 @@ carte c_Laurent_Prevel = { "Laurent Prével", "Si Laurent Prével est la derniè
 //, &c_FC, &c_EcologIIE, &c_lIIEns, &c_Soiree_sans_alcool, &c_Alcool, &c_Cafe, &c_The, &c_Ecocup, &c_Reprographie, &c_Isolation_du_batiment, &c_Parcours_sobriete_numerique, &c_Heures_supplementaires, &c_Kahina_Bouchama, &c_Kevin_Goilard, &c_Massinissa_Merabet, &c_Vitera_Y, &c_Jonas_Senizergues, &c_Fetia_Bannour, &c_Catherine_Dubois, &c_Anne_Laure_Ligozat, &c_Guillaume_Burel, &c_Christophe_Mouilleron, &c_Thomas_Lim, &c_Julien_Forest, &c_Dimitri_Watel, &c_Djibril_Aurelien_Dembele_Cabot, &c_Eric_Lejeune, &c_Lucienne_Pacave, &c_Katrin_Salhab, &c_Laurent_Prevel };
 
 
-// GETTERS ET SETTERS
-
 /*  @requires   rien
     @assigns    rien
     @ensures    renvoie la liste de toutes les cartes du jeu */
@@ -166,6 +164,7 @@ carte* get_liste_carte() {
     return liste_carte;
 }
 
+// GETTERS ET SETTERS
 
 /*  @requires   une carte valide
     @assigns    rien
@@ -697,20 +696,33 @@ void Kevin_Goilard(faction _faction, plateau _plateau, int lignec, int colonnec)
     int ligne_debut = 0;
     int ligne_fin = 0;
     int compteur_carte_supp = 0;
+    int colonne;
 
     ligne_debut = get_plateau_carte_premier(_plateau)[0];
     ligne_fin = get_plateau_carte_dernier(_plateau)[0];  
     int modulo = abs(ligne_fin-ligne_debut);
 
-    int random_ligne = ligne_debut + rand() % modulo;
-    int colonne;
-    
-    for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
-        if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
-            set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
+    if (modulo != 0) {
+        int random_ligne = ligne_debut + rand() % modulo;
+        
+        for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
+            if (get_plateau_case(_plateau,random_ligne,colonne) != NULL){
+                set_case_etat(get_plateau_case(_plateau,random_ligne,colonne), -1);
+                compteur_carte_supp++;
+            }
+        }
+    }
+    else { // si il n'y a qu'une seule ligne
+        for (colonne = 0; colonne <TAILLE_PLATEAU; colonne++ ) {
+        if (get_plateau_case(_plateau,ligne_debut,colonne) != NULL){
+            set_case_etat(get_plateau_case(_plateau,ligne_debut,colonne), -1);
             compteur_carte_supp++;
         }
     }
+    }
+    
+
+    
 
 
 

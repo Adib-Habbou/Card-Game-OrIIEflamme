@@ -18,6 +18,7 @@ int main(){
         _plateau = init_plateau();
 
         affiche_plateau(_plateau);
+        affiche_manche(manche);
 
         if(manche%2 == 1){
             JoueurCommence = rand()%2;

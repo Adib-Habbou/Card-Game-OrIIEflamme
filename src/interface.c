@@ -81,9 +81,12 @@ void affiche_main(faction _faction,int factionid) {
 @ensures retourne 1 si la faction décide de remélanger sa main, retourne 0 sinon
 */
 int decision() {
-    int decision;
 
     debut_demande :
+        int decision = 0;
+        while (decision != '\n' && decision != EOF){ //on vide le buffer
+            decision = getchar();
+        }
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
         scanf("%d",&decision);
 

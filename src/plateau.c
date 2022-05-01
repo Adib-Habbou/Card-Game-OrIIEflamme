@@ -331,7 +331,6 @@ carte retourner(plateau _plateau, faction* _factions){
                     _case = _plateau->tab[colonne][colonne];
                     set_case_etat(_case, 1);
                     if(get_case_carte(_case) != NULL){
-                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }

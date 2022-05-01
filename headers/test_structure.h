@@ -1,3 +1,6 @@
+/*  fichier utilisé dans le même dossier que test_structure.c en local
+    pour tester le bon fonctionnement des piles avec des entiers */
+
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
@@ -19,7 +22,7 @@ int pile_est_vide(pile pile);
 
 /*  @requires une pile valide
     @assigns rien
-    @ensures renvoie la carte au sommet de la pile */
+    @ensures renvoie l'entier au sommet de la pile */
 int pile_sommet(pile pile);
 
 /*  @requires un pointeur vers une pile valide
@@ -28,13 +31,13 @@ int pile_sommet(pile pile);
 pile pile_suivant(pile pile);
 
 /*  @requires un pointeur vers une pile valide
-    @assigns ajoute la carte au sommet de la pile
+    @assigns ajoute l'entier au sommet de la pile
     @ensures rien */
 void empile(pile *pile, int x);
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
-    @ensures supprime la carte au sommet de la pile */
+    @ensures supprime l'entier au sommet de la pile */
 void depile(pile *pile);
 
 /*  @requires une pile valide

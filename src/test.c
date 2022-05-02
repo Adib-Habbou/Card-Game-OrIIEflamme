@@ -145,7 +145,7 @@ void test_presence_troisieme_manche() {
         init_manche(liste_factions, plateau);
 
     // test
-        // Le plateau a été vidé : aucune case du plateau n'est occupée
+        // Le plateau est vide : aucune case du plateau n'est occupée
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
                 
@@ -240,6 +240,8 @@ void test_pose_carte() {
         init_manche(liste_factions, plateau);
         // On retient le nombre initial de cartes dans la main
         int nombre_cartes_main_initial = taille_pile(get_faction_main(faction));
+        // On retient le nombre d'apparitions de la carte qu'on va poser dans la main 
+        
 
     // action
         // On pose une carte (interface va demander quelle carte poser à l'utilisateur, donc le testeur devra input un entier dans la console)
@@ -261,8 +263,12 @@ void test_pose_carte() {
         int nombre_cartes_main_actuel = taille_pile(get_faction_main(faction));
         CU_ASSERT_EQUAL(nombre_cartes_main_actuel, nombre_cartes_main_initial-1);
         // La carte n'appartient plus à la main de la faction 
-        int test_appartenance = appartient(carte_a_poser, get_faction_main(faction));
-        CU_ASSERT_EQUAL(test_appartenance, 0);
+        int nombre_occurrences_carte_posee = get_carte_nombre_occurrences(carte_a_poser);
+            // Si la carte posée ne peut apparaitre qu'une fois dans la main d'une faction, on vérifie simplement qu'elle n'y appartient plus 
+        if (1 == nombre_occurrences_carte_posee) {
+            int test_appartenance = appartient(carte_a_poser, get_faction_main(faction));
+            CU_ASSERT_EQUAL(test_appartenance, 0);
+        }
 }
 
 
@@ -341,7 +347,7 @@ void test_activation_effet_lIIEns() {
 
 
 // Soirée sans alcool
-void test_activation_effet_soiree_sans_alcool() {
+void test_activation_effet_soiree_sans_alcool_cas1() {
     // arrange
         // On initialise le plateau de jeu
         plateau plateau = init_plateau();
@@ -354,35 +360,32 @@ void test_activation_effet_soiree_sans_alcool() {
         // On positionne sur le plateau une carte Soirée sans alcool, qu'on gardera donc tout en haut à gauche
         set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); // id_faction = 0 : c'est faction (=liste_factions[0]) à avoir posé la carte
 
-        // On positionne sur le plateau des cartes FISE/FISA/FC retournées
-        set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 1); // FISE en position (0, 5) : à droite de lIIEns
-        set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
-        set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
+        // On positionne sur le plateau des cartes FISE/FISA/FC non retournées
+        set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 0); // FISE en position (0, 5) : à droite de lIIEns
+        set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 0); // FISA en position (1, 5) : en bas de FISE
+        set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 0); // FC en position (1, 4) : à gauche de FISA
 
         // On retient la ligne la plus en haut et celle la plus en bas avant activation de la carte Soirée sans alcool
         int* position_premier_avant = get_plateau_carte_premier(plateau);
         int ligne_plus_haute_avant = position_premier_avant[0];
         int* position_dernier_avant = get_plateau_carte_dernier(plateau);
         int ligne_plus_basse_avant = position_dernier_avant[0];
-        // On retient le nombre de points DDRS de la faction ayant posé la carte Soirée sans alcool avant son activation
-        int points_DDRS_avant = get_faction_nombre_points_DDRS(faction);
-
 
     // action
-    printf("avant retourne\n");
         retourner(plateau, liste_factions); // Soirée sans alcool est la carte la plus en haut à gauche qui va donc être retournée
-    printf("apres retourne\n");
 
     // test
         // Si au moins une carte alcool est retournée :
         set_plateau_case(plateau, 0, 3, liste_cartes[6], 1, 1); // Alcool en position (0, 3) : tout en haut à gauche, juste avant Soirée sans alcool
             // Il n'y a pas de cartes FISE/FISA/FC face visible sur le plateau : toutes les cartes FISE/FISA/FC retournées du plateau sont supprimées
-            for (int i = 0; i < TAILLE_PLATEAU-1; i++) {
-                for (int j = 0; j < TAILLE_PLATEAU-1; j++) {
-                    char* nom_carte = get_plateau_carte_nom(plateau, i, j);
+            for (int i = 0; i < TAILLE_PLATEAU; i++) {
+                for (int j = 0; j < TAILLE_PLATEAU; j++) {
                     Case case_carte = get_plateau_case(plateau, i, j);
-                    if ( (0 == strcmp(nom_carte, "FISE")) || (0 == strcmp(nom_carte, "FISA")) || (0 == strcmp(nom_carte, "FC")) ) {
-                        CU_ASSERT_EQUAL(get_case_etat(case_carte), 0); 
+                    if (get_case_etat(case_carte) != -1) {
+                        char* nom_carte = get_plateau_carte_nom(plateau, i, j);
+                        if ( (0 == strcmp(nom_carte, "FISE")) || (0 == strcmp(nom_carte, "FISA")) || (0 == strcmp(nom_carte, "FC")) ) {
+                            CU_ASSERT_EQUAL(get_case_etat(case_carte), 0); 
+                        }
                     }
                 } 
             }
@@ -393,14 +396,42 @@ void test_activation_effet_soiree_sans_alcool() {
             int* position_dernier_apres = get_plateau_carte_dernier(plateau);
             int ligne_plus_basse_apres = position_dernier_apres[0];
             CU_ASSERT_EQUAL(ligne_plus_basse_apres, ligne_plus_basse_avant-1)
+}
 
+void test_activation_effet_soiree_sans_alcool_cas2() {
+    // arrange
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise les factions à placer sur le plateau
+        faction* liste_factions = liste_faction();
+        faction faction = liste_factions[0];
+        // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
+        carte* liste_cartes = get_liste_carte();
+
+        // On positionne sur le plateau une carte Soirée sans alcool, qu'on gardera donc tout en haut à gauche
+        set_plateau_case(plateau, 0, 4, liste_cartes[5], 0, 0); // id_faction = 0 : c'est faction (=liste_factions[0]) à avoir posé la carte
+
+        // On positionne sur le plateau des cartes FISE/FISA/FC non retournées
+        set_plateau_case(plateau, 0, 5, liste_cartes[0], 1, 0); // FISE en position (0, 5) : à droite de lIIEns
+        set_plateau_case(plateau, 1, 5, liste_cartes[1], 0, 0); // FISA en position (1, 5) : en bas de FISE
+        set_plateau_case(plateau, 1, 4, liste_cartes[2], 1, 0); // FC en position (1, 4) : à gauche de FISA
+
+        // On retient le nombre de points DDRS de la faction ayant posé la carte Soirée sans alcool avant son activation
+        int points_DDRS_avant = get_faction_nombre_points_DDRS(faction);
+
+        // On retient la position de la carte la plus en haut à gauche (donc, Soirée sans alcool...) avant activation de la carte Soirée sans alcool
+        int* position_premier_avant = get_plateau_carte_premier(plateau);
+
+
+    // action
+        retourner(plateau, liste_factions); // Soirée sans alcool est la carte la plus en haut à gauche qui va donc être retournée
+
+    // test
         // Si aucune carte alcool est retournée :
-            set_plateau_case(plateau, 0, 3, liste_cartes[6], 1, 0); // Carte Alcool en position (0, 3) mise en face cachée
             // La faction qui a posé la carte "Soirée sans alcool" gagne 5 points DDRS
             Case case_carte = get_plateau_case(plateau, position_premier_avant[0], position_premier_avant[1]);
             CU_ASSERT_EQUAL(get_faction_nombre_points_DDRS(get_case_faction(case_carte)), points_DDRS_avant+5);
 }
-
 
 
 // Massinissa Merabet
@@ -498,7 +529,6 @@ void test_activation_effet_Eric_Lejeune_cas1() {
 
     // action
         retourner(plateau, liste_factions); // Eric Lejeune est la carte la plus en haut à gauche avec une face cachée : ce sera la prochaine à être retournée
-
 
     // test
         // Cas 1 : parmi les cartes retournées il y en a au moins une Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel
@@ -801,14 +831,14 @@ int main_test() {
     }
 
     // rajout d'une suite au registre 
-/*  pSuite = CU_add_suite("ordre_factions_suite", init_suite, clean_suite);
+ /*   pSuite = CU_add_suite("ordre_factions_suite", init_suite, clean_suite);
     if (NULL == pSuite) {
         CU_cleanup_registry();
         return CU_get_error();
     }
-*/
+
     // rajout de test à la suite
-/*  if ( (NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
+   if ( (NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
          (NULL == CU_add_test(pSuite, "test_ordre_deterministe_factions_deuxieme_manche", test_ordre_deterministe_factions_deuxieme_manche)) ) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -866,15 +896,16 @@ int main_test() {
     }
 
     // rajout de test à la suite
-/*  if ( (NULL == CU_add_test(pSuite, "test_activation_effet_lIIEns", test_activation_effet_lIIEns)) ||
-         (NULL == CU_add_test(pSuite, "test_activation_effet_soiree_sans_alcool", test_activation_effet_soiree_sans_alcool)) ||
+    if ( // (NULL == CU_add_test(pSuite, "test_activation_effet_lIIEns", test_activation_effet_lIIEns)) ||
+         (NULL == CU_add_test(pSuite, "test_activation_effet_soiree_sans_alcool_cas1", test_activation_effet_soiree_sans_alcool_cas1)) ||
+         (NULL == CU_add_test(pSuite, "test_activation_effet_soiree_sans_alcool_cas2", test_activation_effet_soiree_sans_alcool_cas2)) ||
          (NULL == CU_add_test(pSuite, "test_activation_effet_Massinissa_Merabet", test_activation_effet_Massinissa_Merabet)) ||
          (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas1", test_activation_effet_Eric_Lejeune_cas1)) || 
          (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas2", test_activation_effet_Eric_Lejeune_cas2)) ) {
         CU_cleanup_registry();
         return CU_get_error();
     }
-*/
+
     // rajout d'une suite au registre 
     pSuite = CU_add_suite("vainqueurs_suite", init_suite, clean_suite);
     if (NULL == pSuite) {

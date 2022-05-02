@@ -570,6 +570,10 @@ void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
         free(liste_colonne_carte_verso);
         free(liste_ligne_carte_verso);
     }
+    else { //aucune carte est face verso
+        return;
+    }
+
 }
 
 /*

@@ -74,6 +74,19 @@ void affiche_main(faction _faction,int factionid) {
     printf("\n");
 }
 
+/* 
+@requires rien
+@assigns buffer clavier
+@ensures vide le buffer clavier
+*/
+void clean_stdin(void) 
+{ 
+    int c; 
+  
+    do { 
+        c = getchar(); 
+    } while (c != '\n' && c != EOF); 
+}
 
 /* 
 @requires rien
@@ -82,15 +95,21 @@ void affiche_main(faction _faction,int factionid) {
 */
 int decision() {
     int decision;
-    printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
-    scanf("%d",&decision);
-
-    //vérification de la cohérence de la réponse de l'utilisateur
-    while ((decision!=1) && (decision!=0)) {
-        printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
+    debut_demande :
+        
         printf("Voulez-vous remélanger votre main ? [1]Oui [0]Non\n");
-        scanf("%d",&decision);
-    }
+        int verification = scanf("%d",&decision);
+        if (verification == 0){//on a pas un entier
+            clean_stdin();
+        }
+        //vérification de la cohérence de la réponse de l'utilisateur    
+        if (decision != 1 && decision != 0){
+        printf("Veuillez entrer 1 pour Oui, 0 pour Non\n");
+
+        goto debut_demande;
+        }
+
+        
     return decision;
   
 } 
@@ -233,26 +252,6 @@ void gagnant(faction* factions) {
     else {
         printf("Il n'y a pas encore de factions avec 2 manches gagnées. \n");
     }
-
-    /*init_manche s'occupe de comptabiliser les manches gagnées APPAREMMENT
-
-    if (get_faction_nombre_points_DDRS(factions[0]) > get_faction_nombre_points_DDRS(factions[1])) { // sinon on comptabilise le gagnant de la manche
-        char* nom_gagnant = get_faction_nom(factions[0]);
-        printf(" Félicitation %s ! Vous avez gagné la manche ! \n",nom_gagnant);
-    }
-    else if (get_faction_nombre_points_DDRS(factions[0]) < get_faction_nombre_points_DDRS(factions[1])) {
-        char* nom_gagnant = get_faction_nom(factions[1]);
-        printf(" Félicitation %s ! Vous avez gagné la manche ! \n",nom_gagnant);
-    }
-    else {
-
-        int *liste =  get_plateau_carte_premier(_plateau);
-        int ligne = liste[0];
-        int colonne = liste[1];
-
-        char* nom_gagnant = get_faction_nom(factions[get_case_id_faction(get_plateau_case(_plateau,ligne,colonne))]); //on recupère la faction qui a poser la carte la plus en haut à gauche
-        printf("Egalité : Félicitation %s ! Vous avez gagné la manche car vous avez placé la carte la plus en haut à gauche ! \n",nom_gagnant);
-    } */
 }
 
 /* 

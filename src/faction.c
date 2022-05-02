@@ -109,6 +109,7 @@ void remelanger(faction _faction){
     vider_main(_faction);
     melanger_pioche(_faction);
     repiocher(_faction);
+    set_faction_option_remelanger(_faction, 1);
 }
 
 

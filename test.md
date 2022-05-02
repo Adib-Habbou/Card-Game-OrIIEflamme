@@ -26,9 +26,7 @@ Passé au premier essai : rien à signaler.
 ### test_vainqueur_manche_non_egalite
 Passé au premier essai : rien à signaler.
 ### test_vainqueur_manche_egalite
-- La faction gagnante est à déterminer à la fin de la manche, donc il faut recuperer la faction ayant posé la carte la plus en haut à gauche avant de libérer le plateau : déplacement de la fonction libere_plateau() après la fonction gagnant() ;
-- Les manches gagnées ne sont pas attribuées à la bonne faction : get_faction_manches_gagnees() renvoie 
-CORRIGER
+- La faction gagnante est à déterminer à la fin de la manche, donc il faut recuperer la faction ayant posé la carte la plus en haut à gauche avant de libérer le plateau : déplacement de la fonction libere_plateau() après la fonction gagnant().
 
 
 

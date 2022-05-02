@@ -76,7 +76,7 @@ char* get_carte_description(carte carte) {
 
 /*  @requires   une carte valide
     @assigns    rien
-    @ensures    renvoie le nomnre d'occurrences de la carte */
+    @ensures    renvoie le nombre d'occurrences de la carte */
 int get_carte_nombre_occurrences(carte carte) {
     return carte->nombre_occurrences;
 }
@@ -573,7 +573,7 @@ void Kahina_Bouchama(plateau _plateau, int ligne, int colonne) {
     else { //aucune carte est face verso
         return;
     }
-    
+
 }
 
 /*

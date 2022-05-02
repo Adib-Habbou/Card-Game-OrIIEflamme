@@ -41,7 +41,7 @@ carte* get_faction_pioche(faction _faction) {
 
 /*  @requires   une faction valide
     @assigns    faction
-    @ensures    renvoie l'option remelanger */
+    @ensures    renvoie l'option remelanger (0 ou 1) */
 int get_faction_option_remelanger(faction _faction) {
     return _faction->option_remelanger;
 }
@@ -109,7 +109,6 @@ void remelanger(faction _faction){
     vider_main(_faction);
     melanger_pioche(_faction);
     repiocher(_faction);
-    set_faction_option_remelanger(_faction, 1);
 }
 
 

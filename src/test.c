@@ -58,11 +58,11 @@ void test_initialisation_plateau() {
         // Plateau vide : aucune case du plateau n'est occupée
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
-                CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, 0, 0)), -1);  // état : -1 si la case est vide
+                CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1);  // état : -1 si la case est vide
             }   
         }
         // Le jeu n'est pas terminé
-        CU_ASSERT_EQUAL(init_manche(liste_factions), 1) // init_manche renvoie 1 s'il est possible de commencer une manche de jeu
+        CU_ASSERT_EQUAL(init_manche(liste_factions, plateau), 1) // init_manche() renvoie 1 s'il est possible de commencer une manche de jeu
 }
 
 
@@ -86,7 +86,7 @@ void test_initialisation_plateau() {
 
         // action
             // On initialise la première manche
-            init_manche(liste_factions);
+            init_manche(liste_factions, plateau);
 
         if (0 == JoueurCommence) {
             compteur_faction0++;
@@ -110,11 +110,11 @@ void test_initialisation_plateau() {
         // On initialise les factions à placer sur le plateau
     faction* liste_factions = liste_faction();
         // On initialise la première manche
-    init_manche(liste_factions);
+    init_manche(liste_factions, plateau);
 
     // action
         // On initialise la deuxième manche
-    init_manche(liste_factions);
+    init_manche(liste_factions, plateau);
   
     // test
        // TODO
@@ -142,13 +142,13 @@ void test_presence_troisieme_manche() {
 
     // action
         // On initialise une troisième manche
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
 
     // test
         // Le plateau a été vidé : aucune case du plateau n'est occupée
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
-                // printf("i : %i , j : %i , etat : %i \n", i, j, get_case_etat(get_plateau_case(plateau, i, j)));
+                
                 CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1); // état : -1 si la case est vide
             }   
         }
@@ -159,7 +159,7 @@ void test_presence_troisieme_manche() {
             // On joue virtuellement la troisième manche : chacune des deux factions possède un nombre strictement supérieur à zero de points DDRS
             set_faction_nombre_points_DDRS(liste_factions[0], 20);
             set_faction_nombre_points_DDRS(liste_factions[1], 34);
-        CU_ASSERT_EQUAL(init_manche(liste_factions), 0);
+        CU_ASSERT_EQUAL(init_manche(liste_factions, plateau), 0);
 }
 
 
@@ -174,15 +174,15 @@ void test_presence_troisieme_manche() {
         int appartient(carte _carte, pile main_faction) {
             if (!pile_est_vide(main_faction)) {
                 int taille_main = taille_pile(main_faction); // on retient la taille initiale de la main pour pouvoir la parcourir
-                pile* buffer_main = main_faction; // buffer pour parcourir la main sans la modifier
+                pile* buffer_main = &main_faction; // buffer pour parcourir la main sans la modifier
                 for (int i=0; i < taille_main; i++) {
-                    carte top = pile_sommet(buffer_main);
+                    carte top = pile_sommet(*buffer_main);
                     /* strcmp() compaire deux chaines de caractères, caractère par caractère. 
                         Si les deux chaines sont égales, la fonction renvoie 0. */
                     if ( (strcmp(get_carte_nom(top), get_carte_nom(_carte))) == 0 ) { 
                         return 1;
                     } 
-                    depile(&buffer_main); // on passe à l'élément suivant de la pile 
+                    depile(buffer_main); // on passe à l'élément suivant de la pile 
                 }
                 return 0;
             }
@@ -191,10 +191,12 @@ void test_presence_troisieme_manche() {
 
 void test_option_repiocher() {
     // arrange
-         // On initialise deux factions et on effectue les tests sur la première
+        // On initialise le plateau de jeu
+        plateau plateau = init_plateau();
+        // On initialise deux factions et on effectue les tests sur la première
         faction* liste_factions = liste_faction();
         // On initialise una manche : les mains des factions seront initialisées également
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
         /* On choisit de travailler avec une seule faction.
             Nous avons testé la bonne initialisation des deux factions. 
             Comme elles sont dans le même état, il suffit donc de tester les règles de jeu sur une seule des deux. */
@@ -235,7 +237,7 @@ void test_pose_carte() {
             // Retenons que l'idéntifiant de la faction qui va poser la carte est 0 (indice de position dans la liste des factions)
             int id_faction_posant_attendu = 0;
         // On initialise una manche : les mains des factions seront initialisées également
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
         // On retient le nombre initial de cartes dans la main
         int nombre_cartes_main_initial = taille_pile(get_faction_main(faction));
 
@@ -259,7 +261,6 @@ void test_pose_carte() {
         int nombre_cartes_main_actuel = taille_pile(get_faction_main(faction));
         CU_ASSERT_EQUAL(nombre_cartes_main_actuel, nombre_cartes_main_initial-1);
         // La carte n'appartient plus à la main de la faction 
-        affiche_main(get_faction_main(faction), 0);
         int test_appartenance = appartient(carte_a_poser, get_faction_main(faction));
         CU_ASSERT_EQUAL(test_appartenance, 0);
 }
@@ -292,7 +293,7 @@ void test_activation_effet_lIIEns() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions = liste_faction();
         // On initialise una manche : les mains des factions seront initialisées également
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
 
@@ -310,9 +311,7 @@ void test_activation_effet_lIIEns() {
         
 
     // action
-    printf("avant retourne\n");
         retourner(plateau, liste_factions); // lIIEns est la carte la plus en haut à gauche qui va donc être retournée et dont l'effet va être activé
-    printf("retourne\n");
 
     // test
         // Parcourons toutes les cartes avant celle qui vient d'être retournée (ici lIIEns)
@@ -575,7 +574,7 @@ void test_vainqueur_manche_non_egalite() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions = liste_faction();
         // On "joue" artificiellement une manche : on se positionne en cas de non égalité
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
         set_faction_nombre_points_DDRS(liste_factions[0], 20);
         set_faction_nombre_points_DDRS(liste_factions[1], 34);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
@@ -597,7 +596,7 @@ void test_vainqueur_manche_non_egalite() {
             }   
         }
 
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
 
     // test
         // La faction gagnante (ici la faction 2 car avec le plus de points DDRS) voit sa manche comptabilisée
@@ -614,7 +613,7 @@ void test_vainqueur_manche_egalite() {
         // On initialise les factions à placer sur le plateau
         faction* liste_factions_egalite = liste_faction();
         // On "joue" artificiellement la manche : on se positionne  cette fois-ci en cas d'égalité
-        init_manche(liste_factions_egalite);
+        init_manche(liste_factions_egalite, plateau_egalite);
         set_faction_nombre_points_DDRS(liste_factions_egalite[0], 20);
         set_faction_nombre_points_DDRS(liste_factions_egalite[1], 20);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
@@ -638,27 +637,20 @@ void test_vainqueur_manche_egalite() {
             }   
         }
 
-        init_manche(liste_factions_egalite);
+        init_manche(liste_factions_egalite, plateau_egalite);
 
     // test
         // La faction gagnante voit sa manche comptabilisée
             // Déterminons la faction gagnante, c'est à dire celle qui a posé la carte qui est la plus en haut à gauche du plateau à l'issue de la manche
             Case case_premier = get_plateau_case(plateau_egalite, position_premier[0], position_premier[1]);
             int id_faction_gagnante = get_case_id_faction(case_premier);
-            faction faction_gagnante = liste_factions_egalite[id_faction_gagnante];
-            printf("fac_gagn : %p \n", faction_gagnante); 
-        
-            printf("manche gagnees fac %p : %i \n", liste_factions_egalite[0], get_faction_manches_gagnees(liste_factions_egalite[0]));
-            printf("manche gagnees fac %p : %i \n", liste_factions_egalite[1], get_faction_manches_gagnees(liste_factions_egalite[1]));
-
+            faction faction_gagnante = liste_factions_egalite[id_faction_gagnante];        
         CU_ASSERT_EQUAL(get_faction_manches_gagnees(faction_gagnante), 1); // ici une seule manche a été jouée
-        printf("equal manches gagnees\n");
         // Le nombre de manches gagnées de l'autre faction ne varie pas
             // Déterminons la faction perdante
             faction faction_perdante;
             if (0 == strcmp( get_faction_nom(faction_gagnante), get_faction_nom(liste_factions_egalite[0]) )) { // Si la faction gagnante est la première
                 faction_perdante = liste_factions_egalite[1];
-                printf("if");
             }
             else { faction_perdante = liste_factions_egalite[0]; 
             } // Si la faction gagnante est la seconde
@@ -683,7 +675,7 @@ void test_vainqueur_jeu() {
             set_faction_nombre_points_DDRS(liste_factions[0], 20);
             set_faction_nombre_points_DDRS(liste_factions[1], 34);
         // On initialise une troisième manche
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
         // On positionne des cartes fictives sur le plateau : dans le jeu chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
@@ -727,7 +719,7 @@ void test_demarrage_jeu() {
 
     // action
         // On initialise la première manche
-        init_manche(liste_factions);
+        init_manche(liste_factions, plateau);
 
     // test
         // TODO
@@ -735,11 +727,7 @@ void test_demarrage_jeu() {
 
 
 
-/* Vérifie la bonne terminaison du jeu :
-    - présence d'une faction gagnante ;
-    - présence d'une faction perdante ;
-    - TODO : quoi d'autre? ...
-*/
+/* Vérifie la bonne terminaison du jeu */
 void test_terminaison_jeu() {
     // arrange
         // On initialise le plateau de jeu
@@ -760,7 +748,18 @@ void test_terminaison_jeu() {
 
 
     // test
-        // TODO
+        // Au moins une des deux factions a remporté deux manches 
+        int manches_gagnees0 = get_faction_manches_gagnees(liste_factions[0]);
+        int manches_gagnees1 = get_faction_manches_gagnees(liste_factions[1]);
+        CU_ASSERT_TRUE( (2 == manches_gagnees0) || (2 == manches_gagnees1) );
+        // Le plateau est vide : toutes les cartes ont été retournées 
+         for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            for (int j = 0; j < TAILLE_PLATEAU; j++) {
+                CU_ASSERT_EQUAL(get_case_etat(get_plateau_case(plateau, i, j)), -1);  // état : -1 si la case est vide
+            }   
+        }
+        // On ne peut pas initialiser une quatrième manche 
+        CU_ASSERT_EQUAL(init_manche(liste_factions, plateau), 0); // init_manche() renvoie 0 si une nouvelle manche de jeu ne peut pas être initialisée
 }
 
 
@@ -781,152 +780,140 @@ int clean_suite() {
 
 int main_test() {
    CU_pSuite pSuite = NULL;
-   /* initialize the CUnit test registry */
-   if ( CUE_SUCCESS != CU_initialize_registry() )
-      return CU_get_error();
 
-   /* add a suite to the registry */
-   pSuite = CU_add_suite( "initialisation_suite", init_suite, clean_suite );
-   if ( NULL == pSuite ) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+   // initialisation du registre de test CUnit
+   if ( CUE_SUCCESS != CU_initialize_registry() ) {
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-   if ( (NULL == CU_add_test(pSuite, "test_initialisation_faction", test_initialisation_faction)) ||
-        (NULL == CU_add_test(pSuite, "test_initialisation_plateau", test_initialisation_plateau))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite( "initialisation_suite", init_suite, clean_suite );
+    if ( NULL == pSuite ) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add a suite to the registry */
+    // rajout de test à la suite
+    if ( (NULL == CU_add_test(pSuite, "test_initialisation_faction", test_initialisation_faction)) ||
+         (NULL == CU_add_test(pSuite, "test_initialisation_plateau", test_initialisation_plateau)) ) {
+            CU_cleanup_registry();
+            return CU_get_error();
+    }
+
+    // rajout d'une suite au registre 
 /*  pSuite = CU_add_suite("ordre_factions_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 */
-   /* add the tests to the suite */
-/*   if ((NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
-       (NULL == CU_add_test(pSuite, "test_ordre_deterministe_factions_deuxieme_manche", test_ordre_deterministe_factions_deuxieme_manche))
-      )
-   {
+    // rajout de test à la suite
+/*  if ( (NULL == CU_add_test(pSuite, "test_ordre_aleatoire_factions_premiere_manche", test_ordre_aleatoire_factions_premiere_manche)) ||
+         (NULL == CU_add_test(pSuite, "test_ordre_deterministe_factions_deuxieme_manche", test_ordre_deterministe_factions_deuxieme_manche)) ) {
       CU_cleanup_registry();
       return CU_get_error();
-   }
+    }
 */
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("manches_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("manches_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-    if ((NULL == CU_add_test(pSuite, "test_presence_troisieme_manche", test_presence_troisieme_manche)) ||
-       (NULL == CU_add_test(pSuite, "test_vainqueur_manche_non_egalite", test_vainqueur_manche_non_egalite)) ||
-       (NULL == CU_add_test(pSuite, "test_vainqueur_manche_egalite", test_vainqueur_manche_egalite))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout de test à la suite
+    if ( (NULL == CU_add_test(pSuite, "test_presence_troisieme_manche", test_presence_troisieme_manche)) ||
+         (NULL == CU_add_test(pSuite, "test_vainqueur_manche_non_egalite", test_vainqueur_manche_non_egalite)) ||
+         (NULL == CU_add_test(pSuite, "test_vainqueur_manche_egalite", test_vainqueur_manche_egalite)) ) {
+            CU_cleanup_registry();
+            return CU_get_error();
+    }
 
 
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("positions_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
+    // rajout de test à la suite
     if ( (NULL == CU_add_test(pSuite, "test_pose_carte", test_pose_carte)) ||
-        (NULL == CU_add_test(pSuite, "test_placement_cartes_espace2D", test_placement_cartes_espace2D))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+         (NULL == CU_add_test(pSuite, "test_placement_cartes_espace2D", test_placement_cartes_espace2D)) ) {
+        CU_cleanup_registry();
+        return CU_get_error(); 
+    }
 
 
-   /* add a suite to the registry */
-   pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("option_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-   if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout de test à la suite
+    if ( NULL == CU_add_test(pSuite, "test_option_repiocher", test_option_repiocher) ) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("effets_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("effets_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-/*   if ( (NULL == CU_add_test(pSuite, "test_activation_effet_lIIEns", test_activation_effet_lIIEns)) ||
-        (NULL == CU_add_test(pSuite, "test_activation_effet_soiree_sans_alcool", test_activation_effet_soiree_sans_alcool)) ||
-        (NULL == CU_add_test(pSuite, "test_activation_effet_Massinissa_Merabet", test_activation_effet_Massinissa_Merabet)) ||
-        (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas1", test_activation_effet_Eric_Lejeune_cas1)) || 
-        (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas2", test_activation_effet_Eric_Lejeune_cas2)) 
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout de test à la suite
+/*  if ( (NULL == CU_add_test(pSuite, "test_activation_effet_lIIEns", test_activation_effet_lIIEns)) ||
+         (NULL == CU_add_test(pSuite, "test_activation_effet_soiree_sans_alcool", test_activation_effet_soiree_sans_alcool)) ||
+         (NULL == CU_add_test(pSuite, "test_activation_effet_Massinissa_Merabet", test_activation_effet_Massinissa_Merabet)) ||
+         (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas1", test_activation_effet_Eric_Lejeune_cas1)) || 
+         (NULL == CU_add_test(pSuite, "test_activation_effet_Eric_Lejeune_cas2", test_activation_effet_Eric_Lejeune_cas2)) ) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 */
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("vainqueurs_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("vainqueurs_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-   if ( (NULL == CU_add_test(pSuite, "test_vainqueur_manche_non_egalite", test_vainqueur_manche_non_egalite)) ||
-        (NULL == CU_add_test(pSuite, "test_vainqueur_manche_egalite", test_vainqueur_manche_egalite)) ||
-        (NULL == CU_add_test(pSuite, "test_vainqueur_jeu", test_vainqueur_jeu)) 
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout de test à la suite
+    if ( (NULL == CU_add_test(pSuite, "test_vainqueur_manche_non_egalite", test_vainqueur_manche_non_egalite)) ||
+         (NULL == CU_add_test(pSuite, "test_vainqueur_manche_egalite", test_vainqueur_manche_egalite)) ||
+         (NULL == CU_add_test(pSuite, "test_vainqueur_jeu", test_vainqueur_jeu)) ) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("partie_suite", init_suite, clean_suite);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout d'une suite au registre 
+    pSuite = CU_add_suite("partie_suite", init_suite, clean_suite);
+    if (NULL == pSuite) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-   /* add the tests to the suite */
-   if ( (NULL == CU_add_test(pSuite, "test_demarrage_jeu", test_demarrage_jeu)) ||
-        (NULL == CU_add_test(pSuite, "test_terminaison_jeu", test_terminaison_jeu))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+    // rajout de test à la suite
+    if ( (NULL == CU_add_test(pSuite, "test_demarrage_jeu", test_demarrage_jeu)) ||
+         (NULL == CU_add_test(pSuite, "test_terminaison_jeu", test_terminaison_jeu)) ) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-    /* Run all tests using the basic interface */
-   CU_basic_set_mode(CU_BRM_VERBOSE);
-   CU_basic_run_tests();
-   printf("\n");
-   CU_basic_show_failures(CU_get_failure_list());
-   printf("\n\n");
+    // execution de tous les test avec l'interface basique
+    CU_basic_set_mode(CU_BRM_VERBOSE);
+    CU_basic_run_tests();
+    printf("\n");
+    CU_basic_show_failures(CU_get_failure_list());
+    printf("\n\n");
     
-    /* Clean up registry and return */
+    // clean up du registre
     CU_cleanup_registry();
+    // affichage des erreurs
     return CU_get_error();
     return 0;
 }

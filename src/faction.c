@@ -108,6 +108,7 @@ void remelanger(faction _faction){
     vider_main(_faction);
     melanger_pioche(_faction);
     repiocher(_faction);
+    set_faction_option_remelanger(_faction, 1);
 }
 
 
@@ -121,7 +122,6 @@ void vider_main(faction _faction){
 
 void melanger_pioche(faction _faction){
     _faction->pioche = get_liste_carte();
-    printf("pioche [%s, %i]\n", get_carte_nom(_faction->pioche[2]), get_carte_nombre_occurrences(_faction->pioche[2]));
 }
 
 

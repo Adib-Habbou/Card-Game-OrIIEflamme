@@ -620,10 +620,10 @@ void test_vainqueur_manche_egalite() {
         // Liste de cartes. Pour les indexes des cartes, cf à partir de la ligne 131 de src/carte.c
         carte* liste_cartes = get_liste_carte();
         // On positionne des cartes fictives sur le plateau : dans le jeu chaque faction en a posées 8 (ici, on suppose que chacune en avait deux)
-        set_plateau_case(plateau_egalite, 0, 5, liste_cartes[0], 1, 1); // FISE en position (0, 5) : à droite de lIIEns
-        set_plateau_case(plateau_egalite, 1, 5, liste_cartes[1], 0, 1); // FISA en position (1, 5) : en bas de FISE
-        set_plateau_case(plateau_egalite, 1, 4, liste_cartes[2], 1, 1); // FC en position (1, 4) : à gauche de FISA
-        set_plateau_case(plateau_egalite, 2, 4, liste_cartes[23], 0, 1); // Christophe Mouilleron en position (2, 4) : en bas de Ecocup
+        set_plateau_case(plateau_egalite, 0, 5, liste_cartes[0], 0, 1); // FISE en position (0, 5) : à droite de lIIEns
+        set_plateau_case(plateau_egalite, 1, 5, liste_cartes[1], 1, 1); // FISA en position (1, 5) : en bas de FISE
+        set_plateau_case(plateau_egalite, 1, 4, liste_cartes[2], 0, 1); // FC en position (1, 4) : à gauche de FISA
+        set_plateau_case(plateau_egalite, 2, 4, liste_cartes[23], 1, 1); // Christophe Mouilleron en position (2, 4) : en bas de Ecocup
         // Retenons la position de la carte qui est la plus en haut à gauche du plateau
         int* position_premier = get_plateau_carte_premier(plateau_egalite);
 
@@ -632,7 +632,9 @@ void test_vainqueur_manche_egalite() {
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
             for (int j = 0; j < TAILLE_PLATEAU; j++) {
                 Case _case = get_plateau_case(plateau_egalite, i, j);
-                set_case_etat(_case, 1); // état : 1 si la carte est face visible
+                if (get_case_etat(_case) == 0) {
+                    set_case_etat(_case, 1); // état : 1 si la carte est face visible
+                }
             }   
         }
 

@@ -3,7 +3,7 @@
 int main(){
 /*
     // Initialisation du plateau
-    plateau _plateau;
+    plateau _plateau = NULL;
 
     // Initialisation de la liste des factions
     faction* _factions = liste_faction();
@@ -13,11 +13,12 @@ int main(){
     srand(time(NULL));
 
     // Initialisation d'une manche si le jeu n'est pas terminé 
-    while(init_manche(_factions) != 0){
-
+    while(init_manche(_factions, _plateau) != 0){
+        //libere_plateau(_plateau);
         _plateau = init_plateau();
 
         affiche_plateau(_plateau);
+        affiche_manche(manche);
 
         if(manche%2 == 1){
             JoueurCommence = rand()%2;
@@ -66,11 +67,8 @@ int main(){
             affiche_plateau(_plateau);
         }
         
-        // Affichage du gagnant
-        gagnant(_factions,_plateau);
-        manche++; // passage à la manche suivante
         
-        libere_plateau(_plateau);
+        manche++; // passage à la manche suivante
     }
 
     // Affichage du gagnant

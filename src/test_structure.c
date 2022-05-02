@@ -1,9 +1,12 @@
+/*  fichier utilisé dans le même dossier que test_structure.h en local
+    pour tester le bon fonctionnement des piles avec des entiers */
+
 /* importation du module structure */
-#include "../headers/structure.h"
+#include "structure.h"
 
 /*  implementation des piles avec des listes chaînées */
 struct maillon {
-    carte sommet; // la valeur du premier maillon représente le sommet de la pile
+    int sommet; // la valeur du premier maillon représente le sommet de la pile
     struct maillon *suivant;
 };
 
@@ -23,8 +26,8 @@ int pile_est_vide(pile pile) {
 
 /*  @requires une pile valide
     @assigns rien
-    @ensures renvoie la carte au sommet de la pile */
-carte pile_sommet(pile pile) {
+    @ensures renvoie l'entier au sommet de la pile */
+int pile_sommet(pile pile) {
     return pile->sommet;
 }
 
@@ -36,24 +39,24 @@ pile pile_suivant(pile pile) {
 }
 
 /*  @requires un pointeur vers une pile valide
-    @assigns ajoute la carte au sommet de la pile
+    @assigns ajoute l'entier au sommet de la pile
     @ensures rien */
-void empile(pile *_pile, carte carte) {
+void empile(pile *_pile, int x) {
     // on alloue la mémoire nécessaire à la variable res
     pile res = malloc(sizeof(pile));
     // on vérifie que la mémoire a été allouée correctement
     if (res == NULL) {
         exit(1); // si la mémoire n'a pas été allouée correctement on sort du programme
     }
-    // on empile la carte en ajoutant notre pile à la suite de la pile res qui contient la carte
-    res->sommet = carte;
+    // on empile l'entier en ajoutant notre pile à la suite de la pile res qui contient la carte
+    res->sommet = x;
     res->suivant = *_pile;
     *_pile = res;
 }
 
 /*  @requires un pointeur vers une pile valide
     @assigns pile
-    @ensures supprime la carte au sommet de la pile */
+    @ensures supprime l'entier au sommet de la pile */
 void depile(pile *pile) {
     // on vérifie que la pile n'est pas vide
     if (pile_est_vide(*pile)) {
@@ -78,3 +81,41 @@ int taille_pile(pile pile) {
     return taille;
 }
 
+int main() {
+    // on initialise la pile :
+    pile test = pile_vide();
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 0
+    printf("%i\n", pile_est_vide(test)); // 1
+
+    // on rajoute 10 à la pile :
+    empile(&test, 10);
+    printf("%i\n", pile_est_vide(test)); // 0
+    printf("Le sommet de la pile : %i\n", pile_sommet(test)); // 10
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 1
+
+    // on rajoute 20 à la pile :
+    empile(&test, 20);
+    printf("Le sommet de la pile : %i\n", pile_sommet(test)); // 20
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 2
+
+    // on rajoute 30 à la pile :
+    empile(&test, 30);
+    printf("Le sommet de la pile : %i\n", pile_sommet(test)); // 20
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 3
+
+    // on enlève 30 de la pile :
+    depile(&test);
+    printf("Le sommet de la pile : %i\n", pile_sommet(test)); // 20
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 2
+
+    // on enlève 20 de la pile :
+    depile(&test);
+    printf("Le sommet de la pile : %i\n", pile_sommet(test)); // 10
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 1
+
+    // on enlève 10 de la pile :
+    depile(&test);
+    printf("Taille de la pile : %i\n", taille_pile(test)); // 0
+
+    return 0;
+}

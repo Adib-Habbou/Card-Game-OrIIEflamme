@@ -235,7 +235,7 @@ void libere_plateau(plateau _plateau){
     }
 }
 
-int init_manche(faction* _factions){
+int init_manche(faction* _factions, plateau _plateau){
     int winner = 0;
     int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
     for(int i = 1; i < NOMBRE_JOUEURS; i++){
@@ -251,6 +251,10 @@ int init_manche(faction* _factions){
         }
         return 1;
     }else{
+        if(get_faction_nombre_points_DDRS(_factions[winner]) == get_faction_nombre_points_DDRS(_factions[1-winner])){
+            int* positions = get_plateau_carte_premier(_plateau);
+            winner = get_case_id_faction(get_plateau_case(_plateau, positions[0], positions[1]));
+        }
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
         if(get_faction_manches_gagnees(_factions[winner]) > NOMBRE_MANCHES_GAGNANTES){
             return 0;
@@ -260,10 +264,6 @@ int init_manche(faction* _factions){
             set_faction_nombre_points_DDRS(_factions[i], 0);
             remelanger(_factions[i]);
         }
-        
-        /*libere_plateau(_plateau);
-        plateau newplateau  = init_plateau();
-        _plateau = newplateau;*/
     }
     return 1;
 }

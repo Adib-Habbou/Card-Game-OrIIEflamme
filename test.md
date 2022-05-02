@@ -50,7 +50,8 @@ test TODO : verificare che ogni volta che c'è una carta sul plateau (sauf quand
 ### test_activation_effet_soiree_sans_alcool 
 ### test_activation_effet_Massinissa_Merabet
 ### test_activation_effet_Eric_Lejeune_cas1
-- segfault lors de la recuperation des noms des cartes à la gauche d'Eric Lejeune : problème dans le déplacement des cartes.
+- segfault lors de la recuperation des noms des cartes à la gauche d'Eric Lejeune : problème dans le déplacement des cartes ;
+- changement de l'effet donc des assert : cette carte ne remelange pas elle même et Messinisa Merabet pour éViter des boucle infinies d'effets.
 ### test_activation_effet_Eric_Lejeune_cas2
 
 

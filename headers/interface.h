@@ -37,6 +37,13 @@ void affiche_main(faction f,int factionid);
 
 /* 
 @requires rien
+@assigns buffer clavier
+@ensures vide le buffer clavier
+*/
+void clean_stdin(void) ;
+
+/* 
+@requires rien
 @assigns rien
 @ensures retourne 1 si la faction décide de remélanger sa main, retourne 0 sinon
 */

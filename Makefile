@@ -1,4 +1,4 @@
-CC = gcc `sdl2-config --cflags --libs`
+CC = gcc `sdl2-config --cflags --libs` -pg
 CFLAGS = -Wall -Wextra -std=c99 
 LDFLAGS = -lSDL2main -lSDL2 -lSDL2_ttf
 OBJETS = obj/sdl.o obj/interface.o obj/carte.o obj/faction.o obj/plateau.o obj/structure.o obj/pile.o obj/list_dynamic.o obj/main.o
@@ -7,7 +7,7 @@ bin/oriieflamme : $(OBJETS)
 	$(CC) $^ $(LDFLAGS) -L. -o $@ 
 
 obj/%.o : src/%.c  headers/%.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -pg -o $@ -c $<
 
 test.o : src/test.c
 	$(CC) $(CFLAGS) -o $@ -c $<

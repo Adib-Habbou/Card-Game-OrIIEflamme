@@ -3,10 +3,10 @@ CFLAGS = -Wall -Wextra -std=c99 -gstabs
 OBJETS = obj/main.o obj/carte.o obj/faction.o obj/plateau.o obj/interface.o obj/structure.o
 
 bin/oriieflamme : $(OBJETS)
-	$(CC) -o $@ $^
+	$(CC) -pg -o $@ $^
 
 obj/%.o : src/%.c  headers/%.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -pg -o $@ -c $<
 
 obj/test.o : src/test.c
 	$(CC) $(CFLAGS) -o $@ -c $<

@@ -10,7 +10,7 @@ struct Case {
 
 /* implémentation du type plateau */
 struct plateau {
-    Case** tab; // matrice de cases de taille 50 x 50
+    Case** tab; // matrice de cases de taille 1000 x 1000
 };
 
 
@@ -28,18 +28,15 @@ int get_case_etat(Case _case) {
     return _case->etat;
 }
 
-/*  @requires   une case valide et un entier positif ou -1
+/*  @requires   une case valide et un entier
     @assigns    case
     @ensures    modifie l'état de la carte posé sur la case */
 void set_case_etat(Case _case, int etat) {
-    // si on essaye de set l'état de la case à -1 on considère que l'on souhaite initalisé le nombre d'occurences, l'id de la faction et l'état
-    // je sais que ça ne devrait pas se faire dans un setter je suis fondamentalement contre mais Clark et Willy préfèrent faire comme ça :/
     if (etat == -1) {
         set_carte_nombre_occurrences(_case->carte, -1);
         _case->id_faction = -1;
         _case->etat = -1;
     }
-    // si l'état est un entier positif on ne fait que modifier l'état de la case
     _case->etat = etat;
 }
 
@@ -54,23 +51,18 @@ Case get_plateau_case(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en haut à gauche du plateau */
 int* get_plateau_carte_premier(plateau plateau) {
-    // on initialise nos deux coordonnées à 0
     int ligne = 0;
     int colonne = 0;
-    // tant qu'on trouve une carte sur la case on continue de parcourir le tableau
-    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // on incrémente colonne pour parcourir toute la ligne
-        if (colonne < TAILLE_PLATEAU - 1) {
-            colonne += 1;
+    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne]->carte) != -1) {
+        if (colonne < TAILLE_PLATEAU) {
+             colonne += 1;
         }
-        // on incrémente ligne pour passer à la ligne suivante on remet colonne à 0 pour reparcourir toute la ligne
         else {
             colonne = 0;
             ligne += 1;
         }
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne;
     return position;
@@ -80,23 +72,18 @@ int* get_plateau_carte_premier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en bas à droite du plateau  */
 int* get_plateau_carte_dernier(plateau plateau) {
-    // on initialise nos deux coordonnées à 0
-    int ligne = TAILLE_PLATEAU - 1;
-    int colonne = TAILLE_PLATEAU - 1;
-    // tant qu'on trouve une carte sur la case on continue de parcourir le tableau
+    int ligne = TAILLE_PLATEAU;
+    int colonne = TAILLE_PLATEAU;
     while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // on décrémente colonne pour parcourir toute la ligne
         if (colonne > 0) {
              colonne -= 1;
         }
-        // on décrémente ligne pour passer à la ligne suivante on remet colonne à TAILLE_PLATEAU - 1 pour reparcourir toute la ligne
         else {
-            colonne = TAILLE_PLATEAU - 1;
+            colonne = 0;
             ligne -= 1;
         }
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne;
     return position;
@@ -106,22 +93,15 @@ int* get_plateau_carte_dernier(plateau plateau) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus à gauche  */
 int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
-    // on initialise notre coordonnée de ligne avec celle passé en argument
-    // on initialise pas notre coordonnée de colonne parce qu'elle ne va pas bouger puisqu'on regarder uniquement à gauche de notre case
     int ligne_bis = ligne;
-    // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
-    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // si on ne trouve pas de case à gauche on renvoie un tableau d'entier avec -1 et -1 comme élément
+    while(get_carte_nombre_occurrences(plateau->tab[ligne_bis][colonne]->carte) != -1) {
         if (ligne_bis == 0) {
-            int* position = (int*) malloc(2 * sizeof(int));
-            position[0] = -1;
-            position[1] = -1;
-            return position;
+            //affiche("Pas de carte à gauche");
+            exit(1);
         }
-        ligne_bis -= 1; // on décrémente ligne_bis pour passer à la ligne plus haut
+        ligne_bis -= 1;
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne_bis;
     position[1] = colonne;
     return position;
@@ -131,22 +111,15 @@ int* get_plateau_carte_gauche(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus à droite  */
 int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
-    // on initialise notre coordonnée de ligne avec celle passé en argument
-    // on initialise pas notre coordonnée de colonne parce qu'elle ne va pas bouger puisqu'on regarder uniquement à droite de notre case
     int ligne_bis = ligne;
-    // tant qu'on trouve une carte sur la case on continue de parcourir la ligne
-    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // si on ne trouve pas de case à droite on renvoie un tableau d'entier avec -1 et -1 comme élément
+    while(get_carte_nombre_occurrences(plateau->tab[ligne_bis][colonne]->carte) != -1) {
         if (ligne_bis == TAILLE_PLATEAU) {
-            int* position = (int*) malloc(2 * sizeof(int));
-            position[0] = -1;
-            position[1] = -1;
-            return position;
+            //affiche("Pas de carte à droite");
+            exit(1);
         }
-        ligne_bis += 1; // on incrémente ligne_bis pour passer à la ligne plus bas
+        ligne_bis += 1;
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne_bis;
     position[1] = colonne;
     return position;
@@ -157,22 +130,15 @@ int* get_plateau_carte_droite(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en haut  */
 int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
-    // on initialise notre coordonnée de colonne avec celle passé en argument
-    // on initialise pas notre coordonnée de ligne parce qu'elle ne va pas bouger puisqu'on regarder uniquement en haut de notre case
     int colonne_bis = colonne;
-    // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
-    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // si on ne trouve pas de case en haut on renvoie un tableau d'entier avec -1 et -1 comme élément
+    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne_bis]->carte) != -1) {
         if (colonne_bis == 0) {
-            int* position = (int*) malloc(2 * sizeof(int));
-            position[0] = -1;
-            position[1] = -1;
-            return position;
+            //affiche("Pas de carte en haut");
+            exit(1);
         }
-        colonne_bis -= 1; // on décrémente colonne_bis pour passer à la colonne à gauche
+        colonne_bis -= 1;
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne_bis;
     return position;
@@ -182,22 +148,15 @@ int* get_plateau_carte_haut(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie les coodronnées de la carte la plus en bas  */
 int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
-    // on initialise notre coordonnée de colonne avec celle passé en argument
-    // on initialise pas notre coordonnée de ligne parce qu'elle ne va pas bouger puisqu'on regarder uniquement en bas de notre case
     int colonne_bis = colonne;
-    // tant qu'on trouve une carte sur la case on continue de parcourir la colonne
-    while(get_case_etat(get_plateau_case(plateau, ligne, colonne)) == -1) {
-        // si on ne trouve pas de case en bas on renvoie un tableau d'entier avec -1 et -1 comme élément
+    while(get_carte_nombre_occurrences(plateau->tab[ligne][colonne_bis]->carte) != -1) {
         if (colonne_bis == TAILLE_PLATEAU) {
-            int* position = (int*) malloc(2 * sizeof(int));
-            position[0] = -1;
-            position[1] = -1;
-            return position;
+            //affiche("Pas de carte en bas");
+            exit(1);
         }
-        colonne_bis += 1; // on incrémente colonne_bis pour passer à la colonne à droite
+        colonne_bis += 1;
     }
-    // lorsqu'on tombe sur une case vide on stocke les dernières valeurs de nos coordonnées dans un tableau d'entier
-    int* position = (int*) malloc(2 * sizeof(int));
+    int* position = (int*) malloc(2*sizeof(int));
     position[0] = ligne;
     position[1] = colonne_bis;
     return position;
@@ -207,17 +166,17 @@ int* get_plateau_carte_bas(plateau plateau, int ligne, int colonne) {
     @assigns    rien
     @ensures    renvoie la faction qui a posé la carte présente sur la case */
 faction get_case_faction(Case _case) {
-    faction* factions = liste_faction(); // on stocke dans un tableau les des deux factions en jeu
-    return factions[_case->id_faction]; // on renvoie la faction qui a posé la carte sur la case à partir de l'id faction stocké dans la case
+    faction* factions = liste_faction();
+    return factions[_case->id_faction];
 }
 
 /*  @requires   un plateau valide, deux entiers coordonnées de la case, une carte, l'id faction et l'état 
     @assigns    plateau
     @ensures    modifie la case du plateau */
 void set_plateau_case(plateau plateau, int ligne, int colonne, carte carte, int id_faction, int etat) {
-    plateau->tab[ligne][colonne]->carte = carte; // modification de la carte posé sur la case
-    plateau->tab[ligne][colonne]->id_faction = id_faction; // modification de l'id de la faction qui a posé la carte sur la case
-    plateau->tab[ligne][colonne]->etat = etat; // modification de l'état de la case
+    plateau->tab[ligne][colonne]->carte = carte;
+    plateau->tab[ligne][colonne]->id_faction = id_faction;
+    plateau->tab[ligne][colonne]->etat = etat;
 }
 
 /*  @requires   une case valide
@@ -253,19 +212,18 @@ void libere_plateau(plateau _plateau){
     for(int i = 0; i < TAILLE_PLATEAU; i++){
         free(_plateau->tab[i]);
     }
+    free(_plateau->tab);
 }
 
-int init_manche(faction* _factions, plateau _plateau){
+int init_manche(plateau _plateau, faction* _factions){
     int winner = 0;
     int maxddrs = get_faction_nombre_points_DDRS(_factions[0]);
-    // boucle pour trouver la faction avec le maximum de point DDRS
     for(int i = 1; i < NOMBRE_JOUEURS; i++){
         if(maxddrs < get_faction_nombre_points_DDRS(_factions[i])){
             maxddrs = get_faction_nombre_points_DDRS(_factions[i]);
             winner = i;
         }
     }
-    // cas d'initialisation de la première partie
     if(maxddrs == 0 && winner == 0){
         srand(time(NULL));
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
@@ -273,45 +231,33 @@ int init_manche(faction* _factions, plateau _plateau){
         }
         return 1;
     }else{
-        // verifie si il y a égalité
-        if(get_faction_nombre_points_DDRS(_factions[winner]) == get_faction_nombre_points_DDRS(_factions[1-winner])){
-            // on cherche la carte la plus en haut à gauche
-            int* positions = get_plateau_carte_premier(_plateau);
-            // definie comme gagnant la faction qui a posé la carte
-            winner = get_case_id_faction(get_plateau_case(_plateau, positions[0], positions[1]));
-        }
         set_faction_manches_gagnees(_factions[winner], get_faction_manches_gagnees(_factions[winner])+1);
-        // on arrête la jeu si la faction gagnante à le nombre de manches suffisante pour gagnée le jeu 
         if(get_faction_manches_gagnees(_factions[winner]) >= NOMBRE_MANCHES_GAGNANTES){
             return 0;
         }
-        srand(time(NULL));
-        // initialise une nouvelle manche
         for(int i = 0; i < NOMBRE_JOUEURS; i++){
-            set_faction_nombre_points_DDRS(_factions[i], 0);
             remelanger(_factions[i]);
         }
+        libere_plateau(_plateau);
+        _plateau = init_plateau();
     }
     return 1;
 }
 
 faction* liste_faction(){
-    // crée une liste de faction
     faction* factions = (faction*) malloc(NOMBRE_JOUEURS*sizeof(faction));
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         factions[i] = (faction) malloc(sizeof(faction));
     }
     char* noms[2] = {"Joueur 0", "Joueur 1"};
-    // on initialise chaque faction
     for(int i = 0; i < NOMBRE_JOUEURS; i++){
         factions[i] = (faction) malloc(sizeof(faction));
-        pile main = (pile) malloc(sizeof(pile));
         set_faction_nom(factions[i], noms[i]);
         set_faction_nombre_points_DDRS(factions[i], 0);
+        set_faction_main(factions[i], pile_vide());
+        set_faction_pioche(factions[i], get_liste_carte());
         set_faction_manches_gagnees(factions[i], 0);
         set_faction_option_remelanger(factions[i], 0);
-        set_faction_main(factions[i], main);
-        set_faction_pioche(factions[i], get_liste_carte());
     }
     return factions;
 }
@@ -325,38 +271,33 @@ void poser(plateau _plateau, carte _carte, int* _position){
 carte retourner(plateau _plateau, faction* _factions){
     Case _case = NULL;
     int ligne, colonne;
-    // parcoure la tableau pour trouver la carte la plus en haut à gauche
     for(ligne = 0; ligne < TAILLE_PLATEAU; ligne++){
         for(colonne = 0; colonne < TAILLE_PLATEAU; colonne++){
             if(ligne != colonne){
-                // on retourne la carte actuelle
                 if(_plateau->tab[ligne][colonne]->etat == 0){
                     _case = _plateau->tab[ligne][colonne];
-                    // modifie l'état pour indiquée que la carte est retournée
                     set_case_etat(_case, 1);
-                    // si la carte n'est pas null on active son effet 
                     if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }
-                // on retourne la symétrie de la carte actuelle
                 if(_plateau->tab[colonne][ligne]->etat == 0){
                     _case = _plateau->tab[colonne][ligne];
-                    // modifie l'état pour indiquée que la carte est retournée
                     set_case_etat(_case, 1);
-                    // si la carte n'est pas null on active son effet 
                     if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                         
                 }
             }else{
+                //printf("lig : %i et col : %i\n", ligne, colonne);
                 if(_plateau->tab[colonne][colonne]->etat == 0){
                     _case = _plateau->tab[colonne][colonne];
-                    // modifie l'état pour indiquée que la carte est retournée
                     set_case_etat(_case, 1);
-                    // si la carte n'est pas null on active son effet 
                     if(get_case_carte(_case) != NULL){
+                        //printf("carte\n");
                         goto cartetrouve;
                     }
                 }
@@ -364,7 +305,7 @@ carte retourner(plateau _plateau, faction* _factions){
         }
     }
     return NULL;
-// active l'effet de la carte trouvé en fonction de son nom
+
 cartetrouve:
     if(strcmp(get_carte_nom(_case->carte), "FISE") == 0){
         FISE(_factions[_case->id_faction], ligne, colonne, _plateau);

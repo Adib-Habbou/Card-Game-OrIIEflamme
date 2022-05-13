@@ -1,5 +1,6 @@
-/* importation du module structure */
+#ifndef MAIN_H
+#define MAIN_H
+
 #include "interface.h"
 
-/* Pour le null */
-#include <stddef.h>
+#endif

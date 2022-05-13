@@ -5,99 +5,98 @@
 struct faction {
     char* nom;
     int nombre_points_DDRS;
-    int option_remelanger; /* 0 si la faction n'a pas encore remélanger et 1 si la fonction a déjà remélanger */
-    int manches_gagnees; /* nombre de manches gagnées par la faction : 0, 1 ou 2 */
     pile main; /* type liste défini dans structure.h et structure.c */
     carte* pioche; /* type pile défini dans structure.h et structure.c */
+    int option_remelanger; /* 0 si la faction n'a pas encore remélanger et 1 si la fonction a déjà remélanger */
+    int manches_gagnees; /* nombre de manches gagnées par la faction : 0, 1 ou 2 */
 };
 
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie le nom de la faction */
-char* get_faction_nom(faction _faction) {
-    return _faction->nom;
+char* get_faction_nom(faction faction) {
+    return faction->nom;
 }
 
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie le nombre de points DDRS de la faction */
-int get_faction_nombre_points_DDRS(faction _faction) {
-    return _faction->nombre_points_DDRS;
+int get_faction_nombre_points_DDRS(faction faction) {
+    return faction->nombre_points_DDRS;
 }
 
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie la main de la faction */
-pile get_faction_main(faction _faction) {
-    return _faction->main;
+pile get_faction_main(faction faction) {
+    return faction->main;
 }
 
 /*  @requires   une faction valide
     @assigns    rien
     @ensures    renvoie la pioche de la faction */
-carte* get_faction_pioche(faction _faction) {
-    return _faction->pioche;
+carte* get_faction_pioche(faction faction) {
+    return faction->pioche;
 }
 
 /*  @requires   une faction valide
     @assigns    faction
-    @ensures    renvoie l'option remelanger (0 ou 1) */
-int get_faction_option_remelanger(faction _faction) {
-    return _faction->option_remelanger;
+    @ensures    renvoie l'option remelanger */
+int get_faction_option_remelanger(faction faction) {
+    return faction->option_remelanger;
 }
 
 /*  @requires   une faction valide
     @assigns    faction
     @ensures    renvoie le nombre de manches gagnées */
-int get_faction_manches_gagnees(faction _faction) {
-    return _faction->manches_gagnees;
+int get_faction_manches_gagnees(faction faction) {
+    return faction->manches_gagnees;
 }
 
 /*  @requires   une faction valide et un char
     @assigns    faction
     @ensures    modifie nom de la faction */
-void set_faction_nom(faction _faction, char* nom) {
-    _faction->nom = nom;
+void set_faction_nom(faction faction, char* nom) {
+    faction->nom = nom;
 }
 
-/*  @requires   une faction valide et un entier positif ou nul
+/*  @requires   une faction valide et un entier
     @assigns    faction
     @ensures    modifie le nombre de points DDRS de la faction */
-void set_faction_nombre_points_DDRS(faction _faction, int nombre_points_DDRS) {
-    _faction->nombre_points_DDRS = nombre_points_DDRS;
+void set_faction_nombre_points_DDRS(faction faction, int nombre_points_DDRS) {
+    faction->nombre_points_DDRS = nombre_points_DDRS;
 }
 
 /*  @requires   une faction valide et une pile
     @assigns    faction
     @ensures    modifie la main de la faction */
-void set_faction_main(faction _faction, pile main) {
-    _faction->main = main;
+void set_faction_main(faction faction, pile main) {
+    faction->main = main;
 }
 
 /*  @requires   une faction valide et une pile
     @assigns    faction
     @ensures    modifie la pioche de la faction */
-void set_faction_pioche(faction _faction, carte* pioche) {
-    _faction->pioche = pioche;
+void set_faction_pioche(faction faction, carte* pioche) {
+    faction->pioche = pioche;
 }
 
-/*  @requires   une faction valide et un entier valant 0 ou 1
+/*  @requires   une faction valide et un entier
     @assigns    faction
     @ensures    modifie l'option remelanger de la faction */
-void set_faction_option_remelanger(faction _faction, int option_remelanger) {
-    _faction->option_remelanger = option_remelanger;
+void set_faction_option_remelanger(faction faction, int option_remelanger) {
+    faction->option_remelanger = option_remelanger;
 }
 
-/*  @requires   une faction valide et un entier valant 0, 1 ou 2
+/*  @requires   une faction valide et un entier
     @assigns    faction
     @ensures    modifie le nombre de manches gagnées de la faction */
-void set_faction_manches_gagnees(faction _faction, int manches_gagnees) {
-    _faction->manches_gagnees = manches_gagnees;
+void set_faction_manches_gagnees(faction faction, int manches_gagnees) {
+    faction->manches_gagnees = manches_gagnees;
 }
 
 int test_remelanger(faction _faction){
     if(_faction->option_remelanger == 0){
-        // modifie la valeur de option remelanger pour ne plus pouvoir remelanger
         _faction->option_remelanger = 1;
         return 1;
     }else{
@@ -109,12 +108,13 @@ void remelanger(faction _faction){
     vider_main(_faction);
     melanger_pioche(_faction);
     repiocher(_faction);
-    set_faction_option_remelanger(_faction, 1);
 }
 
 
 void vider_main(faction _faction){
-    _faction->main = NULL;
+    while(!pile_est_vide(_faction->main)){
+        depile(&_faction->main);
+    }
 }
 
 
@@ -124,31 +124,23 @@ void melanger_pioche(faction _faction){
 
 
 void repiocher(faction _faction){
-    // on crée une liste qui contient tous les indices possible de la pioche (avec un nombre d'occurence non null)
     int* liste_index = (int*) malloc(NOMBRE_TYPES_CARTES*sizeof(int));
     int size_liste_index = NOMBRE_TYPES_CARTES;
-    // au début tous les indices sont possible 
     for(int i = 0; i < NOMBRE_TYPES_CARTES; i++){
         liste_index[i] = i;
     }
-    // boucle pour chaque carte
     for(int i = 0; i < NOMBRE_CARTES_MAIN_INITIAL; i++){
-        // choisi un indice aléatoire dans la liste 
         int index = liste_index[rand()%size_liste_index];
-        // par sécurité si le nombre d'occurence est égale à zéro on recommence (normalement cas impossible)
-        if(get_carte_nombre_occurrences(_faction->pioche[index]) <= 0){
+        if(get_carte_nombre_occurrences(_faction->pioche[index]) == 0){
             i--;
         }else{
-            // retire l'indice de la liste si le nombre d'occurence est égale à un
             if(get_carte_nombre_occurrences(_faction->pioche[index]) == 1){
                 liste_index[index] = liste_index[size_liste_index-1];
                 size_liste_index--;
                 if(size_liste_index < 0)
                     break;
             }
-            // ajoute la carte à la main
             empile(&_faction->main, _faction->pioche[index]);
-            // retire un nombre d'occurence à la pioche pour cette carte
             set_carte_nombre_occurrences(_faction->pioche[index], get_carte_nombre_occurrences(_faction->pioche[index])-1);
         }
     }

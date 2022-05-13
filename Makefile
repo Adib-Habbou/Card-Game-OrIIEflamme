@@ -1,14 +1,15 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -gstabs
-OBJETS = obj/main.o obj/carte.o obj/faction.o obj/plateau.o obj/interface.o obj/structure.o
+CC = gcc `sdl2-config --cflags --libs`
+CFLAGS = -Wall -Wextra -std=c99 
+LDFLAGS = -lSDL2main -lSDL2 -lSDL2_ttf
+OBJETS = obj/sdl.o obj/interface.o obj/carte.o obj/faction.o obj/plateau.o obj/structure.o obj/pile.o obj/list_dynamic.o obj/main.o
 
 bin/oriieflamme : $(OBJETS)
-	$(CC) -o $@ $^
+	$(CC) $^ $(LDFLAGS) -L. -o $@ 
 
 obj/%.o : src/%.c  headers/%.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-obj/test.o : src/test.c
+test.o : src/test.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 test : $(OBJETS) obj/test.o
@@ -16,3 +17,5 @@ test : $(OBJETS) obj/test.o
 
 clean:
 	rm -rf obj/*.o
+
+.PHONY : clean

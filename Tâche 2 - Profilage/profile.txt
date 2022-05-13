@@ -1,0 +1,63 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00    83260     0.00     0.00  get_plateau_case
+  0.00      0.00     0.00    63244     0.00     0.00  get_case_etat
+  0.00      0.00     0.00    20016     0.00     0.00  get_case_carte
+  0.00      0.00     0.00      192     0.00     0.00  new_carte
+  0.00      0.00     0.00      178     0.00     0.00  get_carte_nom
+  0.00      0.00     0.00       84     0.00     0.00  pile_est_vide
+  0.00      0.00     0.00       52     0.00     0.00  pile_sommet
+  0.00      0.00     0.00       44     0.00     0.00  get_carte_nombre_occurrences
+  0.00      0.00     0.00       44     0.00     0.00  pile_suivant
+  0.00      0.00     0.00       40     0.00     0.00  get_faction_main
+  0.00      0.00     0.00       26     0.00     0.00  get_plateau_carte_nom
+  0.00      0.00     0.00       19     0.00     0.00  get_faction_nombre_points_DDRS
+  0.00      0.00     0.00       18     0.00     0.00  affiche_plateau
+  0.00      0.00     0.00       16     0.00     0.00  set_carte_nombre_occurrences
+  0.00      0.00     0.00       16     0.00     0.00  set_case_etat
+  0.00      0.00     0.00       12     0.00     0.00  affiche_main
+  0.00      0.00     0.00       12     0.00     0.00  empile
+  0.00      0.00     0.00       10     0.00     0.00  retourner
+  0.00      0.00     0.00       10     0.00     0.00  set_faction_main
+  0.00      0.00     0.00        9     0.00     0.00  set_faction_nombre_points_DDRS
+  0.00      0.00     0.00        8     0.00     0.00  afficher_effet
+  0.00      0.00     0.00        8     0.00     0.00  carte_choisie
+  0.00      0.00     0.00        8     0.00     0.00  carte_positon
+  0.00      0.00     0.00        8     0.00     0.00  get_carte_description
+  0.00      0.00     0.00        8     0.00     0.00  pile_vide
+  0.00      0.00     0.00        8     0.00     0.00  poser
+  0.00      0.00     0.00        8     0.00     0.00  taille_pile
+  0.00      0.00     0.00        6     0.00     0.00  get_faction_manches_gagnees
+  0.00      0.00     0.00        6     0.00     0.00  get_liste_carte
+  0.00      0.00     0.00        6     0.00     0.00  set_faction_option_remelanger
+  0.00      0.00     0.00        4     0.00     0.00  decision
+  0.00      0.00     0.00        4     0.00     0.00  melanger_pioche
+  0.00      0.00     0.00        4     0.00     0.00  remelanger
+  0.00      0.00     0.00        4     0.00     0.00  repiocher
+  0.00      0.00     0.00        4     0.00     0.00  set_faction_manches_gagnees
+  0.00      0.00     0.00        4     0.00     0.00  vider_main
+  0.00      0.00     0.00        3     0.00     0.00  init_manche
+  0.00      0.00     0.00        2     0.00     0.00  Reprographie
+  0.00      0.00     0.00        2     0.00     0.00  affiche_manche
+  0.00      0.00     0.00        2     0.00     0.00  get_plateau_carte_bas
+  0.00      0.00     0.00        2     0.00     0.00  get_plateau_carte_droite
+  0.00      0.00     0.00        2     0.00     0.00  get_plateau_carte_gauche
+  0.00      0.00     0.00        2     0.00     0.00  get_plateau_carte_haut
+  0.00      0.00     0.00        2     0.00     0.00  init_plateau
+  0.00      0.00     0.00        2     0.00     0.00  set_faction_nom
+  0.00      0.00     0.00        2     0.00     0.00  set_faction_pioche
+  0.00      0.00     0.00        1     0.00     0.00  Catherine_Dubois
+  0.00      0.00     0.00        1     0.00     0.00  Christophe_Mouilleron
+  0.00      0.00     0.00        1     0.00     0.00  FC
+  0.00      0.00     0.00        1     0.00     0.00  Massinissa_Merabet
+  0.00      0.00     0.00        1     0.00     0.00  Soiree_sans_alcool
+  0.00      0.00     0.00        1     0.00     0.00  Thomas_Lim
+  0.00      0.00     0.00        1     0.00     0.00  gagnant
+  0.00      0.00     0.00        1     0.00     0.00  get_faction_nom
+  0.00      0.00     0.00        1     0.00     0.00  lIIEns
+  0.00      0.00     0.00        1     0.00     0.00  liste_faction
